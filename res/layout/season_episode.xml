@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:ads="http://schemas.android.com/apk/lib/com.google.ads"
+  xmlns:oak="http://oak/oak/schema"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent"
+  android:id="@+id/episode_row"
+  android:background="@color/white"
+  android:orientation="vertical"
+  android:scrollbars="vertical">
+  
+  <!-- Title Bar -->
+  <View
+    android:id="@+id/divider"
+   	android:layout_width="fill_parent"
+   	android:layout_height="1dp"
+   	android:background="@color/blue"
+   	/> 
+  
+  <!-- Ads -->	
+  <com.google.ads.AdView
+      android:id="@+id/adView"
+      android:layout_height="wrap_content"
+      android:layout_width="wrap_content"
+      ads:adSize="BANNER"
+      ads:adUnitId="a151192e8c30e71"
+      ads:loadAdOnCreate="true"
+      android:layout_alignParentBottom="true"
+      android:layout_centerInParent="true">
+  </com.google.ads.AdView>
+	
+	<!-- ScrollView -->
+	<ScrollView 
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	    android:scrollbars="none"
+	    android:layout_below="@id/divider"
+	    android:layout_above="@id/adView">
+	    
+	    <!-- Content Container -->
+    	<LinearLayout
+    	    android:layout_width="fill_parent"
+    	    android:layout_height="wrap_content"
+    	    android:orientation="vertical">
+    	    
+    	    <!-- Image FrameLayout -->
+    	    <FrameLayout
+				  android:layout_width="fill_parent"
+				  android:layout_height="wrap_content"
+				  android:orientation="horizontal"
+				  android:id="@+id/season_episode_info_holder">
+				  
+    	          <!-- Resizeable Image -->
+				  <voodoo.tvdb.Utils.ResizeableImageView
+			            android:id="@+id/episode_image"
+			            android:contentDescription="@string/season_episode_image"
+						android:layout_width="fill_parent"
+						android:layout_height="wrap_content" 
+						/>
+				  
+				 <!-- Episode Title -->
+				 <LinearLayout 
+					   android:layout_width="wrap_content"
+					   android:layout_height="wrap_content"
+					   android:background="@color/blue"
+					   android:orientation="horizontal"
+					   android:layout_gravity="bottom">
+					 
+				     	<oak.widget.TextViewWithFont 
+					        android:id="@+id/season_episode_bar_title"
+					        android:layout_width="wrap_content"
+					        android:layout_height="wrap_content"
+					        android:textColor="@color/white"
+					        android:textSize="@dimen/text_size_season_episode_bar_title"
+					        android:layout_gravity="center_vertical"
+					        android:layout_margin="8dip"
+					        android:ellipsize="end"
+					        android:maxLines="2"
+					        oak:font="Roboto-Light.ttf"
+					        />
+				     
+				</LinearLayout>
+			</FrameLayout>
+			
+    	    <!-- Top Information Container -->
+			<RelativeLayout
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:padding="8dip">
+				 
+			   	<!-- Episode Season and Episode Number -->
+				<oak.widget.TextViewWithFont
+					android:id="@+id/episode_season_number"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:textColor="@color/black"
+					android:textSize="@dimen/text_size_season_episode_season_number"
+					android:layout_alignParentLeft="true"
+					oak:font="Roboto-Light.ttf"
+					/>
+				
+				<!-- Episode Air Date -->
+				<oak.widget.TextViewWithFont
+					android:id="@+id/episode_airdate"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:textColor="@color/black"
+					android:textSize="@dimen/text_size_season_episode_airdate"
+					android:layout_alignParentLeft="true"
+					android:layout_below="@id/episode_season_number"
+					oak:font="Roboto-BoldCondensedItalic.ttf"
+					/>
+				
+				<!-- Episode Ratings Bar -->
+				<RatingBar
+					android:id="@+id/episode_ratingbar"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					style="?android:attr/ratingBarStyleSmall"
+					android:numStars="10"
+					android:stepSize="0.1"
+					android:isIndicator="true"
+					android:rating="0"
+					android:layout_alignParentRight="true"
+					android:layout_alignTop="@id/episode_season_number"
+					android:layout_marginTop="8dip"
+					android:layout_marginBottom="4dip"
+					/>
+				
+				<!-- Episode Rating Text -->
+				<oak.widget.TextViewWithFont
+					android:id="@+id/episode_rating_text"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:textSize="@dimen/text_size_season_episode_rating"
+					android:textColor="@color/black"
+					android:paddingLeft="2dip"
+					android:layout_alignParentRight="true"
+					android:layout_below="@id/episode_ratingbar"
+					oak:font="Roboto-Light.ttf"
+					/>
+				
+			</RelativeLayout>
+			<!-- 
+			Overview Group
+			 -->
+			 <LinearLayout 
+		 	    android:layout_width="fill_parent"
+		 	    android:layout_height="wrap_content"
+		 	    android:background="@drawable/divider_grey_bg_dropshadow"
+		 	    android:orientation="horizontal"
+		 	    >
+		 	    <oak.widget.TextViewWithFont 
+		 	        android:id="@+id/episode_overview_group_title"
+		 	        android:text="@string/season_episode_overview_title"
+		 	        android:layout_width="wrap_content"
+		 	        android:layout_height="wrap_content"
+		 	        android:textColor="@color/black"
+		 	        android:textSize="@dimen/text_size_season_episode_overview_title"
+		 	        android:layout_marginLeft="8dip"
+		 	        android:layout_gravity="center_vertical"
+		 	        oak:font="Roboto-Light.ttf"
+		 	        />
+		 	</LinearLayout>
+		 	<oak.widget.TextViewWithFont
+				android:id="@+id/episode_overview"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:maxLines="3"
+				android:ellipsize="end"
+				android:textColor="@color/black"
+				android:focusableInTouchMode="true"
+				android:textSize="@dimen/text_size_season_episode_overview_content"
+				android:layout_marginTop="2dip"
+				android:layout_marginBottom="2dip"
+				android:layout_marginRight="10dip"
+				android:layout_marginLeft="8dip"
+				oak:font="Roboto-Light.ttf"
+				/>
+		 	<LinearLayout 
+		   	    android:id="@+id/episode_overview_img_button_layout"
+		   	    android:layout_width="fill_parent"
+		   	    android:layout_height="wrap_content"
+		   	    android:gravity="right">
+		 	    <ImageView
+			   	    android:id="@+id/episode_overview_img_button"
+			   	    android:layout_width="wrap_content"
+			   	    android:layout_height="wrap_content"
+			   	    android:layout_gravity="right"
+			   	    android:contentDescription="@string/season_episode_overview_img_button"
+			   	    android:src="@drawable/expander_open_holo_light"
+			   	    android:paddingBottom="10dip"
+					android:paddingRight="10dip"/>
+		 	</LinearLayout>
+			<!-- 
+			Guest Stars Group
+			 -->
+			<LinearLayout 
+			    android:layout_width="fill_parent"
+			    android:layout_height="wrap_content"
+			    android:background="@drawable/divider_grey_bg_dropshadow"
+			    android:orientation="horizontal"
+			    >
+			    <oak.widget.TextViewWithFont 
+			        android:id="@+id/episode_guest_stars_group_title"
+			        android:text="@string/season_episode_guest_title"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:textColor="@color/black"
+			        android:textSize="@dimen/text_size_season_episode_guest_title"
+			        android:layout_marginLeft="8dip"
+			        android:layout_gravity="center_vertical"
+			        oak:font="Roboto-Light.ttf"
+			        />
+			</LinearLayout>
+			<oak.widget.TextViewWithFont
+				android:id="@+id/episode_guest_stars"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:maxLines="3"
+				android:ellipsize="end"
+				android:textColor="@color/black"
+				android:focusableInTouchMode="true"
+				android:textSize="@dimen/text_size_season_episode_guest_content"
+				android:layout_marginTop="2dip"
+				android:layout_marginBottom="10dip"
+				android:layout_marginRight="10dip"
+				android:layout_marginLeft="8dip"
+				oak:font="Roboto-Light.ttf"
+				/>
+			<LinearLayout 
+		   	    android:id="@+id/episode_guest_img_button_layout"
+		   	    android:layout_width="fill_parent"
+		   	    android:layout_height="wrap_content"
+		   	    android:gravity="right">
+			    <ImageView
+			   	    android:id="@+id/episode_guest_img_button"
+			   	    android:layout_width="wrap_content"
+			   	    android:layout_height="wrap_content"
+			   	    android:layout_gravity="right"
+			   	    android:contentDescription="@string/season_episode_guest_img_button"
+			   	    android:src="@drawable/expander_open_holo_light"
+			   	    android:paddingBottom="10dip"
+					android:paddingRight="10dip"/>
+			</LinearLayout>
+    	</LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:oak="http://oak/oak/schema"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/card_list_item_bg_selector"
+    android:id="@+id/itemRow">
+ 
+    	<!-- Hot Show Image -->
+		<ImageView
+	  	  android:id="@+id/reminder_image"
+	  	  android:contentDescription="@string/item_poster_label"
+		  android:layout_width="100dip"
+		  android:layout_height="150dip" 
+		  android:layout_marginRight="3dip"
+		  android:layout_alignParentLeft="true"
+		  />
+		
+		<!-- Hot Show Name -->
+		<oak.widget.TextViewWithFont
+	  	  android:id="@+id/reminder_series_name"
+	  	  android:layout_width="fill_parent"
+		  android:layout_height="wrap_content"
+		  android:textColor="@color/dark_cyan"
+		  android:maxLines="3"
+		  android:ellipsize="marquee"
+		  android:textSize="22sp"
+		  android:layout_centerInParent="true"
+		  android:layout_toRightOf="@id/reminder_image"
+		  android:layout_marginLeft="8dip"
+		  android:layout_marginRight="8dip"
+		  oak:font="Roboto-Light.ttf"
+		  />
+		
+		
+</RelativeLayout>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+  xmlns:android="http://schemas.android.com/apk/res/android">
+  <item
+  	android:id="@+id/menu_open"
+  	android:title="@string/contextmenu_open" />
+  <item
+  	android:id="@+id/menu_favorite"
+  	android:title="@string/contextmenu_favorite" />
+</menu>

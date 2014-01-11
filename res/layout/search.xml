@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:ads="http://schemas.android.com/apk/lib/com.google.ads"
+	xmlns:oak="http://oak/oak/schema"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/white"
+    android:scrollbars="vertical"
+    android:orientation="vertical">
+   	<LinearLayout
+        android:id="@+id/results_title"
+   	    android:layout_width="fill_parent"
+   	    android:layout_height="25dip"
+   	    android:background="@color/blue"
+   	    android:orientation="horizontal"
+   	    >
+        <oak.widget.TextViewWithFont
+   	        android:id="@+id/searchColon"
+   	        android:text="@string/search_bar_label"
+   	        android:layout_width="wrap_content"
+   	        android:layout_height="wrap_content"
+   	        android:textColor="@color/white"
+   	        android:textSize="14sp"
+   	        android:layout_margin="1dip"
+   	        android:layout_gravity="center_vertical"
+            oak:font="Roboto-Light.ttf"
+   	        />
+   	</LinearLayout>
+
+	<!-- Search List -->
+	<ListView
+	    android:id="@+id/list"
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	    android:cacheColorHint="@color/transparent"
+	    android:clickable="true"
+	    android:divider="@color/transparent"
+	    android:fadingEdge="none"
+        android:layout_above="@+id/adView"
+        android:layout_below="@id/results_title"
+        android:scrollbars="none"
+	    />
+	
+	<!-- Empty Search List Message -->
+	<oak.widget.TextViewWithFont
+		android:id="@+id/empty"
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:gravity="center"
+		android:textColor="@color/blue"
+		android:textSize="32sp"
+		android:padding="10dip"
+		oak:font="Roboto-Light.ttf"
+		/> 
+		
+	<!-- Ads -->
+	<com.google.ads.AdView
+        android:id="@+id/adView"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        ads:adSize="BANNER"
+        ads:adUnitId="a151192e8c30e71"
+        ads:loadAdOnCreate="true"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true">
+	</com.google.ads.AdView>
+</RelativeLayout>

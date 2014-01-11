@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:oak="http://oak/oak/schema"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:background="@color/white">
+    
+	 <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dip" >
+        
+	     <!--  View Title Label -->
+         <oak.widget.TextViewWithFont
+            android:id="@+id/login_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dip"
+            android:text="@string/login_title"
+            android:textSize="@dimen/login_title"
+            android:textStyle="bold"
+            android:textColor="@color/blue"
+            oak:font="Roboto-BoldCondensedItalic.ttf"
+            />
+	    
+	    <!--  Email Label -->
+         <oak.widget.TextViewWithFont
+             android:id="@+id/login_email_title"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="@string/login_email"
+             android:textSize="@dimen/login_email"
+             oak:font="Roboto-Light.ttf"
+             />
+        
+        <!--  Email TextField -->
+        <EditText
+            android:id="@+id/login_email"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:singleLine="true" />
+        
+        <!--  Password Label -->
+         <oak.widget.TextViewWithFont
+             android:id="@+id/login_password_title"
+             android:layout_width="fill_parent"
+             android:layout_height="wrap_content"
+             android:layout_marginTop="15dip"
+             android:text="@string/login_password_title"
+             android:textSize="@dimen/login_password_title"
+             oak:font="Roboto-Light.ttf"
+             />
+        
+        <!--  Password TextField -->
+        <EditText
+            android:id="@+id/login_password"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:singleLine="true"
+            />
+        
+        <!-- Sync Checkbox -->
+		<CheckBox 
+	        android:id="@+id/login_sync_checkbox"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/login_sync_checkbox"
+	        android:padding="24dip"
+	        android:checked="true"/>
+		        
+        <!--  Error message -->
+         <oak.widget.TextViewWithFont
+             android:id="@+id/login_error"
+      		 android:layout_width="fill_parent"
+       		 android:layout_height="wrap_content"
+       		 android:textColor="@color/red"
+       		 android:padding="10dip"
+       		 android:textSize="@dimen/login_error"
+       		 android:textStyle="bold"
+             oak:font="Roboto-BoldCondensedItalic.ttf"
+             />
+        
+        <!--  LoginActivity Button -->
+        <Button
+            android:id="@+id/login_button"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dip"
+            android:padding="5dip"
+            android:text="@string/login_button"
+            android:layout_gravity="center" />
+        
+        <!--  Link to Registration Screen -->
+        <Button
+            android:id="@+id/login_register_link"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dip"
+            android:background="@null"
+            android:text="@string/login_register_link"
+            android:textColor="@color/blue"
+            />
+        
+     </LinearLayout>
+</ScrollView>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:oak="http://oak/oak/schema"
+  android:id="@+id/itemRow"
+  android:layout_width="fill_parent"
+  android:layout_height="wrap_content"
+  android:layout_marginTop="1dp"
+  android:background="@drawable/card_list_item_bg_selector">
+  <ImageView
+  	  android:id="@+id/reminder_image"
+  	  android:contentDescription="@string/item_poster_label"
+	  android:layout_width="100dip"
+	  android:layout_height="150dip" 
+	  android:layout_marginRight="3dip"
+	  />
+  <LinearLayout
+		android:orientation="vertical"
+		android:layout_width="0dip"
+		android:layout_weight="1"
+		android:gravity="center_vertical"
+		android:layout_height="fill_parent"
+		android:focusableInTouchMode="true"
+		android:layout_margin="2dp">
+		
+		<oak.widget.TextViewWithFont
+	  	  android:id="@+id/reminder_episode_season_and_episode_number"
+	  	  android:layout_width="fill_parent"
+		  android:layout_height="wrap_content"
+		  android:textColor="@color/dark_cyan"
+		  android:layout_gravity="center_vertical" 
+		  android:ellipsize="marquee"
+		  android:textSize="20sp"
+		  oak:font="Roboto-Light.ttf"
+		  />
+		
+		<oak.widget.TextViewWithFont
+	  	  android:id="@+id/reminder_episode_name"
+	  	  android:layout_width="fill_parent"
+		  android:layout_height="wrap_content"
+		  android:textColor="@color/dark_cyan"
+		  android:layout_gravity="center_vertical" 
+		  android:ellipsize="marquee"
+		  android:textSize="22sp"
+		  oak:font="Roboto-Light.ttf"
+		  />
+		
+		<oak.widget.TextViewWithFont
+	  	  android:id="@+id/reminder_date_and_time"
+	  	  android:layout_width="fill_parent"
+		  android:layout_height="wrap_content"
+		  android:textColor="@color/dark_cyan"
+		  android:layout_gravity="center_vertical" 
+		  android:ellipsize="marquee"
+		  android:textSize="14sp"
+		  oak:font="Roboto-BoldCondensedItalic.ttf"
+		  />
+		
+		<oak.widget.TextViewWithFont
+	  	  android:id="@+id/reminder_series_name"
+	  	  android:layout_width="fill_parent"
+		  android:layout_height="wrap_content"
+		  android:textColor="@color/dark_cyan"
+		  android:layout_gravity="center_vertical" 
+		  android:ellipsize="marquee"
+		  android:textSize="14sp"
+		  oak:font="Roboto-Light.ttf"
+		  />
+		
+	</LinearLayout>
+</LinearLayout>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout 
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:oak="http://oak/oak/schema"
+    style="@style/Fill"
+	android:background="@color/white"
+    >
+
+	<ScrollView
+        style="@style/Fill"
+	    android:id="@+id/parent_scroll_view"
+	    android:scrollbars="none"
+	    android:background="@color/white"
+        android:layout_above="@+id/adView">
+	    <LinearLayout 
+	        style="@style/FillWidth"
+	        android:orientation="vertical">
+		    
+	        <!-- What's Hot -->
+	        <oak.widget.TextViewWithFont
+                style="@style/Wrap"
+			    android:id="@+id/main_title_hot"
+			    android:textColor="@color/blue"
+			    android:textSize="20sp"
+			    android:text="@string/main_hot_title"
+			    android:layout_marginLeft="8dip"
+			    android:layout_marginTop="8dip"
+			    android:layout_marginBottom="4dip"
+			    oak:font="Roboto-Light.ttf"
+			    />
+		    <HorizontalScrollView
+                android:id="@+id/main_hot_h_scroll_view"
+                style="@style/FillWidth"
+			    android:scrollbars="none"
+			  >
+			</HorizontalScrollView>
+		    
+		    <!-- Upcoming Episodes -->
+	        <oak.widget.TextViewWithFont
+                style="@style/Wrap"
+			    android:id="@+id/main_title_favorite"
+			    android:textColor="@color/blue"
+			    android:textSize="20sp"
+			    android:text="@string/main_upcoming_title"
+			    android:layout_marginLeft="8dip"
+			    android:layout_marginTop="8dip"
+			    android:layout_marginBottom="4dip"
+			    oak:font="Roboto-Light.ttf"
+			    />
+		    <HorizontalScrollView
+                android:id="@+id/main_upcoming_h_scrollview"
+                style="@style/FillWidth"
+                android:scrollbars="none">
+			</HorizontalScrollView>
+		    
+		    <!-- Next On Your Queue -->
+		    <oak.widget.TextViewWithFont
+			    android:id="@+id/main_title_queue"
+			    style="@style/Wrap"
+			    android:textColor="@color/blue"
+			    android:textSize="20sp"
+			    android:text="@string/main_queue_title"
+			    android:layout_marginLeft="8dip"
+			    android:layout_marginTop="8dip"
+			    android:layout_marginBottom="4dip"
+			    oak:font="Roboto-Light.ttf"
+			    />
+		    <HorizontalScrollView
+                android:id="@+id/main_queue_h_scrollview"
+                style="@style/FillWidth"
+			    android:scrollbars="none">
+			</HorizontalScrollView>
+
+		</LinearLayout>
+	</ScrollView>
+</RelativeLayout>
+

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item type="id" name="dashboard_fragment"/>
+    <item type="id" name="favorites_fragment"/>
+    <item type="id" name="timeline_fragment"/>
+    <item type="id" name="queue_fragment"/>
+    <item type="id" name="about_fragment"/>
+    <item type="id" name="login_fragment"/>
+    <item type="id" name="register_fragment"/>
+</resources>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="5dip" >
+    
+    <LinearLayout
+		android:orientation="horizontal"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content">
+		<ImageView
+            android:id="@+id/image"
+            android:layout_width="50dip"
+            android:layout_height="50dip"
+            android:contentDescription="@string/item_poster_label"
+            android:layout_marginRight="10dip"
+            />
+		<LinearLayout 
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom">
+            <LinearLayout 
+	            android:orientation="horizontal"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_gravity="bottom">
+	            <TextView
+					android:id="@+id/full_name"
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"
+					android:textColor="@color/tut_grey"
+					android:maxLines="1"
+					android:textSize="16dip"
+					android:text="Aquilla Torres - "
+					/>
+	            <TextView
+					android:id="@+id/username"
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"
+					android:textColor="@color/blue"
+					android:maxLines="1"
+					android:textSize="16dip"
+					android:text="FoxyX"
+					/>
+	        </LinearLayout>
+	        <TextView
+				android:id="@+id/review"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:textColor="@color/grey"
+				android:textSize="16dip"
+				android:text="Such a Epic Show. So sad Season 2 doesn't start til October 2011"
+				android:layout_marginTop="5dip"
+				/>
+	    </LinearLayout>
+        
+	</LinearLayout>
+</LinearLayout>

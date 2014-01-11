@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:oak="http://oak/oak/schema"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/transparent"
+    >
+    
+    <!-- Content Layout -->
+    <RelativeLayout 
+        android:id="@+id/card_content_container"
+        android:layout_width="110dip"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/card_square_bg"
+        >
+        
+        <!-- Image Wrapper -->
+        <LinearLayout
+            android:id="@+id/card_image_container"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+			>
+	        
+            <!-- Image -->
+	        <ImageView
+		  	  android:id="@+id/card_img"
+		  	  android:contentDescription="@string/item_poster_label"
+			  android:layout_width="fill_parent"
+			  android:layout_height="wrap_content"
+			  android:adjustViewBounds="true"
+			  />
+	    </LinearLayout>
+	    
+        <!-- Bottom Content Container -->
+        <RelativeLayout
+            android:id="@+id/card_bottom_content_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/card_image_container"
+            android:background="@drawable/card_bottom_container_bg_selector"
+            android:clickable="true"
+            >
+	        
+            <!-- Card Menu Image Button -->
+	        <ImageView
+			    android:id="@+id/card_menu"
+			    android:layout_width="18dip"
+			    android:layout_height="27dip"
+			    android:contentDescription="@string/item_poster_label"
+			    android:src="@drawable/ic_menu_moreoverflow_normal_holo_light"
+			    android:layout_alignParentTop="true"
+			    android:layout_alignParentRight="true"
+			    />
+			
+			<!-- Card Title 1 -->
+			<oak.widget.TextViewWithFont
+				android:id="@+id/card_title_1"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:textColor="@color/dark_cyan"
+				android:ellipsize="marquee"
+				android:textSize="@dimen/text_size"
+				android:layout_alignParentLeft="true"
+				android:layout_toLeftOf="@id/card_menu"
+				android:layout_alignTop="@id/card_menu"
+				android:paddingTop="4dip"
+				android:paddingLeft="4dip"
+				android:paddingBottom="4dip"
+				android:lines="1"
+				oak:font="Roboto-BoldCondensedItalic.ttf"
+			    />
+			
+			<!-- Card Title 2 -->
+			<oak.widget.TextViewWithFont
+				android:id="@+id/card_title_2"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:textColor="@color/dark_cyan"
+				android:ellipsize="marquee"
+				android:textSize="@dimen/text_size"
+				android:layout_below="@id/card_title_1"
+				android:layout_alignParentLeft="true"
+				android:layout_toLeftOf="@id/card_menu"
+				android:paddingLeft="4dip"
+				android:paddingBottom="4dip"
+				android:lines="2"
+				oak:font="Roboto-Light.ttf"
+			    />
+            
+        </RelativeLayout>
+	    
+    </RelativeLayout>
+
+</LinearLayout>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <!-- Some Base Colors -->
+	<color name="transparent">#00000000</color>
+	<color name="white">#FFFFFF</color>
+	<color name="white_faded">#f5f6f8</color>
+	<color name="black">#000000</color>
+	<color name="black_faded">#bfbfbf</color>
+	<color name="cyan">#237E8F</color>
+	<color name="dark_cyan">#18454B</color>
+	<color name="grey">#6b696b</color>
+	<color name="grey_2">#8a8f92</color>
+	<color name="grey_3">#bfbfbf</color>
+	<color name="grey_light">#e3e3e3</color>
+	<color name="grey_light_2">#e4e5e7</color>
+	<color name="grey_dark">#3f5155</color>
+	<color name="green">#3fa0ab</color>
+	<color name="blue">#3ea0e1</color>
+	<color name="blue_light">#93bedb</color>
+	<color name="red">#e30000</color>
+	
+	<!-- Defualt Colors -->
+	<color name="background_grey">#e8e8e8</color>
+	
+	<!-- Action Bar Inherited Colors -->
+    <color name="actionbar_separator">#00000000</color>
+    <color name="actionbar_title">#18454B</color>
+    <color name="actionbar_background_start">#FFFFFF</color>
+    <color name="actionbar_background_end">#FFFFFF</color>
+    <color name="actionbar_background_item_pressed_start">#FF7F00</color>
+    <color name="actionbar_background_item_pressed_end">#EE7600</color>
+    
+    <!-- Sliding Menu -->
+    <color name="sliding_menu_background">@color/white_faded</color>
+    <color name="sliding_menu_title">@color/grey_2</color>
+    <color name="sliding_menu_separator">@color/grey_light_2</color>
+    <color name="sliding_menu_text">@color/grey_dark</color>
+    
+    <!-- TutorialActivity -->
+    <color name="tut_grey">@color/grey_3</color>
+    
+</resources>

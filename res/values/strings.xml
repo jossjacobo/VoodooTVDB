@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- App Labels -->
+    <string name="app">voodoo.tvdb</string>
+    <string name="app_label">Voodoo TVDB</string>
+    <string name="app_name">VoodooTVDB</string>
+    <string name="hello">Hello VoodooTVDB!</string>
+    <string name="action_settings">Settings</string>
+    <string name="app_label_for_seachbar"></string>
+
+    <!-- Splash -->
+    <string name="splash_welcome">Welcome to</string>
+
+    <!-- Website -->
+    <string name="website">http://www.voodootvdb.com</string>
+
+    <!-- Email -->
+    <string name="email">jossjacobo@gmail.com</string>
+    <string name="subject">VoodooTVDB App User Feedback</string>
+    <string name="body">Suggestion, Feedback, or comments#8230;</string>
+
+    <!-- Sliding Menu -->
+    <string name="sliding_menu_profile_title">Profile</string>
+    <string name="sliding_menu_your_shows_title">Your Shows</string>
+    <string name="sliding_menu_main">Main</string>
+    <string name="sliding_menu_favorite">Favorites</string>
+    <string name="sliding_menu_timeline">Timeline</string>
+    <string name="sliding_menu_queue">Queue</string>
+    <string name="sliding_menu_settings_title">Settings</string>
+    <string name="sliding_menu_sync">Sync</string>
+    <string name="sliding_menu_settings">Settings</string>
+    <string name="sliding_menu_about">About</string>
+    <string name="sliding_menu_contact">Contact Me</string>
+
+    <!-- List Defaults -->
+    <string name="list_favorite_name">Favorites</string>
+    <string name="list_to_watch_name">To Watch</string>
+    <string name="list_watching_name">Watching</string>
+    <string name="list_favorite_description">List of Favorite Shows</string>
+    <string name="list_to_watch_description">Shows I Need To Watch</string>
+    <string name="list_watching_description">Shows I am Currently Watching</string>
+
+    <!-- Website -->
+    <string name="website">http://www.voodootvdb.com</string>
+
+    <!-- Email -->
+    <string name="email">jossjacobo@gmail.com</string>
+    <string name="subject">VoodooTVDB App User Feedback</string>
+    <string name="body">Suggestion, Feedback, or comments#8230;</string>
+
+    <!-- Twitter -->
+    <string name="twitter_username">voodooxtc</string>
+
+    <!-- List Defaults -->
+    <string name="list_favorite_name">Favorites</string>
+    <string name="list_to_watch_name">To Watch</string>
+    <string name="list_watching_name">Watching</string>
+    <string name="list_favorite_description">List of Favorite Shows</string>
+    <string name="list_to_watch_description">Shows I Need To Watch</string>
+    <string name="list_watching_description">Shows I am Currently Watching</string>
+
+    <!-- Drawer -->
+    <string name="drawer_open">Open</string>
+    <string name="drawer_close">Close</string>
+
+    <!-- Sliding Menu -->
+    <string name="sliding_menu_profile_title">Profile</string>
+    <string name="sliding_menu_your_shows_title">Your Shows</string>
+    <string name="sliding_menu_main">Main</string>
+    <string name="sliding_menu_favorite">Favorites</string>
+    <string name="sliding_menu_timeline">Timeline</string>
+    <string name="sliding_menu_queue">Queue</string>
+    <string name="sliding_menu_settings_title">Settings</string>
+    <string name="sliding_menu_sync">Sync</string>
+    <string name="sliding_menu_settings">Settings</string>
+    <string name="sliding_menu_about">About</string>
+    <string name="sliding_menu_contact">Contact Me</string>
+
+    <!-- DashClock Extension -->
+    <string name="dash_clock_label">VoodooTVDB Upcoming Shows</string>
+    <string name="dash_clock_extension_description">Display the Air Time of your next Upcoming Show.</string>
+
+    <!-- Context Menu -->
+    <string name="contextmenu_open">Open</string>
+    <string name="contextmenu_favorite">Favorite</string>
+    <string name="contextmenu_remove">Remove</string>
+    <string name="contextmenu_add_episode_reminder">Add Reminder for this Episode</string>
+    <string name="contextmenu_share_episode">Share Episode</string>
+    <string name="contextmenu_watched">Watched</string>
+    <string name="contextmenu_not_watched">Have not Watched</string>
+    <string name="contextmenu_episode_watched">Watch all previous</string>
+
+    <!-- Update Notification -->
+    <string name="updating_favorites">Updating Favorites</string>
+    <string name="item_loading">loading</string>
+
+    <!-- MainActivity Activity -->
+    <string name="main_faded_star_cd">Star</string>
+    <string name="main_faded_timeline_cd">Timeline</string>
+    <string name="main_faded_queue_cd">Queue</string>
+    <string name="main_faded_search_cd">Search</string>
+    <string name="main_sub_menu_faves_text">Faves</string>
+    <string name="main_sub_menu_timeline_text">Timeline</string>
+    <string name="main_sub_menu_queue_text">Queue</string>
+    <string name="main_sub_menu_search_text">Search</string>
+    <string name="main_hot_title">What\'s Hot</string>
+    <string name="main_upcoming_title">Upcoming Episodes</string>
+    <string name="main_queue_title">Next On Your Queue</string>
+
+    <!-- MainActivity Hot Menu Items -->
+    <string name="main_hot_menu_favorite">Favorite</string>
+    <string name="main_hot_menu_open">Open</string>
+
+    <!-- MainActivity Upcoming Menu Items -->
+    <string name="main_upcoming_menu_episode">Episode</string>
+    <string name="main_upcoming_menu_show">Show</string>
+    <string name="main_upcoming_menu_previous">Previous Episode</string>
+    <string name="main_upcoming_menu_season">Season</string>
+
+    <!-- MainActivity Queue Menu Items -->
+    <string name="main_queue_menu_watched">Watched</string>
+    <string name="main_queue_menu_episode">Episode</string>
+    <string name="main_queue_menu_show">Show</string>
+    <string name="main_queue_menu_season">Season</string>
+    <string name="main_queue_menu_previous">Previous</string>
+
+    <!-- Search Activity -->
+    <string name="search">Search</string>
+    <string name="search_bar_label">Results</string>
+    <string name="search_hint">Search for Show</string>
+    <string name="empty_text">No Results Found</string>
+
+    <!-- Favorites Activity -->
+    <string name="favorites">Favorites</string>
+    <string name="favorite_empty">No Shows in this List</string>
+    <string name="item_poster_label">Poster</string>
+
+    <!-- Queue Activity -->
+    <string name="queue">Queue</string>
+    <string name="queue_empty">The Queue is Empty</string>
+
+    <!--  Tutorial -->
+    <string name="tutorial_1">Tutorial 1</string>
+    <string name="tutorial_2">Tutorial 2</string>
+    <string name="tutorial_3">Tutorial 3</string>
+    <string name="tutorial_4">Tutorial 4</string>
+    <string name="tutorial_5">Tutorial 5</string>
+
+    <!-- TimeLine -->
+    <string name="timeline">Timeline</string>
+    <string name="tab_1">Upcoming</string>
+    <string name="tab_2">Older</string>
+    <string name="timeline_empty_string">No Shows</string>
+
+    <!-- Reminder -->
+    <string name="reminders_empty">No Reminders</string>
+
+    <!-- Series Info -->
+    <string name="series_info_bar_title">Series Information</string>
+    <string name="series_info_series_poster">Series Poster</string>
+    <string name="series_info_overview_title">Overview</string>
+    <string name="series_info_overview_img_button">Overview Drop Down Button</string>
+    <string name="series_info_actors_title">Actors</string>
+    <string name="series_info_actors_img_button">Actors Drop Down Button</string>
+    <string name="series_info_genre_title">Genre</string>
+    <string name="series_info_aired_on_title">First Aired On</string>
+    <string name="series_info_imdb_title">IMDB</string>
+    <string name="series_info_imdb">IMDB Icon</string>
+    <string name="series_info_seasons_title">Seasons</string>
+    <string name="series_info_reviews_title">Reviews &amp; Shouts</string>
+
+    <!-- Season Episode Item -->
+    <string name="season_episode_item_image">Episode Image</string>
+
+    <!-- Season Episode -->
+    <string name="season_episode_image">Episode Image</string>
+    <string name="season_episode_overview_title">Overview</string>
+    <string name="season_episode_guest_title">Guest Stars</string>
+    <string name="season_episode_overview_img_button">Overview Drop Down Button</string>
+    <string name="season_episode_guest_img_button">Guest Drop Down Button</string>
+
+    <!-- Tutorial -->
+    <string name="tutorial_welcome_to">Welcome to</string>
+    <string name="tutorial_app_name">VoodooTVDB</string>
+    <string name="tutorial_swipe">Get Swiping</string>
+    <string name="tutorial_start">to Start!</string>
+    <string name="tutorial_back">Press "Back" to exit</string>
+    <string name="tutorial_page2_text1">On the Main Screen at the top of the App you\'ll find a few icons. These icons will be your Dashboard Controls.</string>
+    <string name="tutorial_page2_text2">Tapping your Dashboard Icons will help you navigate through the App quickly and easily!</string>
+    <string name="tutorial_page3_text1">Once you\'ve found a show, you can add it to your favorites by tapping on the Star Icon up top.</string>
+    <string name="tutorial_page4_text1">When adding a show to your Favorites you can add it to one or many lists! Manage your lists to organize your shows!</string>
+    <string name="tutorial_page5_text1">You can tap the Watched Icon up top to mark episodes you\'ve watched, this will get your Queue List going!</string>
+    <string name="tutorial_page6_text1">Pro Tip: Long-Press on the shows to mark all previous episodes as watched, so you don\' have to do it one by one.</string>
+    <string name="tutorial_page7_text1">Check out the latest updates and announcements at:</string>
+    <string name="tutorial_page7_text2">VoodooTVDB.com</string>
+    <string name="tutorial_page7_text3">Send your feedback and suggestions my email:</string>
+    <string name="tutorial_page7_text4">@string/email</string>
+    <string name="tutorial_page7_text5">Who am I:</string>
+    <string name="tutorial_page7_text6">Jossay Jacobo - @VoodooXTC</string>
+    <string name="tutorial_page7_text7">Lead Programmer</string>
+
+    <!-- Hot Activity -->
+    <string name="hot_empty">Sorry, Hot Shows list is Empty</string>
+    <string name="hot_title">Hot Shows</string>
+
+    <!-- LoginActivity Activity -->
+    <string name="login_title">Login</string>
+    <string name="login_email">Email</string>
+    <string name="login_password_title">Password</string>
+    <string name="login_button">Login</string>
+    <string name="login_register_link">Register</string>
+    <string name="login_sync_checkbox">Keep Device Synched</string>
+
+    <!-- RegisterActivity -->
+    <string name="register_title">Register</string>
+    <string name="register_username_title">Username</string>
+    <string name="register_email_title">Email</string>
+    <string name="register_password_title">Password</string>
+    <string name="register_button">Register</string>
+    <string name="register_login_link">Login</string>
+    <string name="register_sync_checkbox">Keep Device Synched</string>
+    <string name="register_trakt_checkbox">Already Trakt User</string>
+
+    <!-- Settings -->
+    <string name="settings_label">Settings</string>
+
+    <!-- Cards -->
+    <string name="card_loading">LOADING</string>
+
+</resources>

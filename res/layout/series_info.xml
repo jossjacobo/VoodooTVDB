@@ -1,0 +1,480 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:ads="http://schemas.android.com/apk/lib/com.google.ads"
+  xmlns:oak="http://oak/oak/schema"
+  android:orientation="vertical"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent"
+  android:background="@color/white"
+  android:scrollbars="vertical">
+  
+  <!-- Title Bar -->
+  <LinearLayout 
+    android:id="@+id/series_info_bar_title_container"
+    android:layout_width="fill_parent"
+    android:layout_height="25dip"
+    android:background="@color/blue"
+    android:orientation="horizontal"
+    >
+    
+    <!-- Series Title -->
+	<oak.widget.TextViewWithFont
+	    android:id="@+id/series_info_bar_title"
+	    android:text="@string/series_info_bar_title"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:textColor="@color/white"
+	    android:textSize="@dimen/text_size_series_info_bar_title"
+	    android:layout_gravity="center_vertical"
+	    android:layout_marginLeft="5dip"
+	    oak:font="Roboto-Light.ttf"
+	    />
+	</LinearLayout>
+  
+  <!-- Ads Banner -->
+  <com.google.ads.AdView
+      android:id="@+id/adView"
+      android:layout_height="wrap_content"
+      android:layout_width="wrap_content"
+      ads:adSize="BANNER"
+      ads:adUnitId="a151192e8c30e71"
+      ads:loadAdOnCreate="true"
+      android:layout_alignParentBottom="true"
+      android:layout_centerInParent="true">
+  </com.google.ads.AdView>
+  
+  <!-- Scroll View -->
+  <ScrollView
+  	android:layout_width="fill_parent"
+  	android:layout_height="fill_parent"
+  	android:scrollbars="none"
+  	android:layout_below="@id/series_info_bar_title_container"
+    android:layout_above="@id/adView">
+    
+    <!-- Content Container -->
+    <LinearLayout
+  		android:layout_width="fill_parent"
+  		android:layout_height="wrap_content"
+  		android:orientation="vertical">
+  		
+          <!-- Top Image and Information Container -->
+		  <RelativeLayout
+			  android:layout_width="fill_parent"
+			  android:layout_height="wrap_content"
+			  android:orientation="horizontal"
+			  android:paddingRight="8dip"
+			  >
+			  
+		      <!-- Series Poster Image -->
+		      <ImageView
+			  	  android:id="@+id/series_poster"
+			  	  android:contentDescription="@string/series_info_series_poster"
+				  android:layout_width="120dip"
+				  android:layout_height="180dip" 
+				  android:layout_marginRight="8dip"
+				  android:layout_marginLeft="4dip"
+				  android:layout_marginTop="3dip"
+				  android:layout_marginBottom="3dip"
+				  android:layout_alignParentLeft="true"
+				  />
+
+		        <!-- Next Episode Airs Date -->
+		        <oak.widget.TextViewWithFont
+				  	android:id="@+id/series_next_episode_airs"
+				  	android:layout_width="wrap_content"
+				  	android:layout_height="wrap_content"
+				  	android:textColor="@color/black"
+				  	android:textSize="@dimen/text_size_series_info_next_episode" 
+					android:maxLines="2"
+				  	android:layout_alignTop="@id/series_poster"
+				  	android:layout_toRightOf="@id/series_poster"
+				  	oak:font="Roboto-Light.ttf"
+				  	/>
+		        
+		        <!-- Series Air Time -->
+	  			<oak.widget.TextViewWithFont
+				  	android:id="@+id/series_time"
+				  	android:layout_width="wrap_content"
+				  	android:layout_height="wrap_content"
+				  	android:textColor="@color/black"
+				  	android:textSize="@dimen/text_size_series_info_time"
+				  	android:layout_below="@id/series_next_episode_airs"
+				  	android:layout_toRightOf="@id/series_poster"
+				  	oak:font="Roboto-BoldCondensedItalic.ttf"
+				  	/>
+	  			
+	  			<!-- Series Air Day -->
+				<oak.widget.TextViewWithFont
+					android:id="@+id/series_day"
+					android:layout_width="wrap_content"
+				  	android:layout_height="wrap_content"
+				  	android:textColor="@color/black"
+				  	android:textSize="@dimen/text_size_series_info_day"
+				  	android:layout_below="@id/series_next_episode_airs"
+				  	android:layout_toRightOf="@id/series_time"
+				  	android:layout_marginLeft="4dip"
+				  	oak:font="Roboto-BoldCondensedItalic.ttf"
+				  	/>
+				
+				<!-- Series Network i.e. HBO, FOX, CBS  -->
+				<oak.widget.TextViewWithFont
+				  	android:id="@+id/series_network"
+				  	android:layout_width="wrap_content"
+				  	android:layout_height="wrap_content"
+				  	android:textColor="@color/black"
+				  	android:textSize="@dimen/text_size_series_info_network" 
+				  	android:layout_below="@id/series_time"
+				  	android:layout_alignLeft="@id/series_time"
+				  	android:layout_marginRight="4dip"
+				  	oak:font="Roboto-Light.ttf"
+				  	/>
+				
+				<!-- Series Run Time -->
+				<oak.widget.TextViewWithFont
+				  	android:id="@+id/series_runtime"
+				  	android:layout_width="wrap_content"
+				  	android:layout_height="wrap_content"
+				  	android:textColor="@color/black"
+				  	android:textSize="@dimen/text_size_series_info_runtime"
+				  	android:layout_below="@id/series_time"
+				  	android:layout_toRightOf="@id/series_network"
+				  	oak:font="Roboto-Light.ttf"
+				  	/>
+				
+				<!-- Series Content Rating -->
+				<oak.widget.TextViewWithFont
+				  	android:id="@+id/series_content_rating"
+				  	android:layout_width="wrap_content"
+				  	android:layout_height="wrap_content"
+				  	android:textColor="@color/black"
+				  	android:singleLine="true"
+				  	android:textSize="@dimen/text_size_series_info_tv_rating"
+				  	android:layout_below="@id/series_network"
+				  	android:layout_alignLeft="@id/series_network"
+				  	android:layout_toRightOf="@id/series_poster"
+				  	oak:font="Roboto-Light.ttf"
+				  	/>
+				
+				<!-- Series Star Rating -->
+				<RatingBar
+					android:id="@+id/series_ratingBar"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					style="?android:attr/ratingBarStyleSmall"
+					android:numStars="10"
+					android:stepSize="0.1"
+					android:isIndicator="true"
+					android:rating="0"
+					android:layout_below="@id/series_content_rating"
+					android:layout_toRightOf="@id/series_poster"
+					android:layout_marginBottom="2dip"
+					android:layout_marginTop="2dip"
+					/>
+				
+				<!-- Series Number Rating -->
+				<oak.widget.TextViewWithFont
+					android:id="@+id/series_ratingText"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:textSize="@dimen/text_size_series_info_star_rating"
+					android:textColor="@color/black"
+					android:paddingLeft="2dip"
+					android:layout_below="@id/series_ratingBar"
+					android:layout_toRightOf="@id/series_poster"
+					oak:font="Roboto-Light.ttf"
+					/>
+				
+				<!-- Series Status -->
+				<LinearLayout
+				    android:layout_height="wrap_content"
+				    android:layout_width="wrap_content"
+				  	android:layout_alignParentRight="true"
+				  	android:layout_below="@id/series_ratingText"
+				  	android:background="@drawable/card_square_blue_bg_dropshadow"
+				    >
+				    <oak.widget.TextViewWithFont
+						android:id="@+id/series_status"
+						android:layout_width="wrap_content"
+					  	android:layout_height="wrap_content"
+					  	android:textColor="@color/white"
+					  	android:gravity="right"
+					  	android:textSize="@dimen/text_size_series_info_status"
+					  	android:text="status"
+					  	android:layout_margin="4dip"
+					  	oak:font="Roboto-Light.ttf"
+					  	/>
+				</LinearLayout>
+			</RelativeLayout>
+			
+		  <!-- Overview Group -->
+		   <LinearLayout 
+		   	    android:layout_width="fill_parent"
+		   	    android:layout_height="wrap_content"
+		   	    android:background="@drawable/divider_grey_bg_dropshadow"
+		   	    android:orientation="horizontal"
+		   	    >
+  				<!-- Overview Title Text -->
+		   	    <oak.widget.TextViewWithFont 
+		   	        android:id="@+id/series_overview_group_title"
+		   	        android:text="@string/series_info_overview_title"
+		   	        android:layout_width="wrap_content"
+		   	        android:layout_height="wrap_content"
+		   	        android:textColor="@color/black"
+		   	        android:textSize="@dimen/text_size_series_info_overview_title"
+		   	        android:layout_marginLeft="8dip"
+		   	        android:layout_gravity="center_vertical"
+		   	        oak:font="Roboto-Light.ttf"
+		   	        />
+		   	</LinearLayout>
+		   	<oak.widget.TextViewWithFont
+				android:id="@+id/series_overview"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:maxLines="3"
+				android:ellipsize="end"
+				android:textColor="@color/black"
+				android:textSize="@dimen/text_size_series_info_overview_content"
+				android:layout_marginTop="2dip"
+				android:layout_marginRight="10dip"
+				android:layout_marginLeft="8dip"
+				oak:font="Roboto-Light.ttf"
+				/>
+		   	<LinearLayout 
+		   	    android:id="@+id/series_overview_img_button_layout"
+		   	    android:layout_width="fill_parent"
+		   	    android:layout_height="wrap_content"
+		   	    android:gravity="right">
+		   	    <ImageView
+			   	    android:id="@+id/series_overview_img_button"
+			   	    android:layout_width="wrap_content"
+			   	    android:layout_height="wrap_content"
+			   	    android:layout_gravity="right|center_vertical"
+			   	    android:contentDescription="@string/series_info_overview_img_button"
+			   	    android:src="@drawable/expander_open_holo_light"
+			   	    android:paddingBottom="10dip"
+			   	    android:paddingRight="10dip"/>
+		   	</LinearLayout>
+		   
+		  <!-- 
+		  Actors Group
+		   -->
+		  <LinearLayout 
+		  	    android:layout_width="fill_parent"
+		  	    android:layout_height="wrap_content"
+		  	    android:background="@drawable/divider_grey_bg_dropshadow"
+		  	    android:orientation="horizontal"
+		  	    >
+		  	    <oak.widget.TextViewWithFont 
+		  	        android:id="@+id/series_actors_group_title"
+		  	        android:text="@string/series_info_actors_title"
+		  	        android:layout_width="wrap_content"
+		  	        android:layout_height="wrap_content"
+		  	        android:textColor="@color/black"
+		  	        android:textSize="@dimen/text_size_series_info_actors_title"
+		  	        android:layout_marginLeft="8dip"
+		  	        android:layout_gravity="center_vertical"
+		  	        oak:font="Roboto-Light.ttf"
+		  	        />
+		  	</LinearLayout>
+		  	<oak.widget.TextViewWithFont
+				android:id="@+id/series_actors"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:maxLines="3"
+				android:ellipsize="end"
+				android:textColor="@color/black"
+				android:focusableInTouchMode="true"
+				android:textSize="@dimen/text_size_series_info_actors_content"
+				android:layout_marginTop="2dip"
+				android:layout_marginBottom="10dip"
+				android:layout_marginRight="10dip"
+				android:layout_marginLeft="8dip"
+				oak:font="Roboto-Light.ttf"
+				/>
+		  	<LinearLayout 
+		   	    android:id="@+id/series_actors_img_button_layout"
+		   	    android:layout_width="fill_parent"
+		   	    android:layout_height="wrap_content"
+		   	    android:gravity="right">
+			  	<ImageView
+			   	    android:id="@+id/series_actors_img_button"
+			   	    android:layout_width="wrap_content"
+			   	    android:layout_height="wrap_content"
+			   	    android:layout_gravity="right"
+			   	    android:contentDescription="@string/series_info_actors_img_button"
+			   	    android:src="@drawable/expander_open_holo_light"
+			   	    android:paddingBottom="10dip"
+			   	    android:paddingRight="10dip"/>
+		  	</LinearLayout>
+		  	
+		  	
+		  <!-- 
+		  Genre Group
+		   -->
+		  <LinearLayout 
+		  	    android:layout_width="fill_parent"
+		  	    android:layout_height="wrap_content"
+		  	    android:background="@drawable/divider_grey_bg_dropshadow"
+		  	    android:orientation="horizontal"
+		  	    >
+		  	    <oak.widget.TextViewWithFont 
+		  	        android:id="@+id/series_genre_group_title"
+		  	        android:text="@string/series_info_genre_title"
+		  	        android:layout_width="wrap_content"
+		  	        android:layout_height="wrap_content"
+		  	        android:textColor="@color/black"
+		  	        android:textSize="@dimen/text_size_series_info_genre_title"
+		  	        android:layout_marginLeft="8dip"
+		  	        android:layout_gravity="center_vertical"
+		  	        oak:font="Roboto-Light.ttf"
+		  	        />
+		  	</LinearLayout>
+		  	<oak.widget.TextViewWithFont
+				android:id="@+id/series_genre"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:gravity="top"
+				android:singleLine="false"
+				android:textColor="@color/black"
+				android:focusableInTouchMode="true"
+				android:textSize="@dimen/text_size_series_info_genre_content"
+				android:layout_marginTop="2dip"
+				android:layout_marginBottom="10dip"
+				android:layout_marginRight="10dip"
+				android:layout_marginLeft="8dip"
+				oak:font="Roboto-Light.ttf"
+				/>
+		  	
+		  <!-- 
+		  First Aired On Group
+		   -->
+		  <LinearLayout 
+		  	    android:layout_width="fill_parent"
+		  	    android:layout_height="wrap_content"
+		  	    android:background="@drawable/divider_grey_bg_dropshadow"
+		  	    android:orientation="horizontal"
+		  	    >
+		  	    <oak.widget.TextViewWithFont 
+		  	        android:id="@+id/series_first_aired_on_group_title"
+		  	        android:text="@string/series_info_aired_on_title"
+		  	        android:layout_width="wrap_content"
+		  	        android:layout_height="wrap_content"
+		  	        android:textColor="@color/black"
+		  	        android:textSize="@dimen/text_size_series_info_aired_on_title"
+		  	        android:layout_marginLeft="8dip"
+		  	        android:layout_gravity="center_vertical"
+		  	        oak:font="Roboto-Light.ttf"
+		  	        />
+		  	</LinearLayout>
+			<oak.widget.TextViewWithFont
+				android:id="@+id/series_first_aired"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:gravity="top"
+				android:singleLine="false"
+				android:textColor="@color/black"
+				android:focusableInTouchMode="true"
+				android:textSize="@dimen/text_size_series_info_aired_on_content"
+				android:layout_marginTop="2dip"
+				android:layout_marginBottom="10dip"
+				android:layout_marginRight="10dip"
+				android:layout_marginLeft="8dip"
+				oak:font="Roboto-Light.ttf"
+				/>
+			
+			
+		  <!-- 
+		  IMDB Group
+		   
+		  <LinearLayout 
+		  	    android:layout_width="fill_parent"
+		  	    android:layout_height="wrap_content"
+		  	    android:background="@drawable/divider_grey_bg_dropshadow"
+		  	    android:orientation="horizontal"
+		  	    >
+		  	    <oak.widget.TextViewWithFont 
+		  	        android:id="@+id/series_imdb_group_title"
+		  	        android:text="@string/series_info_imdb_title"
+		  	        android:layout_width="wrap_content"
+		  	        android:layout_height="wrap_content"
+		  	        android:textColor="@color/black"
+		  	        android:textSize="@dimen/text_size_series_info_imdb_title"
+		  	        android:layout_marginLeft="8dip"
+		  	        android:layout_gravity="center_vertical"
+		  	        oak:font="Roboto-Light.ttf"
+		  	        />
+		  	</LinearLayout>
+			<ImageView
+				android:id="@+id/series_imdb"
+				android:layout_width="55dip"
+				android:layout_height="25dip"
+				android:gravity="top"
+				android:src="@drawable/imdb_no"
+				android:contentDescription="@string/series_info_imdb"
+				android:layout_marginTop="10dip"
+				android:layout_marginBottom="10dip"
+				android:layout_marginLeft="8dip"/>
+		  -->
+		  
+		  <!-- 
+		  Seasons Group
+		   -->
+		  <LinearLayout 
+		  	    android:layout_width="fill_parent"
+		  	    android:layout_height="wrap_content"
+		  	    android:background="@drawable/divider_grey_bg_dropshadow"
+		  	    android:orientation="horizontal"
+		  	    >
+		  	    <oak.widget.TextViewWithFont 
+		  	        android:id="@+id/series_seasons_group_title"
+		  	        android:text="@string/series_info_seasons_title"
+		  	        android:layout_width="wrap_content"
+		  	        android:layout_height="wrap_content"
+		  	        android:textColor="@color/black"
+		  	        android:textSize="@dimen/text_size_series_info_seasons_title"
+		  	        android:layout_marginLeft="8dip"
+		  	        android:layout_gravity="center_vertical"
+		  	        oak:font="Roboto-Light.ttf"
+		  	        />
+		  	</LinearLayout>
+			<LinearLayout
+		        android:id="@+id/seasons_list"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content" 
+		        android:cacheColorHint="@color/transparent"
+		        android:clickable="true"
+		        android:orientation="vertical"/>
+		  <!-- 
+		  Reviews & Shouts Group
+		 
+		  <LinearLayout 
+		  	    android:layout_width="fill_parent"
+		  	    android:layout_height="wrap_content"
+		  	    android:background="@color/grey_light"
+		  	    android:orientation="horizontal"
+		  	    >
+		  	    <oak.widget.TextViewWithFont 
+		  	        android:id="@+id/series_seasons_reviews_title"
+		  	        android:text="@string/series_info_reviews_title"
+		  	        android:layout_width="wrap_content"
+		  	        android:layout_height="wrap_content"
+		  	        android:textColor="@color/black"
+		  	        android:textSize="@dimen/text_size_series_info_seasons_title"
+		  	        android:layout_marginLeft="3dip"
+		  	        android:layout_gravity="center_vertical"
+		  	        oak:font="Roboto-Light.ttf"
+		  	        />
+		  	</LinearLayout>
+			<LinearLayout
+		        android:id="@+id/reviews_list"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content" 
+		        android:cacheColorHint="@color/transparent"
+		        android:clickable="true"
+		        android:orientation="vertical"/> 
+		        
+		    -->
+  	</LinearLayout>
+  </ScrollView>
+</RelativeLayout>

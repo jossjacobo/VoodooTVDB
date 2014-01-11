@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:paddingTop="30dip" >
+	<TextView 
+	    android:id="@+id/tutorial_page1_text1"
+        android:text="@string/tutorial_welcome_to"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/tut_grey"
+        android:textSize="@dimen/text_size_tutorial_welcome_to"
+        />
+    <ImageView
+	  	android:layout_width="wrap_content"
+	  	android:layout_height="wrap_content"
+	  	android:src="@drawable/logo"
+	  	android:layout_gravity="center"
+	  	android:layout_margin="5dip"
+	  	android:contentDescription="@string/tutorial_1" />
+    <TextView
+        android:id="@+id/tutorial_page1_text2" 
+        android:text="@string/tutorial_swipe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/tut_grey"
+        android:textSize="@dimen/text_size_tutorial_swipe"
+        />
+    <TextView 
+        android:id="@+id/tutorial_page1_text3"
+        android:text="@string/tutorial_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/tut_grey"
+        android:textSize="@dimen/text_size_tutorial_start"
+        />
+    <TextView
+        android:id="@+id/tutorial_page1_text4"
+        android:text="@string/tutorial_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/tut_grey"
+        android:textSize="@dimen/text_size_tutorial_back"
+        />
+</LinearLayout>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	
+	<string-array name="reminder_times">
+		<item>5 minutes before</item>
+		<item>15 minutes before</item>
+		<item>30 minutes before</item>
+		<item>45 minutes before</item>
+		<item>60 minutes before</item>
+		<item>90 minutes before</item>
+		<item>120 minutes before</item>
+	</string-array>
+	
+	<string-array name="reminder_times_values">
+		<item>5</item>
+		<item>15</item>
+		<item>30</item>
+		<item>45</item>
+		<item>60</item>
+		<item>90</item>
+		<item>120</item>
+	</string-array>
+	
+	<string-array name="update_freq">
+	    <item>Never (Manual)</item>
+	    <item>Daily</item>
+	    <item>Every Other Day</item>
+	    <item>Weekly</item>
+	</string-array>
+	
+	<string-array name="update_freq_values">
+	    <item>0</item>
+	    <item>1</item>
+	    <item>2</item>
+	    <item>3</item>
+	</string-array>
+	
+</resources>

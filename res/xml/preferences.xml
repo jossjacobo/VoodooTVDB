@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+	xmlns:android="http://schemas.android.com/apk/res/android">
+	
+    <PreferenceCategory 
+		android:title="Developer Settings"
+		android:enabled="false">
+		
+        <CheckBoxPreference
+		    android:key = "network_mode"
+		    android:title="Network Mode"
+		    android:defaultValue="true"
+		    android:enabled="true"/>
+		
+	</PreferenceCategory>
+    
+    <PreferenceCategory 
+		android:title="User Settings">
+		
+        <Preference
+			android:key="user_profile"
+			android:title="User Profile"
+			android:enabled="true"
+			/>
+        
+		<CheckBoxPreference
+			android:key = "sync"
+			android:title = "Device Sync"
+			android:defaultValue = "false"
+			android:enabled="true"/>
+		
+		<CheckBoxPreference
+		    android:key = "drawer"
+		    android:title="Drawer"
+		    android:defaultValue="true"
+		    android:enabled="true"/>
+		
+	</PreferenceCategory>
+    
+	<PreferenceCategory 
+		android:title="Reminders and Update Times">
+		
+		<ListPreference
+			android:key = "update_frequency"
+			android:title = "Update"
+			android:entryValues="@array/update_freq_values"
+			android:entries="@array/update_freq"
+			android:defaultValue="1"/>
+		
+		<ListPreference
+			android:key = "reminder_time"
+			android:title = "Remind me"
+			android:entryValues="@array/reminder_times_values"
+			android:entries="@array/reminder_times"
+			android:summary="60 minutes"
+			android:defaultValue="30"/>
+		
+		<voodoo.tvdb.Preferences.TimePreference
+			android:key = "update_service"
+			android:title = "Update Time"
+			android:defaultValue = "00:01" />
+	
+	</PreferenceCategory>
+
+	<PreferenceCategory
+		android:title="Cache">
+		<Preference
+			android:key="CacheClear"
+			android:title="Clear cache"
+			android:summary="Clear all of the image cache" />
+	</PreferenceCategory>
+
+	<PreferenceCategory 
+	    android:title="Tutorial">
+	    <Preference
+	       	android:key="tutorial"
+	       	android:title="Tutorial"
+	       	android:summary="Watch the tutorial again" />
+	</PreferenceCategory>
+</PreferenceScreen>

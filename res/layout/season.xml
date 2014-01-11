@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:ads="http://schemas.android.com/apk/lib/com.google.ads"
+    xmlns:oak="http://oak/oak/schema"
+    style="@style/Fill"
+    android:background="@color/white"
+    >
+		<!-- 
+		Title Bar
+		-->
+		 <LinearLayout
+            android:id="@+id/title_bar"
+            android:layout_width="fill_parent"
+            android:layout_height="25dip"
+            android:background="@color/blue"
+            android:orientation="horizontal"
+            android:layout_alignParentTop="true"
+
+            >
+            <oak.widget.TextViewWithFont
+		        android:id="@+id/season_bar_title"
+		        style="@style/Fill"
+		        android:textColor="@color/white"
+		        android:textSize="14sp"
+		        android:layout_marginLeft="5dip"
+                android:gravity="center_vertical"
+                oak:font="Roboto-Light.ttf"
+		        />
+		</LinearLayout>	
+    	<ListView
+	        android:id="@+id/seasons_list"
+	        android:layout_width="fill_parent"
+	        android:layout_height="fill_parent"
+	        android:cacheColorHint="@color/transparent"
+	        android:clickable="true"
+	        android:divider="@color/transparent"
+            android:scrollbars="none"
+            android:layout_above="@+id/adView"
+            android:layout_below="@id/title_bar"
+	        />
+    	<com.google.ads.AdView
+		      android:id="@id/adView"
+		      android:layout_height="wrap_content"
+		      android:layout_width="wrap_content"
+		      ads:adSize="BANNER"
+		      ads:adUnitId="a151192e8c30e71"
+		      ads:loadAdOnCreate="true"
+		      android:layout_alignParentBottom="true"
+              android:layout_centerInParent="true">
+		</com.google.ads.AdView>
+</RelativeLayout>

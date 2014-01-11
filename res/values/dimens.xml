@@ -1,0 +1,100 @@
+<resources>
+
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <!-- Sliding Menu Drawer -->
+    <dimen name="slide_navigation_item_height">48dp</dimen>
+    <dimen name="slide_navigation_item_text_size">16sp</dimen>
+    <dimen name="slide_navigation_behind_offset">144dp</dimen>
+    <dimen name="slide_navigation_shadow_width">8dp</dimen>
+
+    <!-- Sliding Menu -->
+    <dimen name="slidingmenu_offset">120dp</dimen>
+    <dimen name="list_padding">10dp</dimen>
+    <dimen name="shadow_width">15dp</dimen>
+    <dimen name="slidingmenu_title_text_size">14dip</dimen>
+    <dimen name="slidingmenu_content_text_size">16dip</dimen>
+
+    <!-- Action Bar -->
+    <dimen name="actionbar_height">35dip</dimen>
+    <dimen name="actionbar_item_height">30dip</dimen>
+    <dimen name="actionbar_item_width">40dip</dimen>
+
+    <!-- Sliding Menu -->
+    <dimen name="slidingmenu_offset">120dp</dimen>
+    <dimen name="list_padding">10dp</dimen>
+    <dimen name="shadow_width">15dp</dimen>
+    <dimen name="slidingmenu_title_text_size">14dip</dimen>
+    <dimen name="slidingmenu_content_text_size">16dip</dimen>
+
+    <!-- Text Size -->
+    <dimen name="text_size">14dp</dimen>
+
+    <!-- Text Size Search Item -->
+    <dimen name="text_size_search_item_title">22sp</dimen>
+    <dimen name="text_size_search_item_status">14sp</dimen>
+    <dimen name="text_size_search_item_genre">16sp</dimen>
+    <dimen name="text_size_search_item_rating">12sp</dimen>
+
+    <!-- Text Size Series Info -->
+    <dimen name="text_size_series_info_bar_title">15dip</dimen>
+    <dimen name="text_size_series_info_next_episode">20dip</dimen>
+    <dimen name="text_size_series_info_time">16dip</dimen>
+    <dimen name="text_size_series_info_day">16dip</dimen>
+    <dimen name="text_size_series_info_network">16dip</dimen>
+    <dimen name="text_size_series_info_runtime">16dip</dimen>
+    <dimen name="text_size_series_info_tv_rating">16dip</dimen>
+    <dimen name="text_size_series_info_star_rating">14dip</dimen>
+    <dimen name="text_size_series_info_status">16dip</dimen>
+    <dimen name="text_size_series_info_overview_title">16dip</dimen>
+    <dimen name="text_size_series_info_overview_content">14dip</dimen>
+    <dimen name="text_size_series_info_actors_title">16dip</dimen>
+    <dimen name="text_size_series_info_actors_content">14dip</dimen>
+    <dimen name="text_size_series_info_genre_title">16dip</dimen>
+    <dimen name="text_size_series_info_genre_content">14dip</dimen>
+    <dimen name="text_size_series_info_aired_on_title">16dip</dimen>
+    <dimen name="text_size_series_info_aired_on_content">14dip</dimen>
+    <dimen name="text_size_series_info_imdb_title">16dip</dimen>
+    <dimen name="text_size_series_info_seasons_title">16dip</dimen>
+
+    <!-- Season Episode Item -->
+    <dimen name="text_size_season_episode_item_title">20dip</dimen>
+    <dimen name="text_size_season_episode_item_airdate">14dip</dimen><!-- 10dip originally -->
+    <dimen name="text_size_season_episode_item_season_number">14dip</dimen><!-- 10dip originally -->
+
+    <!-- Season Episode -->
+    <dimen name="text_size_season_episode_bar_title">15dip</dimen>
+    <dimen name="text_size_season_episode_season_number">22dip</dimen>
+    <dimen name="text_size_season_episode_airdate">16dip</dimen>
+    <dimen name="text_size_season_episode_rating">14dip</dimen><!-- 11dip originally -->
+    <dimen name="text_size_season_episode_overview_title">16dip</dimen>
+    <dimen name="text_size_season_episode_overview_content">14dip</dimen>
+    <dimen name="text_size_season_episode_guest_title">16dip</dimen>
+    <dimen name="text_size_season_episode_guest_content">14dip</dimen>
+
+    <!-- Tutorial -->
+    <dimen name="text_size_tutorial_welcome_to">35dip</dimen>
+    <dimen name="text_size_tutorial_swipe">35dip</dimen>
+    <dimen name="text_size_tutorial_start">35dip</dimen>
+    <dimen name="text_size_tutorial_back">25dip</dimen>
+    <dimen name="text_size_tutorial_page2_text1">20dip</dimen>
+    <dimen name="text_size_tutorial_who">14dip</dimen>
+    <dimen name="text_size_tutorial_me">16dip</dimen>
+    <dimen name="text_size_tutorial_lead">14dip</dimen>
+
+    <!-- LoginActivity -->
+    <dimen name="login_title">25dip</dimen>
+    <dimen name="login_email">20dip</dimen>
+    <dimen name="login_password_title">20dip</dimen>
+    <dimen name="login_error">22dip</dimen>
+
+    <!-- RegisterActivity -->
+    <dimen name="register_title">25dip</dimen>
+    <dimen name="register_username_title">20dip</dimen>
+    <dimen name="register_email_title">20dip</dimen>
+    <dimen name="register_password_title">20dip</dimen>
+    <dimen name="register_error">22dip</dimen>
+
+</resources>

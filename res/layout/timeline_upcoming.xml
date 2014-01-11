@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:oak="http://oak/oak/schema"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent"
+  android:background="@color/white"
+  android:scrollbars="vertical"
+  android:orientation="vertical">
+  
+   <!-- List View -->
+   <ListView
+        android:id="@android:id/list"
+        android:layout_width="fill_parent"
+        android:layout_height="0dip" 
+        android:cacheColorHint="@color/transparent"
+        android:divider="@color/transparent"
+        android:layout_weight="1"
+        android:clickable="true"
+        /> 
+        
+    <!-- Empty Message -->
+    <oak.widget.TextViewWithFont
+    	android:id="@id/android:empty"
+	  	android:layout_width="fill_parent"
+	  	android:layout_height="fill_parent"
+	  	android:gravity="center"
+	  	android:textColor="@color/blue"
+	  	android:textSize="32sp"
+	  	android:padding="10dip"
+	  	android:text="@string/timeline_empty_string"
+	  	oak:font="Roboto-Light.ttf"
+	  	/>  
+</LinearLayout>

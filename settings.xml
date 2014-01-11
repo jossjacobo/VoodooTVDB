@@ -1,0 +1,15 @@
+<settings>
+    <profiles>
+        <profile>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <sign.keystore>C:\Android\VoodooTVDB\VoodooXTC.keystore</sign.keystore>
+                <sign.alias>voodootvdb</sign.alias>
+                <sign.keypass>naH0mE</sign.keypass>
+                <sign.storepass>!naHOmE@cB101+1</sign.storepass>
+            </properties>
+        </profile>
+    </profiles>
+</settings>

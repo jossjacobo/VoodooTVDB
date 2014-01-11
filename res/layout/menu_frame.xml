@@ -1,0 +1,7 @@
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/white_faded"
+    android:id="@+id/menu_frame"
+    style="@style/Fill"
+    >
+</ScrollView>

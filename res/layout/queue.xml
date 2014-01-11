@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:ads="http://schemas.android.com/apk/lib/com.google.ads"
+  xmlns:oak="http://oak/oak/schema"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent"
+  android:background="@color/white"
+  android:scrollbars="vertical"
+  android:orientation="vertical" >
+  <View
+    	android:layout_width="fill_parent"
+    	android:layout_height="1dp"
+    	android:background="@color/blue"
+    	/> 
+  <ListView
+        android:id="@+id/queue_list"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:cacheColorHint="@color/transparent"
+        android:clickable="true"
+        android:divider="@color/transparent"
+        android:layout_above="@+id/adView"
+        /> 
+    
+   <!-- Empty List Message -->
+  <oak.widget.TextViewWithFont
+      android:id="@+id/empty_queue"
+	  android:layout_width="fill_parent"
+	  android:layout_height="fill_parent"
+	  android:gravity="center"
+	  android:textColor="@color/blue"
+	  android:textSize="32sp"
+	  android:padding="10dip"
+	  android:text="@string/queue_empty"
+      android:layout_above="@+id/adView"
+	  oak:font="Roboto-Light.ttf"
+	  />
+    
+  <com.google.ads.AdView
+      android:id="@id/adView"
+      android:layout_height="wrap_content"
+      android:layout_width="wrap_content"
+      ads:adSize="BANNER"
+      ads:adUnitId="a151192e8c30e71"
+      ads:loadAdOnCreate="true"
+      android:layout_alignParentBottom="true"
+      android:layout_centerInParent="true"
+      >
+	</com.google.ads.AdView>
+</RelativeLayout>

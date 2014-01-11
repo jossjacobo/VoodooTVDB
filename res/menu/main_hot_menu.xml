@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item 
+        android:id="@+id/main_hot_menu_favorite"
+        android:title="@string/main_hot_menu_favorite" />
+    
+    <item 
+        android:id="@+id/main_hot_menu_open"
+        android:title="@string/main_hot_menu_open" />
+    
+</menu>

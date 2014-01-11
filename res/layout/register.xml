@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:oak="http://oak/oak/schema"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/white" >
+    
+	 <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dip" >
+        
+	    <!--  View Title Label -->
+         <oak.widget.TextViewWithFont
+            android:id="@+id/register_title"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dip"
+            android:text="@string/register_title"
+            android:textSize="@dimen/register_title"
+            android:textStyle="bold"
+             oak:font="Roboto-Light.ttf"
+             android:textColor="@color/blue"
+            />
+        
+        <!--  UserName Label -->
+         <oak.widget.TextViewWithFont
+            android:id="@+id/register_username_title"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/register_username_title"
+            android:textSize="@dimen/register_username_title"
+             oak:font="Roboto-Light.ttf"/>
+        <!--  UserName TextField -->
+        <EditText
+            android:id="@+id/register_username"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textShortMessage"
+            android:singleLine="true"
+            />
+
+		<!--  Email Label -->
+         <oak.widget.TextViewWithFont
+            android:id="@+id/register_email_title"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/register_email_title"
+            android:textSize="@dimen/register_email_title"
+            android:layout_marginTop="10dip"
+             oak:font="Roboto-Light.ttf"/>
+		<!--  Email TextField -->
+        <EditText
+            android:id="@+id/register_email"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:singleLine="true" />
+        
+        <!--  Password Label -->
+         <oak.widget.TextViewWithFont
+            android:id="@+id/register_password_title"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dip"
+            android:text="@string/register_password_title"
+            android:textSize="@dimen/register_password_title"
+             oak:font="Roboto-Light.ttf"/>
+		<!--  Password TextField -->
+        <EditText
+            android:id="@+id/register_password"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:singleLine="true" />
+        
+        <!-- Sync Checkbox -->
+		<CheckBox 
+	        android:id="@+id/register_sync_checkbox"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/register_sync_checkbox"
+	        android:padding="16dp"
+	        android:checked="true"/>
+		
+		<!-- Trakt Checkbox -->
+		<CheckBox 
+	        android:id="@+id/register_trakt_checkbox"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/register_trakt_checkbox"
+	        android:padding="16dp"
+	        android:checked="false"/>
+        
+        <!--  Error message -->
+        <oak.widget.TextViewWithFont
+            android:id="@+id/register_error"
+       		android:layout_width="fill_parent"
+       		android:layout_height="wrap_content"
+       		android:textColor="@color/red"
+       		android:padding="10dip"
+       		android:textSize="@dimen/register_error"
+       		android:textStyle="bold"
+            oak:font="Roboto-Light.ttf"/>
+        
+        <!--  RegisterActivity Button -->
+        <Button
+            android:id="@+id/register_button"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:padding="8dp"
+            android:text="@string/register_button"
+            android:layout_gravity="center"/>
+        
+        <!--  Link to LoginActivity Screen -->
+        <Button
+            android:id="@+id/register_login_link"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@null"
+            android:text="@string/register_login_link"
+            android:textColor="@color/blue"
+            />
+	 </LinearLayout>
+</ScrollView>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

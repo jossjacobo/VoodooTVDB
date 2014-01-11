@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:oak="http://oak/oak/schema"
+  android:layout_width="fill_parent"
+  android:layout_height="wrap_content"
+  android:id="@+id/itemRow"
+  android:background="@drawable/card_list_item_bg_selector">
+  
+  <!-- Series Poster Image -->
+  <ImageView
+  	  android:id="@+id/image"
+  	  android:contentDescription="@string/item_poster_label"
+	  android:layout_width="100dip"
+	  android:layout_height="150dip" 
+	  />
+  
+  <!-- Content Container -->
+  <RelativeLayout
+	android:layout_width="wrap_content"
+	android:layout_height="fill_parent"
+	android:gravity="center_vertical"
+	android:padding="8dip"
+	>
+	
+    <!-- Series Title -->
+	<oak.widget.TextViewWithFont
+		android:id="@+id/text"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:textColor="@color/dark_cyan"
+		android:maxLines="2"
+		android:ellipsize="end"
+		android:textSize="@dimen/text_size_search_item_title"
+		oak:font="Roboto-Light.ttf"
+		/>
+	
+	 <!--Series Status i.e. Continuing or Ended -->
+	 <oak.widget.TextViewWithFont
+		android:id="@+id/status"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:textColor="@color/dark_cyan"
+		android:textSize="@dimen/text_size_search_item_status"
+		android:layout_below="@id/text"
+		oak:font="Roboto-BoldCondensedItalic.ttf"
+		/>
+	 
+	 <!-- Series Genre -->
+     <oak.widget.TextViewWithFont
+		android:id="@+id/genre"
+		android:layout_width="wrap_content"
+	  	android:layout_height="wrap_content"
+	  	android:textColor="@color/black"
+	  	android:maxLines="2"
+		android:ellipsize="end"
+	  	android:textSize="@dimen/text_size_search_item_genre"
+	  	android:layout_below="@id/status"
+	  	oak:font="Roboto-Light.ttf"
+	  	/>
+     
+     <!-- Series Rating Bar -->
+     <RatingBar
+		android:id="@+id/ratingBar"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		style="?android:attr/ratingBarStyleSmall"
+		android:numStars="10"
+		android:stepSize="0.1"
+		android:isIndicator="true"
+		android:rating="0"
+		android:layout_below="@id/genre"
+		android:layout_marginTop="4dip"
+		/>
+	</RelativeLayout>
+</LinearLayout>
