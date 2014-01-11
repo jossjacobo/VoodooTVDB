@@ -133,9 +133,9 @@
                                         </include>
                                     </includes>
                                     <keystore>C:\Android\VoodooTVDB\VoodooXTC.keystore</keystore>
-                                    <alias>voodootvdb</alias>
-                                    <storepass>!naHOmE@cB101+1</storepass>
-                                    <keypass>naH0mE</keypass>
+                                    <storepass><!--CHECK PASSPACK FOR KEYSTORE PASSWORD--></storepass>
+                                    <alias><!--CHECK PASSPACK FOR PROJECT ALIAS--></alias>
+                                    <keypass><!--CHECK PASSPACK FOR ALIAS PASSWORD--></keypass>
                                     <verbose>true</verbose>
                                 </configuration>
                             </execution>
