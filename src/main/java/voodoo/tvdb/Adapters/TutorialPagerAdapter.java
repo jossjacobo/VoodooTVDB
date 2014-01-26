@@ -18,7 +18,7 @@ import voodoo.tvdb.R;
 
 public class TutorialPagerAdapter extends PagerAdapter {
 
-	private final int COUNT = 7;
+	private final int COUNT = 6;
 	
 	private Context context;
 	private Typeface thinFont;
@@ -49,21 +49,18 @@ public class TutorialPagerAdapter extends PagerAdapter {
 			resId = R.layout.page_1;
 			break;
 		case 1:
-			resId = R.layout.page_2;
-			break;
-		case 2:
 			resId = R.layout.page_3;
 			break;
-		case 3:
+		case 2:
 			resId = R.layout.page_4;
 			break;
-		case 4:
+		case 3:
 			resId = R.layout.page_5;
 			break;
-		case 5:
+		case 4:
 			resId = R.layout.page_6;
 			break;
-		case 6:
+		case 5:
 			resId = R.layout.page_7;
 			break;
 		}
@@ -79,51 +76,40 @@ public class TutorialPagerAdapter extends PagerAdapter {
 			text2 = (TextView) view.findViewById(R.id.tutorial_page1_text2);
 			text3 = (TextView) view.findViewById(R.id.tutorial_page1_text3);
 			text4 = (TextView) view.findViewById(R.id.tutorial_page1_text4);
-			
+
 			text1.setTypeface(thinFont);
 			text2.setTypeface(thinFont);
 			text3.setTypeface(thinFont);
 			text4.setTypeface(thinFont);
-			
+
 			break;
 		case 1:
-			//Page 2
-			text1 = (TextView) view.findViewById(R.id.tutorial_page2_text1);
-			setColor(text1, new String[]{"Dashboard Controls"}, context.getResources().getColor(R.color.blue));
-			text1.setTypeface(thinFont);
-			
-			text2 = (TextView) view.findViewById(R.id.tutorial_page2_text2);
-			setColor(text2, new String[]{"Dashboard Icons"}, context.getResources().getColor(R.color.blue));
-			text2.setTypeface(thinFont);
-			
-			break;
-		case 2:
 			//Page 3
 			text1 = (TextView) view.findViewById(R.id.tutorial_page3_text1);
 			setColor(text1, new String[]{"Star Icon"}, context.getResources().getColor(R.color.blue));
 			text1.setTypeface(thinFont);
 			break;
-		case 3:
+		case 2:
 			//Page 4
 			text1 = (TextView) view.findViewById(R.id.tutorial_page4_text1);
 			setColor(text1, new String[]{"Favorites", "lists!", "lists"}, context.getResources().getColor(R.color.blue));
 			text1.setTypeface(thinFont);
 			
 			break;
-		case 4:
+		case 3:
 			//Page 5
 			text1 = (TextView) view.findViewById(R.id.tutorial_page5_text1);
 			setColor(text1, new String[]{"Watched Icon","Queue List"}, context.getResources().getColor(R.color.blue));
 			text1.setTypeface(thinFont);
 			
 			break;
-		case 5:
+		case 4:
 			//Page 6
 			text1 = (TextView) view.findViewById(R.id.tutorial_page6_text1);
 			setColor(text1, new String[]{"Long-Press", "watched"}, context.getResources().getColor(R.color.blue));
 			text1.setTypeface(thinFont);
 			break;
-		case 6:
+		case 5:
 			//Page 7
 			text1 = (TextView) view.findViewById(R.id.tutorial_page7_text1);
 			text1.setTypeface(thinFont);

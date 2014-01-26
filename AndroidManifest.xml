@@ -43,7 +43,8 @@
             <meta-data android:name="android.app.default_searchable" android:value=".Activity.SearchActivity"/>
         </activity>
 
-        <activity android:configChanges="keyboardHidden|orientation|screenSize" android:label="@string/app_name" android:name=".Activity.TutorialActivity">
+        <activity android:configChanges="keyboardHidden|orientation|screenSize" android:label="@string/app_name" android:theme="@style/Theme.Sherlock.NoActionBar"
+            android:name=".Activity.TutorialActivity">
             <meta-data android:name="android.app.default_searchable" android:value=".Activity.SearchActivity"/>
         </activity>
 
