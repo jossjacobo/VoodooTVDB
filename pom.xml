@@ -132,10 +132,10 @@
                                             ${project.build.directory}/${project.build.finalName}.apk
                                         </include>
                                     </includes>
-                                    <keystore>C:\Android\VoodooTVDB\VoodooXTC.keystore</keystore>
-                                    <storepass><!--CHECK PASSPACK FOR KEYSTORE PASSWORD--></storepass>
-                                    <alias><!--CHECK PASSPACK FOR PROJECT ALIAS--></alias>
-                                    <keypass><!--CHECK PASSPACK FOR ALIAS PASSWORD--></keypass>
+                                    <keystore>VoodooXTC.keystore</keystore>
+                                    <storepass><!-- Check PassPack for Store Password --></storepass>
+                                    <alias><!-- Check PassPack for Alias --></alias>
+                                    <keypass><!-- Check PassPack for Alias Password --></keypass>
                                     <verbose>true</verbose>
                                 </configuration>
                             </execution>
@@ -153,8 +153,7 @@
                                 <skip>false</skip>
                                 <verbose>true</verbose>
                                 <inputApk>${project.build.directory}/${project.build.finalName}.apk</inputApk>
-                                <outputApk>${project.build.directory}/${project.build.finalName}-signed-aligned.apk
-                                </outputApk>
+                                <outputApk>${project.build.directory}/${project.build.finalName}-signed-aligned.apk</outputApk>
                             </zipalign>
                             <manifest>
                                 <debuggable>false</debuggable>
