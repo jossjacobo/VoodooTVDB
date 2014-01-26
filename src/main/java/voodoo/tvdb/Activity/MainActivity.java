@@ -89,11 +89,7 @@ public class MainActivity extends BaseSlidingActivity implements SlidingMenuFrag
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()){
             case android.R.id.home:
-                if(!blocked && home){
-                    toggle();
-                }else{
-                    onBackPressed();
-                }
+                toggle();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

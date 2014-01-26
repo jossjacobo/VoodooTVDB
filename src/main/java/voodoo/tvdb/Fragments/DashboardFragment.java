@@ -164,7 +164,7 @@ public class DashboardFragment extends RoboSherlockFragment implements HotMainFr
         ActionBar actionBar = getSherlockActivity().getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(false);
         actionBar.setDisplayShowTitleEnabled(false);
-        actionBar.setDisplayHomeAsUpEnabled(false);
+        actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
         actionBar.setHomeButtonEnabled(true);
         actionBar.setIcon(R.drawable.logo);

@@ -33,8 +33,26 @@
         <item name="android:actionDropDownStyle">@style/actionbar_DropDownNav</item>
         <item name="android:actionBarStyle">@style/actionbar_solid_ActionBar</item>
         <item name="android:panelBackground">@drawable/menu_hardkey_panel_actionbar</item>
-        
-        
+    </style>
+
+    <style name="Theme.actionbarHome" parent="@style/Theme.Sherlock.Light">
+        <item name="actionBarItemBackground">@drawable/selectable_background_actionbar</item>
+        <item name="popupMenuStyle">@style/actionbar_PopupMenu</item>
+        <item name="dropDownListViewStyle">@style/actionbar_DropDownListView</item>
+        <item name="actionBarTabStyle">@style/actionbar_ActionBarTabStyle</item>
+        <item name="actionDropDownStyle">@style/actionbar_DropDownNav</item>
+        <item name="actionBarStyle">@style/actionbar_solid_ActionBar</item>
+
+        <item name="android:actionBarItemBackground">@drawable/selectable_background_actionbar</item>
+        <item name="android:popupMenuStyle">@style/actionbar_PopupMenu</item>
+        <item name="android:dropDownListViewStyle">@style/actionbar_DropDownListView</item>
+        <item name="android:actionBarTabStyle">@style/actionbar_ActionBarTabStyle</item>
+        <item name="android:actionDropDownStyle">@style/actionbar_DropDownNav</item>
+        <item name="android:actionBarStyle">@style/actionbar_solid_ActionBar</item>
+        <item name="android:panelBackground">@drawable/menu_hardkey_panel_actionbar</item>
+
+        <item name="homeAsUpIndicator">@drawable/ic_navigation_drawer</item>
+        <item name="android:homeAsUpIndicator">@drawable/ic_navigation_drawer</item>
     </style>
 
     <style name="actionbar_solid_ActionBar" parent="@style/Widget.Sherlock.Light.ActionBar.Solid">
