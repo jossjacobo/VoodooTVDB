@@ -1,18 +1,16 @@
 package voodoo.tvdb.Fragments;
 
-import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
+import android.os.AsyncTask;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.github.rtyley.android.sherlock.roboguice.fragment.RoboSherlockFragment;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.taig.pmc.PopupMenuCompat;
 
@@ -32,7 +30,7 @@ import voodoo.tvdb.sqlitDatabase.DatabaseAdapter;
 /**
  * Created by PUTITO-TV on 10/11/13.
  */
-public class QueueMainFragment extends RoboSherlockFragment {
+public class QueueMainFragment{
 
     private static final String TAG = "QueueAsync";
 
@@ -48,21 +46,21 @@ public class QueueMainFragment extends RoboSherlockFragment {
     private ImageLoader imageLoader;
 
     private QueueListener listener;
+    private Context context;
+    private LayoutInflater inflater;
 
-    @Override
-    public void onCreate(Bundle savedState){
-        super.onCreate(savedState);
-        dbAdapter = new DatabaseAdapter(getSherlockActivity());
-    }
+    public LinearLayout createView(Context c, LayoutInflater i, ImageLoader il){
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedState){
-        view = (LinearLayout) inflater.from(getSherlockActivity()).inflate(R.layout.main_card_container,
-                container,false);
+        context = c;
+        inflater = i;
+        imageLoader = il;
+        dbAdapter = new DatabaseAdapter(context);
+
+        view = (LinearLayout) inflater.inflate(R.layout.main_card_container, null);
 
         // Loading Card
-        View card = inflater.from(getSherlockActivity()).inflate(R.layout.card_hot_horizontal_item,
-                null,false);
+        View card = inflater.from(context).inflate(R.layout.card_hot_horizontal_item,
+                null, false);
         card.findViewById(R.id.card_menu).setVisibility(View.INVISIBLE);
         card.findViewById(R.id.card_star).setVisibility(View.INVISIBLE);
         view.addView(card);
@@ -70,28 +68,31 @@ public class QueueMainFragment extends RoboSherlockFragment {
         return view;
     }
 
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState){
-        queue = fetchQueue();
-        queue = fetchNextEpisode(queue);
-
-        if(queue != null){
-            // Queue from database is not empty add, MORE Item
-            queue.add(cardMore());
-            updateView(queue);
-        }else{
-            // If Queue are not on the DB
-            queue = new ArrayList<Episode>();
-            queue.add(cardEmpty());
-            updateView(queue);
-        }
+    public void initialize(){
+        new initializeAsync().execute(true);
     }
 
-    @Override
-    public void onResume(){
-        super.onResume();
-        if(queue != null){
-            checkForChanges();
+    class initializeAsync extends AsyncTask<Boolean, Void, ArrayList<Episode>> {
+
+        @Override
+        protected ArrayList<Episode> doInBackground(Boolean... booleans) {
+            return fetchNextEpisode(fetchQueue());
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<Episode> r){
+            queue = r;
+
+            if(queue != null){
+                // Queue from database is not empty add, MORE Item
+                queue.add(cardMore());
+                updateView(queue);
+            }else{
+                // If Queue are not on the DB
+                queue = new ArrayList<Episode>();
+                queue.add(cardEmpty());
+                updateView(queue);
+            }
         }
     }
 
@@ -108,30 +109,38 @@ public class QueueMainFragment extends RoboSherlockFragment {
     }
     
     public void checkForChanges(){
-        
-        //Remove the "More" or "Empty" item before comparing with the query
-        if(queue.get(queue.size()-1).TYPE == MORE || queue.get(queue.size()-1).TYPE == EMPTY)
-            queue.remove(queue.size()-1);
+        new checkForChangesAsync().execute(true);
+    }
 
-        ArrayList<Episode> query;
-        query = fetchQueue();
-        query = fetchNextEpisode(query);
+    class checkForChangesAsync extends AsyncTask<Boolean,Void,ArrayList<Episode>>{
 
-        if(!isEqualEpisodes(queue,query)){
-            Log.d(TAG, "Episodes Not Equal, update View");
-            queue = query;
-            if(queue == null){
-                //If episodes are still NULL add the empty episode
-                queue = new ArrayList<Episode>();
-                queue.add(cardEmpty());
-            }else{
-                //Else just add the More episode at the end
-                queue.add(cardMore());
-            }
-            updateView(queue);
+        @Override
+        protected ArrayList<Episode> doInBackground(Boolean... booleans) {
+            return fetchNextEpisode(fetchQueue());
         }
 
-        queue.add(queue.size() == 0 ? cardEmpty() : cardMore());
+        @Override
+        protected void onPostExecute(ArrayList<Episode> query){
+            //Remove the "More" or "Empty" item before comparing with the query
+            if(queue.get(queue.size()-1).TYPE == MORE || queue.get(queue.size()-1).TYPE == EMPTY)
+                queue.remove(queue.size()-1);
+
+            if(!isEqualEpisodes(queue, query)){
+                Log.d(TAG, "Episodes Not Equal, update View");
+                queue = query;
+                if(queue == null){
+                    //If episodes are still NULL add the empty episode
+                    queue = new ArrayList<Episode>();
+                    queue.add(cardEmpty());
+                }else{
+                    //Else just add the More episode at the end
+                    queue.add(cardMore());
+                }
+                updateView(queue);
+            }
+
+            queue.add(queue.size() == 0 ? cardEmpty() : cardMore());
+        }
     }
 
     public void updateView(ArrayList<Episode> e){
@@ -148,7 +157,7 @@ public class QueueMainFragment extends RoboSherlockFragment {
                 episode = e.get(i);
             }
 
-            LinearLayout item = (LinearLayout) View.inflate(getSherlockActivity(),
+            LinearLayout item = (LinearLayout) View.inflate(context,
                     R.layout.card_horizontal_item, null);
 
             LinearLayout imgWrapper = (LinearLayout) item.findViewById(R.id.card_image_container);
@@ -177,7 +186,7 @@ public class QueueMainFragment extends RoboSherlockFragment {
                     bottomContainer.setOnClickListener(new View.OnClickListener(){
                         @Override
                         public void onClick(View arg0) {
-//                            Intent j = new Intent(getSherlockActivity(), QueueActivity.class);
+//                            Intent j = new Intent(context, QueueActivity.class);
 //                            startActivity(j);
                             listener.onLoadQueueFragment();
                         }
@@ -196,7 +205,7 @@ public class QueueMainFragment extends RoboSherlockFragment {
                     name.setText(episode.TITLE);
 
                     /** Image */
-                    String imgUri = ServerUrls.getImageUrl(getSherlockActivity(),
+                    String imgUri = ServerUrls.getImageUrl(context,
                             ServerUrls.fixURL(episode.IMAGE_URL));
                     imageLoader.displayImage(imgUri, img, BaseSlidingActivity.optionsWithFadeIn);
 
@@ -208,7 +217,7 @@ public class QueueMainFragment extends RoboSherlockFragment {
                         public void onClick(final View v) {
 
                             /** Initialize PopupMenu Class */
-                            PopupMenuCompat popup = PopupMenuCompat.newInstance(getSherlockActivity(), v);
+                            PopupMenuCompat popup = PopupMenuCompat.newInstance(context, v);
                             popup.inflate(R.menu.main_queue_menu);
                             popup.setOnMenuItemClickListener(new PopupMenuCompat.OnMenuItemClickListener(){
 
@@ -225,7 +234,7 @@ public class QueueMainFragment extends RoboSherlockFragment {
                                     switch(id){
                                         case R.id.main_queue_menu_watched:
                                             /** Mark the Episode as watched */
-                                            WatchedHelper wHelper = new WatchedHelper(getSherlockActivity());
+                                            WatchedHelper wHelper = new WatchedHelper(context);
                                             wHelper.markWatched(e.ID);
                                             listener.onWatched();
                                             break;
@@ -236,15 +245,15 @@ public class QueueMainFragment extends RoboSherlockFragment {
                                             re.EPISODE_ID = e.ID;
                                             re.SERIES_ID = e.SERIES_ID;
 
-                                            i = new Intent(getSherlockActivity(), SeasonEpisodeActivity.class);
+                                            i = new Intent(context, SeasonEpisodeActivity.class);
                                             i.putExtra(SeasonEpisodeActivity.REMINDER, re);
-                                            startActivity(i);
+                                            context.startActivity(i);
                                             break;
                                         case R.id.main_queue_menu_show:
                                             /** Series Info Activity */
-                                            i = new Intent(getSherlockActivity(), SeriesInfoActivity.class);
+                                            i = new Intent(context, SeriesInfoActivity.class);
                                             i.putExtra(SeriesInfoActivity.ID, e.SERIES_ID);
-                                            startActivity(i);
+                                            context.startActivity(i);
                                             break;
                                         case R.id.main_queue_menu_previous:
                                             /** Previous Episode Info Activity */
@@ -252,9 +261,9 @@ public class QueueMainFragment extends RoboSherlockFragment {
                                             re.EPISODE_ID = e.PREVIOUS_EPISODE_ID;
                                             re.SERIES_ID = e.SERIES_ID;
 
-                                            i = new Intent(getSherlockActivity(), SeasonEpisodeActivity.class);
+                                            i = new Intent(context, SeasonEpisodeActivity.class);
                                             i.putExtra(SeasonEpisodeActivity.REMINDER, re);
-                                            startActivity(i);
+                                            context.startActivity(i);
                                             break;
                                     }
                                     return true;
@@ -278,15 +287,15 @@ public class QueueMainFragment extends RoboSherlockFragment {
                             re.EPISODE_ID = e.ID;
                             re.SERIES_ID = e.SERIES_ID;
 
-                            Intent i = new Intent(getSherlockActivity(),
+                            Intent i = new Intent(context,
                                     SeasonEpisodeActivity.class);
                             i.putExtra(SeasonEpisodeActivity.REMINDER, re);
-                            startActivity(i);
+                            context.startActivity(i);
                             break;
                         case EMPTY:
                             break;
                         case MORE:
-//                            Intent j = new Intent(getSherlockActivity(), QueueActivity.class);
+//                            Intent j = new Intent(context, QueueActivity.class);
 //                            startActivity(j);
                             listener.onLoadQueueFragment();
                             break;
@@ -411,18 +420,18 @@ public class QueueMainFragment extends RoboSherlockFragment {
         this.imageLoader = loader;
     }
 
-    @Override
-    public void onAttach(Activity activity){
-        super.onAttach(activity);
-
-//        if(activity instanceof QueueListener){
-//            listener = (QueueListener) activity;
-//        }else{
-//            throw new ClassCastException(activity.toString()
-//                    + " must implement QueueMainFragment.QueueListener");
-//        }
-
-    }
+//    @Override
+//    public void onAttach(Activity activity){
+//        super.onAttach(activity);
+//
+////        if(activity instanceof QueueListener){
+////            listener = (QueueListener) activity;
+////        }else{
+////            throw new ClassCastException(activity.toString()
+////                    + " must implement QueueMainFragment.QueueListener");
+////        }
+//
+//    }
 
     public void setListener(QueueListener l){
         this.listener = l;

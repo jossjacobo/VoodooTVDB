@@ -1,6 +1,7 @@
 package voodoo.tvdb.Fragments;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -46,7 +47,7 @@ import voodoo.tvdb.sqlitDatabase.DatabaseAdapter;
 /**
  * Created by PUTITO-TV on 10/11/13.
  */
-public class HotMainFragment extends RoboSherlockFragment {
+public class HotMainFragment{
 
     private static final String TAG = "HotMainFragment";
 
@@ -62,21 +63,20 @@ public class HotMainFragment extends RoboSherlockFragment {
     public ImageLoader imageLoader;
 
     private HotListener listener;
-    private Activity a;
+    private Context context;
+    private LayoutInflater inflater;
 
-    @Override
-    public void onCreate(Bundle savedState){
-        super.onCreate(savedState);
-        dbAdapter = new DatabaseAdapter(getSherlockActivity());
-    }
+    public LinearLayout createView(Context c, LayoutInflater i, ImageLoader il){
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedState){
-        view = (LinearLayout) inflater.from(getSherlockActivity()).inflate(R.layout.main_card_container,
-                container,false);
+        context = c;
+        inflater = i;
+        imageLoader = il;
+        dbAdapter = new DatabaseAdapter(context);
+
+        view = (LinearLayout) inflater.inflate(R.layout.main_card_container, null);
 
         // Loading Card
-        View card = inflater.from(getSherlockActivity()).inflate(R.layout.card_hot_horizontal_item,
+        View card = inflater.from(context).inflate(R.layout.card_hot_horizontal_item,
                 null,false);
         card.findViewById(R.id.card_menu).setVisibility(View.INVISIBLE);
         card.findViewById(R.id.card_star).setVisibility(View.INVISIBLE);
@@ -85,18 +85,29 @@ public class HotMainFragment extends RoboSherlockFragment {
         return view;
     }
 
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState){
-        // Fetch Hot Shows from database
-        series = fetchHot();
+    public void initialize(){
+        new initializeAsync().execute(true);
+    }
 
-        if(series != null){
-            //Hot Show list from database is not empty add, MORE Item
-            series.add(cardMore());
-            updateView(series);
-        }else{
-            // If Series is not on the DB, try to download it.
-            new DownloadHotShows().execute(true);
+    class initializeAsync extends AsyncTask<Boolean, Void, ArrayList<Series>>{
+
+        @Override
+        protected ArrayList<Series> doInBackground(Boolean... booleans) {
+            return fetchHot();
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<Series> s){
+            series = s;
+
+            if(series != null){
+                //Hot Show list from database is not empty add, MORE Item
+                series.add(cardMore());
+                updateView(series);
+            }else{
+                // If Series is not on the DB, try to download it.
+                new DownloadHotShows().execute(true);
+            }
         }
     }
 
@@ -143,36 +154,47 @@ public class HotMainFragment extends RoboSherlockFragment {
         return s;
     }
 
-    @Override
-    public void onResume(){
-        super.onResume();
-        if(series != null){
-            checkForChanges();
-        }
-    }
+//    @Override
+//    public void onResume(){
+//        super.onResume();
+//        if(series != null){
+//            checkForChanges();
+//        }
+//    }
 
     public void checkForChanges() {
-        ArrayList<Series> temp = fetchHot();
+        new checkForChangesAsync().execute(true);
+    }
 
-        if(series.get(series.size()-1).TYPE == MORE || series.get(series.size()-1).TYPE == EMPTY)
-            series.remove(series.size() - 1);
+    class checkForChangesAsync extends AsyncTask<Boolean,Void,ArrayList<Series>>{
 
-        if(!isEqualSeries(series,temp)){
-            if(temp == null){
-                // Series for some reason is now empty...I don't even...kno..
-                series = new ArrayList<Series>();
-                series.add(cardEmpty());
-                // If Series is not on the DB, try to download it.
-                new DownloadHotShows().execute(true);
-            }else{
-                series = temp;
-                series.add(cardMore());
-            }
-            //Log.d(TAG, "Something Changed, update the views");
-            updateView(series);
+        @Override
+        protected ArrayList<Series> doInBackground(Boolean... booleans) {
+            return fetchHot();
         }
 
-        series.add(series.size() == 0 ? cardEmpty() : cardMore());
+        @Override
+        protected void onPostExecute(ArrayList<Series> temp){
+            if(series.get(series.size()-1).TYPE == MORE || series.get(series.size()-1).TYPE == EMPTY)
+                series.remove(series.size() - 1);
+
+            if(!isEqualSeries(series,temp)){
+                if(temp == null){
+                    // Series for some reason is now empty...I don't even...kno..
+                    series = new ArrayList<Series>();
+                    series.add(cardEmpty());
+                    // If Series is not on the DB, try to download it.
+                    new DownloadHotShows().execute(true);
+                }else{
+                    series = temp;
+                    series.add(cardMore());
+                }
+                //Log.d(TAG, "Something Changed, update the views");
+                updateView(series);
+            }
+
+            series.add(series.size() == 0 ? cardEmpty() : cardMore());
+        }
     }
 
     private void updateView(ArrayList<Series> s) {
@@ -191,7 +213,7 @@ public class HotMainFragment extends RoboSherlockFragment {
             Series seriesItem = i == size-1 ? s.get(s.size()-1) : s.get(i);
 
             /** Find all the Layouts */
-            LinearLayout item = (LinearLayout) View.inflate(getSherlockActivity(),
+            LinearLayout item = (LinearLayout) View.inflate(context,
                     R.layout.card_hot_horizontal_item, null);
             LinearLayout imgWrapper = (LinearLayout) item.findViewById(R.id.card_image_container);
             ImageView img = (ImageView) item.findViewById(R.id.card_img);
@@ -220,8 +242,8 @@ public class HotMainFragment extends RoboSherlockFragment {
                     bottomContainer.setOnClickListener(new View.OnClickListener(){
                         @Override
                         public void onClick(View v) {
-                            Intent j = new Intent(getSherlockActivity(), HotActivity.class);
-                            startActivity(j);
+                            Intent j = new Intent(context, HotActivity.class);
+                            context.startActivity(j);
                         }
                     });
                     break;
@@ -230,7 +252,7 @@ public class HotMainFragment extends RoboSherlockFragment {
                     imgWrapper.setTag(i);
                     title.setText(seriesItem.TITLE);
                     /** Image */
-                    String imgUri = ServerUrls.getImageUrl(getSherlockActivity(),
+                    String imgUri = ServerUrls.getImageUrl(context,
                             ServerUrls.fixURL(seriesItem.POSTER_URL));
                     imageLoader.displayImage(imgUri, img, BaseSlidingActivity.optionsWithFadeIn);
 
@@ -244,7 +266,7 @@ public class HotMainFragment extends RoboSherlockFragment {
                         @Override
                         public void onClick(View v) {
                             Series s = (Series) v.getTag();
-                            FavoriteHelper faveHelper = new FavoriteHelper(getSherlockActivity());
+                            FavoriteHelper faveHelper = new FavoriteHelper(context);
                             faveHelper.createFavoriteAlert(s, faveHelper.isSeriesFavorited(s.ID), new FavoriteSavingListener(){
                                 @Override
                                 public void onSavingCompleted(
@@ -267,7 +289,7 @@ public class HotMainFragment extends RoboSherlockFragment {
                         @Override
                         public void onClick(final View v) {
                             /** Initialize PopupMenu Class */
-                            PopupMenuCompat popup = PopupMenuCompat.newInstance(getSherlockActivity(), v);
+                            PopupMenuCompat popup = PopupMenuCompat.newInstance(context, v);
                             popup.inflate(R.menu.main_hot_menu);
                             popup.setOnMenuItemClickListener(new PopupMenuCompat.OnMenuItemClickListener(){
                                 @Override
@@ -278,14 +300,14 @@ public class HotMainFragment extends RoboSherlockFragment {
                                     int item_id = item.getItemId();
                                     switch(item_id){
                                         case R.id.main_hot_menu_open:
-                                            Intent i = new Intent(getSherlockActivity(),
+                                            Intent i = new Intent(context,
                                                     SeriesInfoActivity.class);
                                             i.putExtra(SeriesInfoActivity.ID, series_id);
-                                            startActivity(i);
+                                            context.startActivity(i);
                                             break;
                                         case R.id.main_hot_menu_favorite:
-                                            Toast.makeText(getSherlockActivity(),"Favorite",Toast.LENGTH_SHORT).show();
-                                            FavoriteHelper faveHelper = new FavoriteHelper(a);
+                                            Toast.makeText(context,"Favorite",Toast.LENGTH_SHORT).show();
+                                            FavoriteHelper faveHelper = new FavoriteHelper(context);
                                             faveHelper.createFavoriteAlert(s, faveHelper.isSeriesFavorited(s.ID), new FavoriteSavingListener(){
                                                 @Override
                                                 public void onSavingCompleted(
@@ -316,16 +338,16 @@ public class HotMainFragment extends RoboSherlockFragment {
                     Series s = series.get(index);
                     switch(s.TYPE){
                         case ITEM:
-                            Intent i = new Intent(getSherlockActivity(),
+                            Intent i = new Intent(context,
                                     SeriesInfoActivity.class);
                             i.putExtra(SeriesInfoActivity.ID, s.ID);
-                            startActivity(i);
+                            context.startActivity(i);
                             break;
                         case EMPTY:
                             break;
                         case MORE:
-                            Intent j = new Intent(getSherlockActivity(), HotActivity.class);
-                            startActivity(j);
+                            Intent j = new Intent(context, HotActivity.class);
+                            context.startActivity(j);
                             break;
                     }
                 }
@@ -347,7 +369,7 @@ public class HotMainFragment extends RoboSherlockFragment {
         if(series == null){
             return null;
         }else{
-            FavoriteHelper fHelper = new FavoriteHelper(getSherlockActivity());
+            FavoriteHelper fHelper = new FavoriteHelper(context);
             for(int i = 0; i < series.size(); i++){
                 series.get(i).IS_FAVORITE = fHelper.isSeriesFavorited(series.get(i).ID) ?
                       Series.SERIES_IS_IN_FAVES : Series.SERIES_IS_NOT_IN_FAVES;
@@ -375,12 +397,12 @@ public class HotMainFragment extends RoboSherlockFragment {
 
         try{
 
-            url = new URL(ServerUrls.getHotUrl(getSherlockActivity()));
+            url = new URL(ServerUrls.getHotUrl(context));
 
             mySAXParserFactory = SAXParserFactory.newInstance();
             mySAXParser = mySAXParserFactory.newSAXParser();
             mXMLReader = mySAXParser.getXMLReader();
-            mXmlHandler = new XmlHandlerHot(getSherlockActivity());
+            mXmlHandler = new XmlHandlerHot(context);
             mXMLReader.setContentHandler(mXmlHandler);
 
             mXMLReader.parse(new InputSource(url.openStream()));
@@ -414,7 +436,7 @@ public class HotMainFragment extends RoboSherlockFragment {
 
     private void updateServertimeHot(){
 
-        String urlString = ServerUrls.getServerTimeUrl(getSherlockActivity());
+        String urlString = ServerUrls.getServerTimeUrl(context);
         try {
             //Create the XML parser
             SAXParserFactory mySAXParserFactory = SAXParserFactory.newInstance();
@@ -476,22 +498,22 @@ public class HotMainFragment extends RoboSherlockFragment {
         return true;
     }
 
-    @Override
-    public void onAttach(Activity activity){
-        super.onAttach(activity);
-
+//    @Override
+//    public void onAttach(Activity activity){
+//        super.onAttach(activity);
+//
 //        if(activity instanceof HotListener){
 //            listener = (HotListener) activity;
 //        }else{
 //            throw new ClassCastException(activity.toString()
 //                    + " must implement HotMainFragment.HotListener");
 //        }
+//
+//    }
 
-    }
-
-    public void setActivity(Activity activity){
-        this.a = activity;
-    }
+//    public void setActivity(Activity activity){
+//        this.a = activity;
+//    }
 
     public void setListener(HotListener l){
         this.listener = l;

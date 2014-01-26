@@ -1,6 +1,8 @@
 package voodoo.tvdb.Fragments;
 
+import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,7 +36,7 @@ import voodoo.tvdb.sqlitDatabase.DatabaseAdapter;
 /**
  * Created by PUTITO-TV on 10/11/13.
  */
-public class UpcomingMainFragment extends RoboSherlockFragment {
+public class UpcomingMainFragment {
 
     private static final String TAG = "UpcomingAsync";
 
@@ -50,20 +52,20 @@ public class UpcomingMainFragment extends RoboSherlockFragment {
     public ImageLoader imageLoader;
 
     private UpcomingListener listener;
+    private Context context;
+    private LayoutInflater inflater;
 
-    @Override
-    public void onCreate(Bundle savedState){
-        super.onCreate(savedState);
-        dbAdapter = new DatabaseAdapter(getSherlockActivity());
-    }
+    public LinearLayout createView(Context c, LayoutInflater i, ImageLoader il){
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedState){
-        view = (LinearLayout) inflater.from(getSherlockActivity()).inflate(R.layout.main_card_container,
-                container,false);
+        context = c;
+        inflater = i;
+        imageLoader = il;
+        dbAdapter = new DatabaseAdapter(context);
+
+        view = (LinearLayout) inflater.inflate(R.layout.main_card_container, null);
 
         // Loading Card
-        View card = inflater.from(getSherlockActivity()).inflate(R.layout.card_hot_horizontal_item,
+        View card = inflater.from(context).inflate(R.layout.card_hot_horizontal_item,
                 null,false);
         card.findViewById(R.id.card_menu).setVisibility(View.INVISIBLE);
         card.findViewById(R.id.card_star).setVisibility(View.INVISIBLE);
@@ -72,51 +74,68 @@ public class UpcomingMainFragment extends RoboSherlockFragment {
         return view;
     }
 
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState){
-        reminders = lookForRemindersInSD();
-
-        if(reminders != null){
-            //Reminders from database is not empty add, MORE Item
-            reminders.add(cardMore());
-            updateView(reminders);
-        }else{
-            // If Reminders are not on the DB
-            reminders = new ArrayList<Reminder>();
-            reminders.add(cardEmpty());
-            updateView(reminders);
-        }
+    public void initialize(){
+        new initializeAsync().execute(true);
     }
 
-    @Override
-    public void onResume(){
-        super.onResume();
-        if(reminders != null){
-            checkForChanges();
+    class initializeAsync extends AsyncTask<Boolean, Void, ArrayList<Reminder>> {
+
+        @Override
+        protected ArrayList<Reminder> doInBackground(Boolean... booleans) {
+
+            return lookForRemindersInSD();
         }
-    }
 
-    public void checkForChanges(){
-        ArrayList<Reminder> query = lookForRemindersInSD();
+        @Override
+        protected void onPostExecute(ArrayList<Reminder> r){
+            reminders = r;
 
-        //Remove the "More" or "Empty" item before comparing with the query
-        if(reminders.get(reminders.size()-1).TYPE == MORE || reminders.get(reminders.size()-1).TYPE == EMPTY)
-            reminders.remove(reminders.size()-1);
-
-        if(!isEqualReminders(reminders,query)){
-            reminders = query;
-            //Check again which to add, if the "More" or "Empty" Item
-            if(reminders == null){
-                //Add Empty View
+            if(reminders != null){
+                //Reminders from database is not empty add, MORE Item
+                reminders.add(cardMore());
+                updateView(reminders);
+            }else{
+                // If Reminders are not on the DB
                 reminders = new ArrayList<Reminder>();
                 reminders.add(cardEmpty());
-            }else{
-                reminders.add(cardMore());
+                updateView(reminders);
             }
-            updateView(reminders);
+        }
+    }
+
+
+    public void checkForChanges(){
+        new checkForChangesAsync().execute(true);
+    }
+
+    class checkForChangesAsync extends AsyncTask<Boolean,Void,ArrayList<Reminder>>{
+
+        @Override
+        protected ArrayList<Reminder> doInBackground(Boolean... booleans) {
+            return lookForRemindersInSD();
         }
 
-        reminders.add(reminders.size() == 0 ? cardEmpty() : cardMore());
+        @Override
+        protected void onPostExecute(ArrayList<Reminder> query){
+            //Remove the "More" or "Empty" item before comparing with the query
+            if(reminders.get(reminders.size()-1).TYPE == MORE || reminders.get(reminders.size()-1).TYPE == EMPTY)
+                reminders.remove(reminders.size()-1);
+
+            if(!isEqualReminders(reminders,query)){
+                reminders = query;
+                //Check again which to add, if the "More" or "Empty" Item
+                if(reminders == null){
+                    //Add Empty View
+                    reminders = new ArrayList<Reminder>();
+                    reminders.add(cardEmpty());
+                }else{
+                    reminders.add(cardMore());
+                }
+                updateView(reminders);
+            }
+
+            reminders.add(reminders.size() == 0 ? cardEmpty() : cardMore());
+        }
     }
 
     private void updateView(ArrayList<Reminder> r) {
@@ -134,7 +153,7 @@ public class UpcomingMainFragment extends RoboSherlockFragment {
                 reminder = r.get(i);
             }
 
-            LinearLayout item = (LinearLayout) View.inflate(getSherlockActivity(),
+            LinearLayout item = (LinearLayout) View.inflate(context,
                     R.layout.card_horizontal_item, null);
 
             LinearLayout imgWrapper = (LinearLayout) item.findViewById(R.id.card_image_container);
@@ -164,9 +183,9 @@ public class UpcomingMainFragment extends RoboSherlockFragment {
                     bottomContainer.setOnClickListener(new View.OnClickListener(){
                         @Override
                         public void onClick(View v) {
-                            Toast.makeText(getSherlockActivity(),"TIMELINEACTIVITY",Toast.LENGTH_SHORT).show();
-                            //Intent j = new Intent(getSherlockActivity(), TimelineActivity.class);
-                            //getSherlockActivity().startActivity(j);
+                            Toast.makeText(context,"TIMELINEACTIVITY",Toast.LENGTH_SHORT).show();
+                            //Intent j = new Intent(context, TimelineActivity.class);
+                            //context.startActivity(j);
                         }
                     });
 
@@ -187,7 +206,7 @@ public class UpcomingMainFragment extends RoboSherlockFragment {
                     date.setText("S" + s + "E" + ep);
 
                     // Fix Image URL and Display it
-                    String imgUri = ServerUrls.getImageUrl(getSherlockActivity(),
+                    String imgUri = ServerUrls.getImageUrl(context,
                             ServerUrls.fixURL(reminder.IMAGE_URL));
                     imageLoader.displayImage(imgUri, img, BaseSlidingActivity.optionsWithFadeIn);
 
@@ -197,7 +216,7 @@ public class UpcomingMainFragment extends RoboSherlockFragment {
                         @Override
                         public void onClick(final View v) {
                             /** Initialize PopupMenu Class */
-                            PopupMenuCompat popup = PopupMenuCompat.newInstance(getSherlockActivity(), v);
+                            PopupMenuCompat popup = PopupMenuCompat.newInstance(context, v);
                             popup.inflate(R.menu.main_upcoming_menu);
                             popup.setOnMenuItemClickListener(new PopupMenuCompat.OnMenuItemClickListener(){
                                 @Override
@@ -206,17 +225,17 @@ public class UpcomingMainFragment extends RoboSherlockFragment {
                                     int id = item.getItemId();
                                     switch(id){
                                         case R.id.main_upcoming_menu_episode:
-                                            Intent i = new Intent(getSherlockActivity(),
+                                            Intent i = new Intent(context,
                                                     SeasonEpisodeActivity.class);
                                             i.putExtra(SeasonEpisodeActivity.REMINDER, reminder);
-                                            startActivity(i);
+                                            context.startActivity(i);
                                             break;
                                         case R.id.main_upcoming_menu_show:
                                             /** Series Info Activity */
-                                            Intent intent = new Intent(getSherlockActivity(),
+                                            Intent intent = new Intent(context,
                                                     SeriesInfoActivity.class);
                                             intent.putExtra(SeriesInfoActivity.ID, reminder.SERIES_ID);
-                                            getSherlockActivity().startActivity(intent);
+                                            context.startActivity(intent);
                                             break;
                                     }
                                     return true;
@@ -234,16 +253,16 @@ public class UpcomingMainFragment extends RoboSherlockFragment {
                     Reminder r = reminders.get(position);
                     switch(r.TYPE){
                         case ITEM:
-                            Intent i = new Intent(getSherlockActivity(), SeasonEpisodeActivity.class);
+                            Intent i = new Intent(context, SeasonEpisodeActivity.class);
                             i.putExtra(SeasonEpisodeActivity.REMINDER, r);
-                            startActivity(i);
+                            context.startActivity(i);
                             break;
                         case EMPTY:
                             break;
                         case MORE:
                             // TODO change fragment
-//                            Intent j = new Intent(getSherlockActivity(), TimelineActivity.class);
-//                            getSherlockActivity().startActivity(j);
+//                            Intent j = new Intent(context, TimelineActivity.class);
+//                            context.startActivity(j);
                             listener.onLoadTimelineFragment();
                             break;
                     }

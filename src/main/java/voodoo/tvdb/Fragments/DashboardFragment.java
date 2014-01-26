@@ -9,10 +9,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.HorizontalScrollView;
+import android.widget.LinearLayout;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.github.rtyley.android.sherlock.roboguice.fragment.RoboSherlockFragment;
-import com.google.ads.ac;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import javax.inject.Inject;
@@ -35,10 +35,15 @@ public class DashboardFragment extends RoboSherlockFragment implements HotMainFr
     HorizontalScrollView upcomingView;
     HorizontalScrollView queueView;
 
+    LinearLayout hotViewContainer;
+    LinearLayout upcomingViewContainer;
+    LinearLayout queueViewContainer;
+
     @Inject
     public DataStore dataStore;
 
     ImageLoader imageLoader = ImageLoader.getInstance();
+    LayoutInflater layoutInflater;
 
     // Fragments
     HotMainFragment hotFragment;
@@ -49,6 +54,7 @@ public class DashboardFragment extends RoboSherlockFragment implements HotMainFr
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedState){
+        layoutInflater = inflater;
         View view = inflater.from(getActivity()).inflate(R.layout.main, container, false);
 
         hotView = (HorizontalScrollView) view.findViewById(R.id.main_hot_h_scroll_view);
@@ -66,6 +72,13 @@ public class DashboardFragment extends RoboSherlockFragment implements HotMainFr
     public void onResume(){
         super.onResume();
         listener.onHome(true);
+
+        if(hotFragment.series != null)
+            hotFragment.checkForChanges();
+        if(upcomingFragment.reminders != null)
+            upcomingFragment.checkForChanges();
+        if(queueFragment.queue != null)
+            queueFragment.checkForChanges();
     }
 
     @Override
@@ -75,25 +88,25 @@ public class DashboardFragment extends RoboSherlockFragment implements HotMainFr
     }
 
     private void initializeFrags() {
-        FragmentTransaction ft = getSherlockActivity().getSupportFragmentManager().beginTransaction();
+//        FragmentTransaction ft = getSherlockActivity().getSupportFragmentManager().beginTransaction();
 
         hotFragment = new HotMainFragment();
-        hotFragment.setImageLoader(imageLoader);
         hotFragment.setListener(this);
-        hotFragment.setActivity(getSherlockActivity());
-        ft.replace(hotView.getId(),hotFragment);
+        hotViewContainer = hotFragment.createView(getSherlockActivity(),layoutInflater,imageLoader);
+        hotView.addView(hotViewContainer);
+        hotFragment.initialize();
 
         upcomingFragment = new UpcomingMainFragment();
-        upcomingFragment.setImageLoader(imageLoader);
         upcomingFragment.setListener(this);
-        ft.replace(upcomingView.getId(),upcomingFragment);
+        upcomingViewContainer = upcomingFragment.createView(getSherlockActivity(), layoutInflater, imageLoader);
+        upcomingView.addView(upcomingViewContainer);
+        upcomingFragment.initialize();
 
         queueFragment = new QueueMainFragment();
-        queueFragment.setImageLoader(imageLoader);
         queueFragment.setListener(this);
-        ft.replace(queueView.getId(),queueFragment);
-
-        ft.commit();
+        queueViewContainer = queueFragment.createView(getSherlockActivity(), layoutInflater, imageLoader);
+        queueView.addView(queueViewContainer);
+        queueFragment.initialize();
     }
 
     private void firstStart() {
