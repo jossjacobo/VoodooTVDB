@@ -5,10 +5,15 @@ import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.ListView;
 
+import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
@@ -37,7 +42,7 @@ import voodoo.tvdb.Utils.CustomTypefaceSpan;
 /**
  * Created by Voodoo Home on 9/28/13.
  */
-public class BaseSlidingActivity extends SlidingFragmentActivity implements SlidingMenu.OnClosedListener,
+public class BaseSlidingActivity extends SherlockFragmentActivity implements SlidingMenu.OnClosedListener,
     SlidingMenu.OnOpenedListener{
 
     private static final String TAG = "BaseSlidingActivity";
@@ -51,7 +56,10 @@ public class BaseSlidingActivity extends SlidingFragmentActivity implements Slid
     public static DisplayImageOptions optionsWithFadeIn;
     public static DisplayImageOptions optionsWithoutFadeIn;
 
-    public SlidingMenuFragment slidingMenuFragment;
+    private DrawerLayout drawerLayout;
+    private ListView drawerlist;
+
+    String[] title = new String[] {"Profile", "Login", "Register", "GO PRO!", "Your Shows", "Main", "Favorites", "Timeline", "Queue", "Settings", "Sync", "Settings", "Contact Me", "About"};
 
     /** Ads */
     private boolean ads = false;
@@ -60,7 +68,7 @@ public class BaseSlidingActivity extends SlidingFragmentActivity implements Slid
     public void onCreate(Bundle savedState){
         super.onCreate(savedState);
         setContentView(R.layout.voodoo_main);
-        setBehindContentView(R.layout.menu_frame);
+//        setBehindContentView(R.layout.menu_frame);
 
         //contentView = (FrameLayout) findViewById(R.id.content_container);
 
@@ -125,18 +133,27 @@ public class BaseSlidingActivity extends SlidingFragmentActivity implements Slid
     }
 
     private void setupSlidingMenu() {
-        getSlidingMenu().setMode(SlidingMenu.LEFT);
-        getSlidingMenu().setShadowWidthRes(R.dimen.slide_navigation_shadow_width);
-        getSlidingMenu().setShadowDrawable(R.drawable.shadow);
-        getSlidingMenu().setBehindOffsetRes(R.dimen.slide_navigation_behind_offset);
-        getSlidingMenu().setFadeDegree(0.35f);
-        getSlidingMenu().setOnClosedListener(this);
-        getSlidingMenu().setOnOpenedListener(this);
+//        getSlidingMenu().setMode(SlidingMenu.LEFT);
+//        getSlidingMenu().setShadowWidthRes(R.dimen.slide_navigation_shadow_width);
+//        getSlidingMenu().setShadowDrawable(R.drawable.shadow);
+//        getSlidingMenu().setBehindOffsetRes(R.dimen.slide_navigation_behind_offset);
+//        getSlidingMenu().setFadeDegree(0.35f);
+//        getSlidingMenu().setOnClosedListener(this);
+//        getSlidingMenu().setOnOpenedListener(this);
 
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        slidingMenuFragment = new SlidingMenuFragment();
-        ft.replace(R.id.menu_frame, slidingMenuFragment);
-        ft.commit();
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawerlist = (ListView) findViewById(R.id.drawer_listview);
+
+        drawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
+
+
+
+
+//        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+//        slidingMenuFragment = new SlidingMenuFragment();
+//        slidingMenuFragment = (SlidingMenuFragment) findViewById(R.id.drawer_content);
+//        ft.replace(R.id.menu_frame, slidingMenuFragment);
+//        ft.commit();
     }
 
     public void setSlideNavHint(int fragId){

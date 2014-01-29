@@ -2,15 +2,30 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:ads="http://schemas.android.com/apk/lib/com.google.ads"
-    android:layout_height="fill_parent"
-    android:layout_width="fill_parent"
-    android:background="@color/white"
-    >
-    <FrameLayout
-        android:id="@+id/content_container"
+    style="@style/Fill">
+    <android.support.v4.widget.DrawerLayout
+        android:id="@+id/drawer_layout"
+        android:layout_height="fill_parent"
+        android:layout_width="fill_parent"
+        android:background="@color/white"
+        android:layout_alignParentTop="true"
         android:layout_above="@+id/adView"
-        style="@style/Fill"
-        />
+        >
+        <FrameLayout
+            android:id="@+id/content_container"
+            android:layout_above="@+id/adView"
+            style="@style/Fill"
+            />
+        <ListView
+            android:id="@+id/drawer_listview"
+            android:layout_height="match_parent"
+            android:layout_width="240dp"
+            android:layout_gravity="start"
+            android:background="@color/white_faded"
+            android:divider="@color/transparent"
+            android:dividerHeight="0dp"
+            />
+    </android.support.v4.widget.DrawerLayout>
     <com.google.ads.AdView
         android:id="@id/adView"
         style="@style/Wrap"
