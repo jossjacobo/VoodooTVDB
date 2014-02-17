@@ -3,17 +3,14 @@ package voodoo.tvdb.Fragments;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.github.rtyley.android.sherlock.roboguice.fragment.RoboSherlockFragment;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.taig.pmc.PopupMenuCompat;
 
@@ -25,12 +22,12 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 
-import voodoo.tvdb.Activity.SeasonEpisodeActivity;
-import voodoo.tvdb.Activity.SeriesInfoActivity;
-import voodoo.tvdb.Activity.BaseSlidingActivity;
+import voodoo.tvdb.activity.SeasonEpisodeActivity;
+import voodoo.tvdb.activity.SeriesInfoActivity;
+import voodoo.tvdb.activity.BaseSlidingActivity;
 import voodoo.tvdb.Objects.Reminder;
 import voodoo.tvdb.R;
-import voodoo.tvdb.Utils.ServerUrls;
+import voodoo.tvdb.utils.ServerUrls;
 import voodoo.tvdb.sqlitDatabase.DatabaseAdapter;
 
 /**

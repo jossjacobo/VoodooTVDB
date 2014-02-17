@@ -1,20 +1,16 @@
 package voodoo.tvdb.Fragments;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.github.rtyley.android.sherlock.roboguice.fragment.RoboSherlockFragment;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.taig.pmc.PopupMenuCompat;
 
@@ -31,15 +27,15 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
-import voodoo.tvdb.Activity.HotActivity;
-import voodoo.tvdb.Activity.SeriesInfoActivity;
-import voodoo.tvdb.Activity.BaseSlidingActivity;
+import voodoo.tvdb.activity.HotActivity;
+import voodoo.tvdb.activity.SeriesInfoActivity;
+import voodoo.tvdb.activity.BaseSlidingActivity;
 import voodoo.tvdb.Objects.Series;
 import voodoo.tvdb.R;
-import voodoo.tvdb.Utils.FavoriteHelper;
-import voodoo.tvdb.Utils.FavoriteSavingListener;
-import voodoo.tvdb.Utils.Keys;
-import voodoo.tvdb.Utils.ServerUrls;
+import voodoo.tvdb.utils.FavoriteHelper;
+import voodoo.tvdb.utils.FavoriteSavingListener;
+import voodoo.tvdb.utils.Keys;
+import voodoo.tvdb.utils.ServerUrls;
 import voodoo.tvdb.XMLHandlers.XmlHandlerHot;
 import voodoo.tvdb.XMLHandlers.XmlHandlerServertime;
 import voodoo.tvdb.sqlitDatabase.DatabaseAdapter;

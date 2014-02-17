@@ -1,4 +1,4 @@
-package voodoo.tvdb.Activity;
+package voodoo.tvdb.activity;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -9,8 +9,12 @@ import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.view.MenuItemCompat;
+import android.support.v7.widget.ShareActionProvider;
 import android.text.TextUtils.TruncateAt;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
@@ -18,10 +22,6 @@ import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
-import com.actionbarsherlock.view.MenuItem.OnMenuItemClickListener;
-import com.actionbarsherlock.widget.ShareActionProvider;
 import com.google.ads.AdView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -46,11 +46,11 @@ import javax.xml.parsers.SAXParserFactory;
 import voodoo.tvdb.Objects.Episode;
 import voodoo.tvdb.Objects.FavoriteBundle;
 import voodoo.tvdb.Objects.Series;
-import voodoo.tvdb.Preferences.Prefs;
+import voodoo.tvdb.preferences.Prefs;
 import voodoo.tvdb.R;
-import voodoo.tvdb.Utils.FavoriteHelper;
-import voodoo.tvdb.Utils.FavoriteSavingListener;
-import voodoo.tvdb.Utils.ServerUrls;
+import voodoo.tvdb.utils.FavoriteHelper;
+import voodoo.tvdb.utils.FavoriteSavingListener;
+import voodoo.tvdb.utils.ServerUrls;
 import voodoo.tvdb.XMLHandlers.XmlHandlerFetchAllSeriesInfo;
 import voodoo.tvdb.sqlitDatabase.DatabaseAdapter;
 
@@ -174,19 +174,19 @@ public class SeriesInfoActivity extends BaseActivity {
 		String text = series == null ? "http://voodootvdb.com" : "Watching " + series.TITLE + "! http://voodootvdb.com";
 		
 		//ActionBar
-		getSupportMenuInflater().inflate(R.menu.share_menu_item, menu);
+		getMenuInflater().inflate(R.menu.share_menu_item, menu);
 
-		MenuItem share = (MenuItem) menu.findItem(R.id.menu_icon_share);
-		ShareActionProvider provider = (ShareActionProvider) share.getActionProvider();
+		MenuItem share = menu.findItem(R.id.menu_icon_share);
+		ShareActionProvider provider = (ShareActionProvider) MenuItemCompat.getActionProvider(share);
 		//provider.setShareHistoryFileName(ShareActionProvider.DEFAULT_SHARE_HISTORY_FILE_NAME);
 		Intent i = new Intent(Intent.ACTION_SEND);
 		i.setType("text/plain");
 		i.putExtra(Intent.EXTRA_TEXT, text);
 		provider.setShareIntent(i);
 		
-		favorite = (MenuItem) menu.add("Favorite").setIcon( isFavorited ? R.drawable.rate_star_med_on_holo_light : R.drawable.rate_star_med_off_holo_light);
-		favorite.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-		favorite.setOnMenuItemClickListener(new OnMenuItemClickListener(){
+		favorite = menu.add(getResources().getString(R.string.favorites)).setIcon( isFavorited ? R.drawable.rate_star_med_on_holo_light : R.drawable.rate_star_med_off_holo_light);
+        MenuItemCompat.setShowAsAction(favorite, MenuItemCompat.SHOW_AS_ACTION_ALWAYS);
+		favorite.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener(){
 			@Override
 			public boolean onMenuItemClick(MenuItem item) {
                 FavoriteHelper faveHelper = new FavoriteHelper(SeriesInfoActivity.this);
@@ -404,7 +404,7 @@ public class SeriesInfoActivity extends BaseActivity {
 		
 		//Set the star status
 		isFavorited = isSeriesFavorited(series.ID);
-		invalidateOptionsMenu();
+		supportInvalidateOptionsMenu();
 		
 		/** Image Stuff */
 		DisplayImageOptions optionsWithDelay = new DisplayImageOptions.Builder()

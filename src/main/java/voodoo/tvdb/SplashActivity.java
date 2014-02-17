@@ -1,5 +1,6 @@
 package voodoo.tvdb;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.PixelFormat;
 import android.os.Bundle;
@@ -7,14 +8,15 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.Window;
 
-import com.github.rtyley.android.sherlock.roboguice.activity.RoboSherlockFragmentActivity;
+import com.google.inject.Injector;
 
 import javax.inject.Inject;
 
-import voodoo.tvdb.Activity.MainActivity;
+import roboguice.RoboGuice;
+import voodoo.tvdb.activity.MainActivity;
 import voodoo.tvdb.SharedPreferences.DataStore;
 
-public class SplashActivity extends RoboSherlockFragmentActivity {
+public class SplashActivity extends Activity {
 
     @Inject
     DataStore dataStore;
@@ -47,6 +49,9 @@ public class SplashActivity extends RoboSherlockFragmentActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash);
+
+        Injector i = RoboGuice.getBaseApplicationInjector(this.getApplication());
+        dataStore = i.getInstance(DataStore.class);
 
         Message msg = new Message();
         msg.what = dataStore.getFirstRun() ? MSG_FIRST_LAUNCH : MSG_NOT_FIRST_LAUNCH;

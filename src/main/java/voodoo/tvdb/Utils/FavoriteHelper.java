@@ -1,4 +1,4 @@
-package voodoo.tvdb.Utils;
+package voodoo.tvdb.utils;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -21,7 +21,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
-import voodoo.tvdb.AlarmServices.MyAlarmManager;
+import voodoo.tvdb.alarmServices.MyAlarmManager;
 import voodoo.tvdb.Objects.FavoriteBundle;
 import voodoo.tvdb.Objects.Reminder;
 import voodoo.tvdb.Objects.Series;

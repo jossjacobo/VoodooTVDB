@@ -1,4 +1,4 @@
-package voodoo.tvdb.Utils;
+package voodoo.tvdb.utils;
 
 /**
  * A convenient class to extends when you only want to listen

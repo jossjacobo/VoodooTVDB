@@ -16,15 +16,15 @@ import com.taig.pmc.PopupMenuCompat;
 
 import java.util.ArrayList;
 
-import voodoo.tvdb.Activity.SeasonEpisodeActivity;
-import voodoo.tvdb.Activity.SeriesInfoActivity;
-import voodoo.tvdb.Activity.BaseSlidingActivity;
+import voodoo.tvdb.activity.SeasonEpisodeActivity;
+import voodoo.tvdb.activity.SeriesInfoActivity;
+import voodoo.tvdb.activity.BaseSlidingActivity;
 import voodoo.tvdb.Objects.Episode;
 import voodoo.tvdb.Objects.Reminder;
 import voodoo.tvdb.Objects.Series;
 import voodoo.tvdb.R;
-import voodoo.tvdb.Utils.ServerUrls;
-import voodoo.tvdb.Utils.WatchedHelper;
+import voodoo.tvdb.utils.ServerUrls;
+import voodoo.tvdb.utils.WatchedHelper;
 import voodoo.tvdb.sqlitDatabase.DatabaseAdapter;
 
 /**

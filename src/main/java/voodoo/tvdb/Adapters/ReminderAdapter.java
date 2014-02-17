@@ -21,10 +21,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-import voodoo.tvdb.Activity.SeasonEpisodeActivity;
+import voodoo.tvdb.activity.SeasonEpisodeActivity;
 import voodoo.tvdb.Objects.Reminder;
 import voodoo.tvdb.R;
-import voodoo.tvdb.Utils.ServerUrls;
+import voodoo.tvdb.utils.ServerUrls;
 
 @SuppressLint("SimpleDateFormat")
 public class ReminderAdapter extends BaseAdapter implements View.OnClickListener {

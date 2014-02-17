@@ -2,35 +2,40 @@ package voodoo.tvdb.Fragments;
 
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBarActivity;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 
-import com.actionbarsherlock.app.SherlockActivity;
-import com.actionbarsherlock.app.SherlockFragment;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.github.rtyley.android.sherlock.roboguice.fragment.RoboSherlockFragment;
+import com.google.inject.Injector;
 
-import voodoo.tvdb.Utils.CustomTypefaceSpan;
+import roboguice.RoboGuice;
+import voodoo.tvdb.SharedPreferences.DataStore;
+import voodoo.tvdb.utils.CustomTypefaceSpan;
 
 /**
  * Created by PUTITO-TV on 10/30/13.
  */
-public class BaseFragment extends RoboSherlockFragment {
+public class BaseFragment extends Fragment {
 
-    SherlockFragmentActivity context;
+    public ActionBarActivity context;
+    public DataStore dataStore;
 
     @Override
     public void onCreate(Bundle savedState){
         super.onCreate(savedState);
-        this.context = getSherlockActivity();
+        this.context = (ActionBarActivity) getActivity();
+
+        Injector i = RoboGuice.getBaseApplicationInjector(context.getApplication());
+        dataStore = i.getInstance(DataStore.class);
     }
 
     public void setActionBarTitle(String title){
-        Typeface font = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Roboto-Light.ttf");
+        Typeface font = Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Light.ttf");
         CustomTypefaceSpan bold = new CustomTypefaceSpan("", font);
         SpannableStringBuilder sb = new SpannableStringBuilder(title);
         sb.setSpan(bold, 0, title.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
 
-        getSherlockActivity().getSupportActionBar().setTitle(sb);
+        context.getSupportActionBar().setTitle(sb);
     }
 }

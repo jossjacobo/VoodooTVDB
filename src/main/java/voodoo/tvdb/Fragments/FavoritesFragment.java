@@ -2,32 +2,31 @@ package voodoo.tvdb.Fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.view.MenuItem;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import voodoo.tvdb.Activity.MainActivity;
-import voodoo.tvdb.Activity.SeriesInfoActivity;
+import voodoo.tvdb.activity.MainActivity;
+import voodoo.tvdb.activity.SeriesInfoActivity;
 import voodoo.tvdb.Adapters.FavoriteAdapter;
 import voodoo.tvdb.Adapters.SpinnerAdapter;
-import voodoo.tvdb.AlarmServices.MyAlarmManager;
+import voodoo.tvdb.alarmServices.MyAlarmManager;
 import voodoo.tvdb.Objects.ListItem;
 import voodoo.tvdb.Objects.ListObject;
 import voodoo.tvdb.Objects.Series;
-import voodoo.tvdb.Preferences.Prefs;
+import voodoo.tvdb.preferences.Prefs;
 import voodoo.tvdb.R;
-import voodoo.tvdb.Utils.ListHelper;
-import voodoo.tvdb.Utils.WatchedHelper;
+import voodoo.tvdb.utils.ListHelper;
+import voodoo.tvdb.utils.WatchedHelper;
 import voodoo.tvdb.sqlitDatabase.DatabaseAdapter;
 
 /**
@@ -60,7 +59,7 @@ public class FavoritesFragment extends BaseListFragment {
     }
 
     private void setupActionBar() {
-        ActionBar actionBar = getSherlockActivity().getSupportActionBar();
+        ActionBar actionBar = context.getSupportActionBar();
         actionBar.setDisplayShowCustomEnabled(false);
         actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -167,7 +166,7 @@ public class FavoritesFragment extends BaseListFragment {
         };
         SpinnerAdapter spinnerAdapter = new SpinnerAdapter(context,
                 android.R.layout.simple_dropdown_item_1line, items);
-        getSherlockActivity().getSupportActionBar()
+        context.getSupportActionBar()
                 .setListNavigationCallbacks(spinnerAdapter, navListener);
     }
 
@@ -190,7 +189,7 @@ public class FavoritesFragment extends BaseListFragment {
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo){
         super.onCreateContextMenu(menu, v, menuInfo);
-        MenuInflater mi = getSherlockActivity().getMenuInflater();
+        MenuInflater mi = context.getMenuInflater();
         mi.inflate(R.menu.list_menu_favorite_item_longpress, menu);
     }
 
@@ -224,18 +223,13 @@ public class FavoritesFragment extends BaseListFragment {
 
         dbAdapter.open();
         if(list_name.equals("All")){
-            Log.d(TAG, "Fetch ALL the series");
             series_items = dbAdapter.fetchAllSeries();
         }else{
-            Log.d(TAG, "Fetch the series in " + listName);
             list_items = dbAdapter.fetchListItemsOfList(list_name);
             if(list_items != null){
-                Log.d(TAG, "There are " +  list_items.size() + " in " + listName);
                 series_items = new ArrayList<Series>();
                 for(int i = 0; i < list_items.size(); i++){
-                    Log.d(TAG, "list item: " + list_items.get(i).toString());
                     Series s = dbAdapter.fetchSeries(list_items.get(i).SERIES_ID);
-                    Log.d(TAG, "series: " + s.toString());
                     series_items.add(s);
                 }
             }else{

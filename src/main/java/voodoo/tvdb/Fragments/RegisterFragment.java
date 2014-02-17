@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,17 +18,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.actionbarsherlock.app.ActionBar;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Locale;
 
-import roboguice.inject.InjectView;
-import voodoo.tvdb.AlarmServices.ReminderManager;
+import voodoo.tvdb.alarmServices.ReminderManager;
 import voodoo.tvdb.R;
-import voodoo.tvdb.Utils.UserFunctions;
+import voodoo.tvdb.utils.UserFunctions;
 import voodoo.tvdb.sqlitDatabase.DatabaseAdapter;
 
 /**
@@ -115,7 +113,7 @@ public class RegisterFragment extends BaseFragment{
     }
 
     private void setupActionBar() {
-        ActionBar actionBar = getSherlockActivity().getSupportActionBar();
+        ActionBar actionBar = context.getSupportActionBar();
         actionBar.setDisplayShowCustomEnabled(false);
         actionBar.setDisplayShowTitleEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);

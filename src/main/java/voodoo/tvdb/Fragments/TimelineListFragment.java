@@ -71,7 +71,7 @@ public class TimelineListFragment extends BaseListFragment {
      * Database Queries and Utility Functions
      */
     private ArrayList<Reminder> lookForRemindersInDB() {
-        DatabaseAdapter dbAdapter = new DatabaseAdapter(getSherlockActivity());
+        DatabaseAdapter dbAdapter = new DatabaseAdapter(context);
 
         dbAdapter.open();
         reminders = dbAdapter.fetchAllReminders();

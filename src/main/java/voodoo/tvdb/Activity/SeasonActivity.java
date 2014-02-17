@@ -1,4 +1,4 @@
-package voodoo.tvdb.Activity;
+package voodoo.tvdb.activity;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -10,16 +10,15 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
+import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
-import com.actionbarsherlock.view.MenuItem.OnMenuItemClickListener;
 import com.google.ads.AdView;
 
 import java.text.ParseException;
@@ -33,11 +32,11 @@ import voodoo.tvdb.Adapters.SeasonAdapter;
 import voodoo.tvdb.Objects.Episode;
 import voodoo.tvdb.Objects.Reminder;
 import voodoo.tvdb.Objects.Series;
-import voodoo.tvdb.Preferences.Prefs;
+import voodoo.tvdb.preferences.Prefs;
 import voodoo.tvdb.R;
-import voodoo.tvdb.Utils.FavoriteHelper;
-import voodoo.tvdb.Utils.FavoriteSavingListener;
-import voodoo.tvdb.Utils.WatchedHelper;
+import voodoo.tvdb.utils.FavoriteHelper;
+import voodoo.tvdb.utils.FavoriteSavingListener;
+import voodoo.tvdb.utils.WatchedHelper;
 import voodoo.tvdb.sqlitDatabase.DatabaseAdapter;
 
 /**
@@ -125,7 +124,7 @@ public class SeasonActivity extends BaseActivity {
 		
 		//update the star status
 		isFavorite = dbAdapter.isSeriesFavorited(series.ID);
-		invalidateOptionsMenu();
+		supportInvalidateOptionsMenu();
 	}
 	
 	@Override
@@ -152,7 +151,7 @@ public class SeasonActivity extends BaseActivity {
 		//ActionBar
 		favorite = (MenuItem) menu.add("favorite").setIcon( isFavorite ? R.drawable.rate_star_med_on_holo_light : R.drawable.rate_star_med_off_holo_light);
 		favorite.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-		favorite.setOnMenuItemClickListener(new OnMenuItemClickListener(){
+		favorite.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener(){
 
 			@Override
 			public boolean onMenuItemClick(MenuItem item) {

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:oak="http://oak/oak/schema"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_list_item_container"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="8dp"
+    >
+    <oak.widget.TextViewWithFont
+        android:id="@+id/drawer_list_item_title"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/slidingmenu_content_text_size"
+        android:textColor="@drawable/sliding_menu_text_color_selector"
+        android:padding="8dp"
+        tools:text="Login"
+        oak:font="Roboto-Light.ttf"
+        />
+</LinearLayout>

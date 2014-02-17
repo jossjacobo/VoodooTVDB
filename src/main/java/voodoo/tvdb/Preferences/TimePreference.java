@@ -1,4 +1,4 @@
-package voodoo.tvdb.Preferences;
+package voodoo.tvdb.preferences;
 
 import android.content.Context;
 import android.content.res.TypedArray;

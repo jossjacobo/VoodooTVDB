@@ -52,7 +52,7 @@
 				  android:id="@+id/season_episode_info_holder">
 				  
     	          <!-- Resizeable Image -->
-				  <voodoo.tvdb.Utils.ResizeableImageView
+				  <voodoo.tvdb.utils.ResizeableImageView
 			            android:id="@+id/episode_image"
 			            android:contentDescription="@string/season_episode_image"
 						android:layout_width="fill_parent"

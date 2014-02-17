@@ -1,4 +1,4 @@
-package voodoo.tvdb.Utils;
+package voodoo.tvdb.utils;
 
 import android.app.SearchManager;
 import android.content.SearchRecentSuggestionsProvider;

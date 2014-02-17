@@ -1,4 +1,4 @@
-package voodoo.tvdb.AlarmServices;
+package voodoo.tvdb.alarmServices;
 
 import android.content.Context;
 import android.util.Log;

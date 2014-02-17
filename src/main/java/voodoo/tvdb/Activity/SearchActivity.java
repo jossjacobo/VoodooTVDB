@@ -1,4 +1,4 @@
-package voodoo.tvdb.Activity;
+package voodoo.tvdb.activity;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
@@ -20,7 +21,6 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.actionbarsherlock.view.MenuItem;
 import com.google.ads.AdView;
 
 import org.xml.sax.InputSource;
@@ -39,11 +39,11 @@ import javax.xml.parsers.SAXParserFactory;
 import voodoo.tvdb.Adapters.LazyAdapter;
 import voodoo.tvdb.Objects.SearchBundle;
 import voodoo.tvdb.Objects.Series;
-import voodoo.tvdb.Preferences.Prefs;
+import voodoo.tvdb.preferences.Prefs;
 import voodoo.tvdb.R;
-import voodoo.tvdb.Utils.FavoriteHelper;
-import voodoo.tvdb.Utils.FavoriteSavingListener;
-import voodoo.tvdb.Utils.ServerUrls;
+import voodoo.tvdb.utils.FavoriteHelper;
+import voodoo.tvdb.utils.FavoriteSavingListener;
+import voodoo.tvdb.utils.ServerUrls;
 import voodoo.tvdb.XMLHandlers.XmlHandlerFetchInfo;
 import voodoo.tvdb.XMLHandlers.XmlHandlerSearch;
 import voodoo.tvdb.sqlitDatabase.DatabaseAdapter;
@@ -69,6 +69,10 @@ public class SearchActivity extends BaseActivity implements OnScrollListener{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search);
+
+        empty = (TextView) findViewById(R.id.empty);
+        ListView list = (ListView) findViewById(R.id.list);
+        list.setEmptyView(empty);
         
         dbAdapter = new DatabaseAdapter(this);
         loadingView = getLayoutInflater().inflate(R.layout.item_loading, null);
@@ -189,18 +193,6 @@ public class SearchActivity extends BaseActivity implements OnScrollListener{
 	@Override
 	public void onScrollStateChanged(AbsListView view, int scrollState){
 	}
-
-    /**
-     * Hack to make the empty TextView by the EmptyView by overriding the onContentChanged
-     */
-    @Override
-    public void onContentChanged(){
-    	super.onContentChanged();
-    	
-    	empty = (TextView) findViewById(R.id.empty);
-    	ListView list = (ListView) findViewById(R.id.list);
-    	list.setEmptyView(empty);
-    }
 
     /**
      * On Item LongPress Context menu

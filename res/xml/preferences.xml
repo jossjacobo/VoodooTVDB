@@ -55,7 +55,7 @@
 			android:summary="60 minutes"
 			android:defaultValue="30"/>
 		
-		<voodoo.tvdb.Preferences.TimePreference
+		<voodoo.tvdb.preferences.TimePreference
 			android:key = "update_service"
 			android:title = "Update Time"
 			android:defaultValue = "00:01" />

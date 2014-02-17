@@ -29,12 +29,12 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.TreeSet;
 
-import voodoo.tvdb.Activity.SeasonEpisodeActivity;
+import voodoo.tvdb.activity.SeasonEpisodeActivity;
 import voodoo.tvdb.Objects.Episode;
 import voodoo.tvdb.Objects.Series;
 import voodoo.tvdb.R;
-import voodoo.tvdb.Utils.ServerUrls;
-import voodoo.tvdb.Utils.WatchedHelper;
+import voodoo.tvdb.utils.ServerUrls;
+import voodoo.tvdb.utils.WatchedHelper;
 import voodoo.tvdb.sqlitDatabase.DatabaseAdapter;
 
 @SuppressLint("SimpleDateFormat")

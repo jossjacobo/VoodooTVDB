@@ -1,4 +1,4 @@
-package voodoo.tvdb.AlarmServices;
+package voodoo.tvdb.alarmServices;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -13,7 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import voodoo.tvdb.Objects.Reminder;
-import voodoo.tvdb.Preferences.Prefs;
+import voodoo.tvdb.preferences.Prefs;
 
 
 public class ReminderManager {

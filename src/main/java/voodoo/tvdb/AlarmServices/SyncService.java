@@ -1,4 +1,4 @@
-package voodoo.tvdb.AlarmServices;
+package voodoo.tvdb.alarmServices;
 
 import android.annotation.SuppressLint;
 import android.app.NotificationManager;
@@ -26,7 +26,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
-import voodoo.tvdb.Activity.MainActivity;
+import voodoo.tvdb.activity.MainActivity;
 import voodoo.tvdb.Objects.Episode;
 import voodoo.tvdb.Objects.FavoriteBundle;
 import voodoo.tvdb.Objects.ListItem;
@@ -34,13 +34,13 @@ import voodoo.tvdb.Objects.ListObject;
 import voodoo.tvdb.Objects.Reminder;
 import voodoo.tvdb.Objects.Series;
 import voodoo.tvdb.R;
-import voodoo.tvdb.Utils.ListHelper;
-import voodoo.tvdb.Utils.ListSyncFunctions;
-import voodoo.tvdb.Utils.Reminders;
-import voodoo.tvdb.Utils.ServerUrls;
-import voodoo.tvdb.Utils.UserFunctions;
-import voodoo.tvdb.Utils.WatchedHelper;
-import voodoo.tvdb.Utils.WatchedSyncFunctions;
+import voodoo.tvdb.utils.ListHelper;
+import voodoo.tvdb.utils.ListSyncFunctions;
+import voodoo.tvdb.utils.Reminders;
+import voodoo.tvdb.utils.ServerUrls;
+import voodoo.tvdb.utils.UserFunctions;
+import voodoo.tvdb.utils.WatchedHelper;
+import voodoo.tvdb.utils.WatchedSyncFunctions;
 import voodoo.tvdb.XMLHandlers.XmlHandlerFetchAllSeriesInfo;
 import voodoo.tvdb.sqlitDatabase.DatabaseAdapter;
 

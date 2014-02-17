@@ -1,4 +1,4 @@
-package voodoo.tvdb.AlarmServices;
+package voodoo.tvdb.alarmServices;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -20,7 +20,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
-import voodoo.tvdb.Activity.MainActivity;
+import voodoo.tvdb.activity.MainActivity;
 import voodoo.tvdb.Objects.Episode;
 import voodoo.tvdb.Objects.Reminder;
 import voodoo.tvdb.Objects.Series;
@@ -30,9 +30,9 @@ import voodoo.tvdb.XMLHandlers.XmlHandlerHot;
 import voodoo.tvdb.XMLHandlers.XmlHandlerServertime;
 import voodoo.tvdb.XMLHandlers.XmlHandlerUpdate;
 import voodoo.tvdb.sqlitDatabase.DatabaseAdapter;
-import voodoo.tvdb.Utils.Reminders;
-import voodoo.tvdb.Utils.ServerUrls;
-import voodoo.tvdb.Utils.UserFunctions;
+import voodoo.tvdb.utils.Reminders;
+import voodoo.tvdb.utils.ServerUrls;
+import voodoo.tvdb.utils.UserFunctions;
 
 public class FavoriteUpdateService extends WakeReminderIntentService{
 	

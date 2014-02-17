@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.TreeSet;
 
-import voodoo.tvdb.Activity.BaseSlidingActivity;
+import voodoo.tvdb.activity.BaseSlidingActivity;
 import voodoo.tvdb.Objects.Episode;
 import voodoo.tvdb.Objects.ListItem;
 import voodoo.tvdb.Objects.ListObject;

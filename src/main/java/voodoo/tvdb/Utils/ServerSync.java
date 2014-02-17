@@ -1,4 +1,4 @@
-package voodoo.tvdb.Utils;
+package voodoo.tvdb.utils;
 
 public class ServerSync {
 

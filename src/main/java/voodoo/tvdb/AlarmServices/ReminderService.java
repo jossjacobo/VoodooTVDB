@@ -1,4 +1,4 @@
-package voodoo.tvdb.AlarmServices;
+package voodoo.tvdb.alarmServices;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -7,7 +7,7 @@ import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 
-import voodoo.tvdb.Activity.MainActivity;
+import voodoo.tvdb.activity.MainActivity;
 import voodoo.tvdb.Objects.Reminder;
 import voodoo.tvdb.R;
 

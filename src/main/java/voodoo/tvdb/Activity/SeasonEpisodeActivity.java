@@ -1,11 +1,15 @@
-package voodoo.tvdb.Activity;
+package voodoo.tvdb.activity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.support.v4.view.MenuItemCompat;
+import android.support.v7.widget.ShareActionProvider;
 import android.text.TextUtils.TruncateAt;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
@@ -13,10 +17,6 @@ import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
-import com.actionbarsherlock.view.MenuItem.OnMenuItemClickListener;
-import com.actionbarsherlock.widget.ShareActionProvider;
 import com.google.ads.AdView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -29,10 +29,10 @@ import java.util.ArrayList;
 import voodoo.tvdb.Objects.Episode;
 import voodoo.tvdb.Objects.Reminder;
 import voodoo.tvdb.Objects.Series;
-import voodoo.tvdb.Preferences.Prefs;
+import voodoo.tvdb.preferences.Prefs;
 import voodoo.tvdb.R;
-import voodoo.tvdb.Utils.ServerUrls;
-import voodoo.tvdb.Utils.WatchedHelper;
+import voodoo.tvdb.utils.ServerUrls;
+import voodoo.tvdb.utils.WatchedHelper;
 import voodoo.tvdb.sqlitDatabase.DatabaseAdapter;
 
 @SuppressLint("SimpleDateFormat")
@@ -127,7 +127,7 @@ public class SeasonEpisodeActivity extends BaseActivity {
 		super.onResume();
 		
 		isWatched = isWatched(episode.ID);
-		invalidateOptionsMenu();
+		supportInvalidateOptionsMenu();
 		
 	}
 	@Override
@@ -147,10 +147,10 @@ public class SeasonEpisodeActivity extends BaseActivity {
 		super.onCreateOptionsMenu(menu);
 		
 		//ActionBar
-		getSupportMenuInflater().inflate(R.menu.share_menu_item, menu);
+		getMenuInflater().inflate(R.menu.share_menu_item, menu);
 
 		MenuItem share = menu.findItem(R.id.menu_icon_share);
-		ShareActionProvider provider = (ShareActionProvider) share.getActionProvider();
+		ShareActionProvider provider = (ShareActionProvider) MenuItemCompat.getActionProvider(share);
 		//provider.setShareHistoryFileName(ShareActionProvider.DEFAULT_SHARE_HISTORY_FILE_NAME);
 		Intent i = new Intent(Intent.ACTION_SEND);
 		i.setType("text/plain");
@@ -158,8 +158,8 @@ public class SeasonEpisodeActivity extends BaseActivity {
 		provider.setShareIntent(i);
 		
 		watched = menu.add("watched").setIcon(isWatched ? R.drawable.btn_check_on : R.drawable.btn_check_off);
-		watched.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-		watched.setOnMenuItemClickListener(new OnMenuItemClickListener(){
+        MenuItemCompat.setShowAsAction(watched, MenuItemCompat.SHOW_AS_ACTION_ALWAYS);
+		watched.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener(){
 
 			@Override
 			public boolean onMenuItemClick(MenuItem item) {

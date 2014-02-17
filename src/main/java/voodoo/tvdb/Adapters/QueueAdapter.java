@@ -22,12 +22,12 @@ import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import java.util.ArrayList;
 import java.util.TreeSet;
 
-import voodoo.tvdb.Activity.SeasonEpisodeActivity;
+import voodoo.tvdb.activity.SeasonEpisodeActivity;
 import voodoo.tvdb.Objects.Episode;
 import voodoo.tvdb.Objects.Reminder;
 import voodoo.tvdb.Objects.Series;
 import voodoo.tvdb.R;
-import voodoo.tvdb.Utils.ServerUrls;
+import voodoo.tvdb.utils.ServerUrls;
 import voodoo.tvdb.sqlitDatabase.DatabaseAdapter;
 
 public class QueueAdapter extends BaseAdapter implements OnClickListener, OnCreateContextMenuListener{

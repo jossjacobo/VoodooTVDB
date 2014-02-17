@@ -1,19 +1,14 @@
 package voodoo.tvdb.Fragments;
 
-import android.app.Activity;
-import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
+import android.support.v7.app.ActionBar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.SherlockFragment;
 
 import java.util.ArrayList;
 
@@ -22,22 +17,18 @@ import voodoo.tvdb.R;
 /**
  * Created by Voodoo Home on 11/2/13.
  */
-public class TimelineFragment extends Fragment {
-
-    private static final String TAG = "TimelineFragment";
+public class TimelineFragment extends BaseFragment {
 
     View view;
     ArrayList<Fragment> frags;
     ViewPagerAdapter adapter;
-
-    TimelineListener listener;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedState){
         view = inflater.inflate(R.layout.timeline_main, container, false);
 
         //Action bar
-        listener.onSetupTimelineActionBar();
+        setupActionBar();
 
         adapter = new ViewPagerAdapter(null, getChildFragmentManager());
 
@@ -69,6 +60,18 @@ public class TimelineFragment extends Fragment {
         });
 
         return view;
+    }
+
+    private void setupActionBar() {
+        ActionBar actionBar = context.getSupportActionBar();
+        actionBar.setDisplayShowCustomEnabled(false);
+        actionBar.setDisplayShowTitleEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeButtonEnabled(true);
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+        actionBar.setIcon(R.drawable.icon);
+
+        setActionBarTitle(getResources().getString(R.string.timeline));
     }
 
     @Override
@@ -132,22 +135,5 @@ public class TimelineFragment extends Fragment {
             this.fragments = f;
             notifyDataSetChanged();
         }
-    }
-
-    @Override
-    public void onAttach(Activity activity){
-        super.onAttach(activity);
-
-        if(activity instanceof TimelineListener){
-            listener = (TimelineListener) activity;
-        }else{
-            throw new ClassCastException(activity.toString()
-                    + " must implement QueueMainFragment.QueueListener");
-        }
-
-    }
-
-    public interface TimelineListener{
-        public void onSetupTimelineActionBar();
     }
 }

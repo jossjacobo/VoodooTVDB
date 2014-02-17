@@ -1,4 +1,4 @@
-package voodoo.tvdb.Utils;
+package voodoo.tvdb.utils;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -16,9 +16,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import voodoo.tvdb.Activity.MainActivity;
-import voodoo.tvdb.AlarmServices.MyAlarmManager;
-import voodoo.tvdb.AlarmServices.SyncService;
+import voodoo.tvdb.activity.MainActivity;
+import voodoo.tvdb.alarmServices.MyAlarmManager;
+import voodoo.tvdb.alarmServices.SyncService;
 import voodoo.tvdb.Objects.ListObject;
 import voodoo.tvdb.Objects.Series;
 import voodoo.tvdb.R;
@@ -110,7 +110,7 @@ public class UserFunctions {
 		int count = db.getUserCount();
 		db.close();
 		
-		return count > 0 ? true : false;
+		return count > 0;
 	}
 	
 	

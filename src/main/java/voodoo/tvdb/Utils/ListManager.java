@@ -1,4 +1,4 @@
-package voodoo.tvdb.Utils;
+package voodoo.tvdb.utils;
 
 import android.app.AlertDialog;
 import android.content.Context;

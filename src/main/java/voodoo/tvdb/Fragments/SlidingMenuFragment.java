@@ -12,21 +12,19 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.github.rtyley.android.sherlock.roboguice.fragment.RoboSherlockFragment;
-
 import java.util.HashMap;
 
 import roboguice.inject.InjectView;
-import voodoo.tvdb.AlarmServices.ReminderManager;
-import voodoo.tvdb.Preferences.Prefs;
+import voodoo.tvdb.alarmServices.ReminderManager;
+import voodoo.tvdb.preferences.Prefs;
 import voodoo.tvdb.R;
-import voodoo.tvdb.Utils.UserFunctions;
+import voodoo.tvdb.utils.UserFunctions;
 import voodoo.tvdb.sqlitDatabase.DatabaseAdapter;
 
 /**
  * Created by Voodoo Home on 9/28/13.
  */
-public class SlidingMenuFragment extends RoboSherlockFragment implements View.OnClickListener {
+public class SlidingMenuFragment extends BaseFragment implements View.OnClickListener {
 
     private static final String TAG = "SlidingMenuFragment";
 

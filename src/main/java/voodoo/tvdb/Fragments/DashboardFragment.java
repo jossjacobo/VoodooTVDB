@@ -3,30 +3,24 @@ package voodoo.tvdb.Fragments;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
+import android.support.v7.app.ActionBar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 
-import com.actionbarsherlock.app.ActionBar;
-import com.github.rtyley.android.sherlock.roboguice.fragment.RoboSherlockFragment;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-import javax.inject.Inject;
-
-import voodoo.tvdb.Activity.TutorialActivity;
+import voodoo.tvdb.activity.TutorialActivity;
 import voodoo.tvdb.Objects.ListObject;
 import voodoo.tvdb.R;
-import voodoo.tvdb.SharedPreferences.DataStore;
 import voodoo.tvdb.sqlitDatabase.DatabaseAdapter;
 
 /**
  * Created by PUTITO-TV on 10/28/13.
  */
-public class DashboardFragment extends RoboSherlockFragment implements HotMainFragment.HotListener,
+public class DashboardFragment extends BaseFragment implements HotMainFragment.HotListener,
         QueueMainFragment.QueueListener, UpcomingMainFragment.UpcomingListener{
 
     private static final String TAG = "DashboardFragment";
@@ -38,9 +32,6 @@ public class DashboardFragment extends RoboSherlockFragment implements HotMainFr
     LinearLayout hotViewContainer;
     LinearLayout upcomingViewContainer;
     LinearLayout queueViewContainer;
-
-    @Inject
-    public DataStore dataStore;
 
     ImageLoader imageLoader = ImageLoader.getInstance();
     LayoutInflater layoutInflater;
@@ -55,7 +46,7 @@ public class DashboardFragment extends RoboSherlockFragment implements HotMainFr
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedState){
         layoutInflater = inflater;
-        View view = inflater.from(getActivity()).inflate(R.layout.main, container, false);
+        View view = layoutInflater.inflate(R.layout.main, container, false);
 
         hotView = (HorizontalScrollView) view.findViewById(R.id.main_hot_h_scroll_view);
         upcomingView = (HorizontalScrollView) view.findViewById(R.id.main_upcoming_h_scrollview);
@@ -88,32 +79,31 @@ public class DashboardFragment extends RoboSherlockFragment implements HotMainFr
     }
 
     private void initializeFrags() {
-//        FragmentTransaction ft = getSherlockActivity().getSupportFragmentManager().beginTransaction();
+//        FragmentTransaction ft = context.getSupportFragmentManager().beginTransaction();
 
         hotFragment = new HotMainFragment();
         hotFragment.setListener(this);
-        hotViewContainer = hotFragment.createView(getSherlockActivity(),layoutInflater,imageLoader);
+        hotViewContainer = hotFragment.createView(context,layoutInflater,imageLoader);
         hotView.addView(hotViewContainer);
         hotFragment.initialize();
 
         upcomingFragment = new UpcomingMainFragment();
         upcomingFragment.setListener(this);
-        upcomingViewContainer = upcomingFragment.createView(getSherlockActivity(), layoutInflater, imageLoader);
+        upcomingViewContainer = upcomingFragment.createView(context, layoutInflater, imageLoader);
         upcomingView.addView(upcomingViewContainer);
         upcomingFragment.initialize();
 
         queueFragment = new QueueMainFragment();
         queueFragment.setListener(this);
-        queueViewContainer = queueFragment.createView(getSherlockActivity(), layoutInflater, imageLoader);
+        queueViewContainer = queueFragment.createView(context, layoutInflater, imageLoader);
         queueView.addView(queueViewContainer);
         queueFragment.initialize();
     }
 
     private void firstStart() {
         if(dataStore.getFirstRun()){
-            Log.e(TAG, "First Run");
             // Create Default Lists
-            DatabaseAdapter dbAdapter = new DatabaseAdapter(getSherlockActivity());
+            DatabaseAdapter dbAdapter = new DatabaseAdapter(context);
             dbAdapter.open();
             dbAdapter.insertList(new ListObject(getResources().getString(R.string.list_favorite_name),
                     getResources().getString(R.string.list_favorite_description)));
@@ -124,7 +114,7 @@ public class DashboardFragment extends RoboSherlockFragment implements HotMainFr
             dbAdapter.close();
 
             // Launch TutorialActivity
-            Intent i = new Intent(getSherlockActivity(),TutorialActivity.class);
+            Intent i = new Intent(context,TutorialActivity.class);
             startActivity(i);
 
             // First Run completed
@@ -161,7 +151,7 @@ public class DashboardFragment extends RoboSherlockFragment implements HotMainFr
     }
 
     public void setupActionBarHomeTitle() {
-        ActionBar actionBar = getSherlockActivity().getSupportActionBar();
+        ActionBar actionBar = context.getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(false);
         actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setDisplayHomeAsUpEnabled(true);

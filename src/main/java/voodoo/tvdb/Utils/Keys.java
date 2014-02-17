@@ -1,4 +1,4 @@
-package voodoo.tvdb.Utils;
+package voodoo.tvdb.utils;
 
 /**
  * Created by PUTITO-TV on 10/11/13.

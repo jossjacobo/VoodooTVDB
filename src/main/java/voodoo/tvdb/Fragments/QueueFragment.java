@@ -1,8 +1,7 @@
 package voodoo.tvdb.Fragments;
 
 import android.os.Bundle;
-
-import com.actionbarsherlock.app.ActionBar;
+import android.support.v7.app.ActionBar;
 
 import java.util.ArrayList;
 
@@ -33,7 +32,7 @@ public class QueueFragment extends BaseListFragment {
     }
 
     private void setupActionBar() {
-        ActionBar actionBar = getSherlockActivity().getSupportActionBar();
+        ActionBar actionBar = context.getSupportActionBar();
         actionBar.setDisplayShowCustomEnabled(false);
         actionBar.setDisplayShowTitleEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);

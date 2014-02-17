@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="drawer_list_header_login">Login</string>
+    <string name="drawer_list_header_logout">Log out</string>
+    <string name="drawer_list_header_register">Register</string>
+    <string name="drawer_list_header_go_pro">Go PRO!</string>
+
+    <string-array name="drawer_list_items">
+        <item>Your Shows</item>
+        <item>Main</item>
+        <item>Favorites</item>
+        <item>Timeline</item>
+        <item>Queue</item>
+        <item>App Settings</item>
+        <item>Sync</item>
+        <item>Settings</item>
+        <item>Contact Me</item>
+        <item>About</item>
+    </string-array>
+
+    <string-array name="drawer_list_items_headers">
+        <item>Your Shows</item>
+        <item>App Settings</item>
+    </string-array>
+</resources>

@@ -1,4 +1,4 @@
-package voodoo.tvdb.Utils;
+package voodoo.tvdb.utils;
 
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;

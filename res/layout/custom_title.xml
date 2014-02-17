@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/transparent">
-	<voodoo.tvdb.Utils.ScrollingTextView
+	<voodoo.tvdb.utils.ScrollingTextView
 	    android:id="@+id/title"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"

@@ -25,10 +25,10 @@ import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import java.util.ArrayList;
 import java.util.Locale;
 
-import voodoo.tvdb.Activity.SeriesInfoActivity;
+import voodoo.tvdb.activity.SeriesInfoActivity;
 import voodoo.tvdb.Objects.Series;
 import voodoo.tvdb.R;
-import voodoo.tvdb.Utils.ServerUrls;
+import voodoo.tvdb.utils.ServerUrls;
 
 public class LazyAdapter extends BaseAdapter implements OnClickListener, OnCreateContextMenuListener{
 	private static final String TAG = "LazyAdapter";

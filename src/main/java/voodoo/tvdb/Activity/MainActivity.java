@@ -1,16 +1,13 @@
-package voodoo.tvdb.Activity;
+package voodoo.tvdb.activity;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBar;
 import android.view.View;
-import android.widget.FrameLayout;
 
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.view.MenuItem;
 import com.google.ads.AdView;
 
-import roboguice.inject.InjectView;
 import voodoo.tvdb.Fragments.AboutFragment;
 import voodoo.tvdb.Fragments.DashboardFragment;
 import voodoo.tvdb.Fragments.FavoritesFragment;
@@ -25,15 +22,8 @@ import voodoo.tvdb.R;
  * Created by Voodoo Home on 9/28/13.
  */
 public class MainActivity extends BaseSlidingActivity implements SlidingMenuFragment.SlidingMenuListener,
-        DashboardFragment.DashboardListner, TimelineFragment.TimelineListener, LoginFragment.LoginListener,
+        DashboardFragment.DashboardListner, LoginFragment.LoginListener,
         RegisterFragment.RegisterListener{
-
-    private static final String TAG = "MainActivity";
-
-    @InjectView(R.id.content_container)
-    FrameLayout contentView;
-
-    int currentFrag = 0;
 
     @Override
     public void onCreate(Bundle savedState){
@@ -43,57 +33,6 @@ public class MainActivity extends BaseSlidingActivity implements SlidingMenuFrag
         // Ads
         AdView adview = (AdView) findViewById(R.id.adView);
         viewAds(adview);
-    }
-
-    private void selectFragment(View view, int nextFrag){
-        if(currentFrag != nextFrag){
-            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            Fragment frag = new Fragment();
-
-            switch (nextFrag){
-                case R.id.dashboard_fragment:
-                    frag = new DashboardFragment();
-                    break;
-                case R.id.favorites_fragment:
-                    frag = new FavoritesFragment();
-                    break;
-                case R.id.timeline_fragment:
-                    frag = new TimelineFragment();
-                    break;
-                case R.id.queue_fragment:
-                    frag = new QueueFragment();
-                    break;
-                case R.id.about_fragment:
-                    frag = new AboutFragment();
-                    break;
-                case R.id.sli_menu_profile_username:
-                    frag = new LoginFragment();
-                    break;
-                case R.id.sli_menu_profile_loginAndOut:
-                    frag = new RegisterFragment();
-                    break;
-            }
-
-            ft.replace(view.getId(), frag);
-            ft.commit();
-            currentFrag = nextFrag;
-
-            setSlideNavHint(nextFrag);
-            if(getSlidingMenu().isMenuShowing()){
-                toggle();
-            }
-        }
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item){
-        switch (item.getItemId()){
-            case android.R.id.home:
-                toggle();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
     }
 
     @Override
@@ -123,19 +62,6 @@ public class MainActivity extends BaseSlidingActivity implements SlidingMenuFrag
     @Override
     public void onLoadTimeline() {
         selectFragment(contentView, R.id.timeline_fragment);
-    }
-
-    @Override
-    public void onSetupTimelineActionBar() {
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayShowCustomEnabled(false);
-        actionBar.setDisplayShowTitleEnabled(true);
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setHomeButtonEnabled(true);
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
-        actionBar.setIcon(R.drawable.icon);
-
-        setActionBarTitle(getResources().getString(R.string.timeline));
     }
 
     @Override

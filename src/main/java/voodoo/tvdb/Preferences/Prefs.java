@@ -1,4 +1,4 @@
-package voodoo.tvdb.Preferences;
+package voodoo.tvdb.preferences;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -20,10 +20,10 @@ import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-import voodoo.tvdb.Activity.TutorialActivity;
-import voodoo.tvdb.AlarmServices.ReminderManager;
+import voodoo.tvdb.activity.TutorialActivity;
+import voodoo.tvdb.alarmServices.ReminderManager;
 import voodoo.tvdb.R;
-import voodoo.tvdb.Utils.UserFunctions;
+import voodoo.tvdb.utils.UserFunctions;
 
 public class Prefs extends PreferenceActivity implements OnSharedPreferenceChangeListener{
 	/**

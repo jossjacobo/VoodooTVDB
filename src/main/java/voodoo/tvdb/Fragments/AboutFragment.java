@@ -3,6 +3,7 @@ package voodoo.tvdb.Fragments;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.text.Spannable;
 import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
@@ -11,8 +12,6 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import com.actionbarsherlock.app.ActionBar;
 
 import voodoo.tvdb.R;
 
@@ -80,13 +79,12 @@ public class AboutFragment extends BaseFragment {
     }
 
     private void setupActionBar() {
-        ActionBar actionBar = getSherlockActivity().getSupportActionBar();
-        actionBar.setDisplayShowCustomEnabled(false);
-        actionBar.setDisplayShowTitleEnabled(true);
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setHomeButtonEnabled(true);
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
-        actionBar.setIcon(R.drawable.icon);
+        context.getSupportActionBar().setDisplayShowCustomEnabled(false);
+        context.getSupportActionBar().setDisplayShowTitleEnabled(true);
+        context.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        context.getSupportActionBar().setHomeButtonEnabled(true);
+        context.getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+        context.getSupportActionBar().setIcon(R.drawable.icon);
 
         setActionBarTitle(getResources().getString(R.string.sliding_menu_about));
     }
@@ -95,11 +93,9 @@ public class AboutFragment extends BaseFragment {
         view.setText(view.getText().toString(), TextView.BufferType.SPANNABLE);
 
         Spannable str = (Spannable) view.getText();
-        for(int i = 0; i < subtext.length; i++){
-
-            int index = view.getText().toString().indexOf(subtext[i]);
-            str.setSpan(new ForegroundColorSpan(color), index, index + subtext[i].length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-
+        for(String sub: subtext){
+            int index = view.getText().toString().indexOf(sub);
+            str.setSpan(new ForegroundColorSpan(color), index, index + sub.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         }
     }
 

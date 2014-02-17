@@ -1,19 +1,19 @@
-package voodoo.tvdb.Activity;
+package voodoo.tvdb.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.actionbarsherlock.view.MenuItem;
 import com.google.ads.AdView;
 
 import java.util.ArrayList;
 
 import voodoo.tvdb.Adapters.HotAdapter;
 import voodoo.tvdb.Objects.Series;
-import voodoo.tvdb.Preferences.Prefs;
+import voodoo.tvdb.preferences.Prefs;
 import voodoo.tvdb.R;
 import voodoo.tvdb.sqlitDatabase.DatabaseAdapter;
 
@@ -39,7 +39,12 @@ public class HotActivity extends BaseActivity {
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.hot);
-		
+
+        list = (ListView) findViewById(R.id.hot_list);
+        empty = (TextView) findViewById(R.id.empty_hot_list);
+
+        list.setEmptyView(empty);
+
 		//Initialize
 		hotList = null;
 		dbAdapter = new DatabaseAdapter(this);
@@ -113,20 +118,6 @@ public class HotActivity extends BaseActivity {
 		}
 		return false;
 	}
-	
-	/**
-     * Hack to make the empty TextView by the EmptyView by overriding the onContentChanged
-     */
-    @Override
-    public void onContentChanged(){
-    	super.onContentChanged();
-    	
-    	list = (ListView) findViewById(R.id.hot_list);
-		empty = (TextView) findViewById(R.id.empty_hot_list);
-
-    	list.setEmptyView(empty);
-    }
-    
 }
 
 

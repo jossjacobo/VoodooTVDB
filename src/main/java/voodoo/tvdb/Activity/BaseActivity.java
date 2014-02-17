@@ -1,16 +1,18 @@
-package voodoo.tvdb.Activity;
+package voodoo.tvdb.activity;
 
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.v4.view.MenuItemCompat;
+import android.support.v7.app.ActionBarActivity;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
-import com.github.rtyley.android.sherlock.roboguice.activity.RoboSherlockActivity;
+import com.google.inject.Injector;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
 import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -21,18 +23,16 @@ import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 
 import java.io.File;
 
-import javax.inject.Inject;
-
+import roboguice.RoboGuice;
 import voodoo.tvdb.R;
 import voodoo.tvdb.SharedPreferences.DataStore;
-import voodoo.tvdb.Utils.CustomTypefaceSpan;
+import voodoo.tvdb.utils.CustomTypefaceSpan;
 
 /**
  * Created by Voodoo Home on 11/2/13.
  */
-public class BaseActivity extends RoboSherlockActivity {
+public class BaseActivity extends ActionBarActivity {
 
-    @Inject
     public DataStore dataStore;
 
     public ImageLoader imageLoader = ImageLoader.getInstance();
@@ -45,6 +45,9 @@ public class BaseActivity extends RoboSherlockActivity {
     @Override
     public void onCreate(Bundle savedState){
         super.onCreate(savedState);
+
+        Injector i = RoboGuice.getBaseApplicationInjector(this.getApplication());
+        dataStore = i.getInstance(DataStore.class);
 
         setActionBarTitle(getResources().getString(R.string.app_name));
         initializeImageLoader();
@@ -109,8 +112,8 @@ public class BaseActivity extends RoboSherlockActivity {
     public boolean onCreateOptionsMenu(Menu menu){
         super.onCreateOptionsMenu(menu);
         // Search Menu Item
-        MenuItem search = menu.add("Search").setIcon(R.drawable.ic_menu_search_holo_light);
-        search.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+        MenuItem search = menu.add(getResources().getString(R.string.search)).setIcon(R.drawable.ic_menu_search_holo_light);
+        MenuItemCompat.setShowAsAction(search, MenuItemCompat.SHOW_AS_ACTION_ALWAYS);
         search.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener(){
             @Override
             public boolean onMenuItemClick(MenuItem item) {
