@@ -1,4 +1,4 @@
-package voodoo.tvdb.Fragments;
+package voodoo.tvdb.fragments;
 
 import android.content.Intent;
 import android.net.Uri;

@@ -1,4 +1,4 @@
-package voodoo.tvdb.Adapters;
+package voodoo.tvdb.adapters;
 
 import android.content.Context;
 import android.graphics.Typeface;

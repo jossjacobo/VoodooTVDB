@@ -43,15 +43,15 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
-import voodoo.tvdb.Objects.Episode;
-import voodoo.tvdb.Objects.FavoriteBundle;
-import voodoo.tvdb.Objects.Series;
+import voodoo.tvdb.objects.Episode;
+import voodoo.tvdb.objects.FavoriteBundle;
+import voodoo.tvdb.objects.Series;
 import voodoo.tvdb.preferences.Prefs;
 import voodoo.tvdb.R;
 import voodoo.tvdb.utils.FavoriteHelper;
 import voodoo.tvdb.utils.FavoriteSavingListener;
 import voodoo.tvdb.utils.ServerUrls;
-import voodoo.tvdb.XMLHandlers.XmlHandlerFetchAllSeriesInfo;
+import voodoo.tvdb.xmlHandlers.XmlHandlerFetchAllSeriesInfo;
 import voodoo.tvdb.sqlitDatabase.DatabaseAdapter;
 
 @SuppressLint("SimpleDateFormat")
@@ -172,16 +172,15 @@ public class SeriesInfoActivity extends BaseActivity {
 		super.onCreateOptionsMenu(menu);
 
 		String text = series == null ? "http://voodootvdb.com" : "Watching " + series.TITLE + "! http://voodootvdb.com";
-		
-		//ActionBar
+
 		getMenuInflater().inflate(R.menu.share_menu_item, menu);
 
 		MenuItem share = menu.findItem(R.id.menu_icon_share);
 		ShareActionProvider provider = (ShareActionProvider) MenuItemCompat.getActionProvider(share);
-		//provider.setShareHistoryFileName(ShareActionProvider.DEFAULT_SHARE_HISTORY_FILE_NAME);
 		Intent i = new Intent(Intent.ACTION_SEND);
 		i.setType("text/plain");
 		i.putExtra(Intent.EXTRA_TEXT, text);
+        i.putExtra(Intent.EXTRA_TEXT, "voodoo");
 		provider.setShareIntent(i);
 		
 		favorite = menu.add(getResources().getString(R.string.favorites)).setIcon( isFavorited ? R.drawable.rate_star_med_on_holo_light : R.drawable.rate_star_med_off_holo_light);

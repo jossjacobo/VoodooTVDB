@@ -8,7 +8,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import voodoo.tvdb.Objects.ListObject;
+import voodoo.tvdb.objects.ListObject;
 
 public class ListManager {
 

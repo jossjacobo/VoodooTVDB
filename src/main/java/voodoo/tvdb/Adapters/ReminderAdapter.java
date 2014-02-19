@@ -1,4 +1,4 @@
-package voodoo.tvdb.Adapters;
+package voodoo.tvdb.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -22,7 +22,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import voodoo.tvdb.activity.SeasonEpisodeActivity;
-import voodoo.tvdb.Objects.Reminder;
+import voodoo.tvdb.objects.Reminder;
 import voodoo.tvdb.R;
 import voodoo.tvdb.utils.ServerUrls;
 

@@ -28,10 +28,10 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 
-import voodoo.tvdb.Adapters.SeasonAdapter;
-import voodoo.tvdb.Objects.Episode;
-import voodoo.tvdb.Objects.Reminder;
-import voodoo.tvdb.Objects.Series;
+import voodoo.tvdb.adapters.SeasonAdapter;
+import voodoo.tvdb.objects.Episode;
+import voodoo.tvdb.objects.Reminder;
+import voodoo.tvdb.objects.Series;
 import voodoo.tvdb.preferences.Prefs;
 import voodoo.tvdb.R;
 import voodoo.tvdb.utils.FavoriteHelper;

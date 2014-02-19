@@ -1,4 +1,4 @@
-package voodoo.tvdb.SharedPreferences;
+package voodoo.tvdb.sharedPreferences;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;

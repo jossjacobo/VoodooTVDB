@@ -36,16 +36,16 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
-import voodoo.tvdb.Adapters.LazyAdapter;
-import voodoo.tvdb.Objects.SearchBundle;
-import voodoo.tvdb.Objects.Series;
+import voodoo.tvdb.adapters.LazyAdapter;
+import voodoo.tvdb.objects.SearchBundle;
+import voodoo.tvdb.objects.Series;
 import voodoo.tvdb.preferences.Prefs;
 import voodoo.tvdb.R;
 import voodoo.tvdb.utils.FavoriteHelper;
 import voodoo.tvdb.utils.FavoriteSavingListener;
 import voodoo.tvdb.utils.ServerUrls;
-import voodoo.tvdb.XMLHandlers.XmlHandlerFetchInfo;
-import voodoo.tvdb.XMLHandlers.XmlHandlerSearch;
+import voodoo.tvdb.xmlHandlers.XmlHandlerFetchInfo;
+import voodoo.tvdb.xmlHandlers.XmlHandlerSearch;
 import voodoo.tvdb.sqlitDatabase.DatabaseAdapter;
 
 public class SearchActivity extends BaseActivity implements OnScrollListener{

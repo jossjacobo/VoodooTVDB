@@ -1,5 +1,6 @@
 package voodoo.tvdb.activity;
 
+import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -14,9 +15,9 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.SearchView;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -49,17 +50,17 @@ import java.util.HashMap;
 import java.util.Locale;
 
 import roboguice.RoboGuice;
-import voodoo.tvdb.Fragments.AboutFragment;
-import voodoo.tvdb.Fragments.DashboardFragment;
-import voodoo.tvdb.Fragments.FavoritesFragment;
-import voodoo.tvdb.Fragments.LoginFragment;
-import voodoo.tvdb.Fragments.QueueFragment;
-import voodoo.tvdb.Fragments.RegisterFragment;
-import voodoo.tvdb.Fragments.TimelineFragment;
 import voodoo.tvdb.R;
-import voodoo.tvdb.SharedPreferences.DataStore;
 import voodoo.tvdb.alarmServices.ReminderManager;
+import voodoo.tvdb.fragments.AboutFragment;
+import voodoo.tvdb.fragments.DashboardFragment;
+import voodoo.tvdb.fragments.FavoritesFragment;
+import voodoo.tvdb.fragments.LoginFragment;
+import voodoo.tvdb.fragments.QueueFragment;
+import voodoo.tvdb.fragments.RegisterFragment;
+import voodoo.tvdb.fragments.TimelineFragment;
 import voodoo.tvdb.preferences.Prefs;
+import voodoo.tvdb.sharedPreferences.DataStore;
 import voodoo.tvdb.sqlitDatabase.DatabaseAdapter;
 import voodoo.tvdb.utils.CustomTypefaceSpan;
 import voodoo.tvdb.utils.UserFunctions;
@@ -480,15 +481,21 @@ public class BaseSlidingActivity extends ActionBarActivity implements View.OnCli
     public boolean onCreateOptionsMenu(Menu menu){
         super.onCreateOptionsMenu(menu);
         // Search Menu Item
-        MenuItem search = menu.add("Search").setIcon(R.drawable.ic_menu_search_holo_light);
-        MenuItemCompat.setShowAsAction(search, MenuItemCompat.SHOW_AS_ACTION_IF_ROOM);
-        search.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener(){
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                onSearchRequested();
-                return true;
-            }
-        });
+        getMenuInflater().inflate(R.menu.search_menu_item, menu);
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        MenuItem search = menu.findItem(R.id.menu_item_search);
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(search);
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setIconifiedByDefault(false);
+        
+//        search.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener(){
+//
+//            @Override
+//            public boolean onMenuItemClick(MenuItem item) {
+//                Log.e(TAG, "Search Clicked");
+//                return onSearchRequested();
+//            }
+//        });
         return true;
     }
 

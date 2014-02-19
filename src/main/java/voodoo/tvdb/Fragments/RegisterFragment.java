@@ -1,4 +1,4 @@
-package voodoo.tvdb.Fragments;
+package voodoo.tvdb.fragments;
 
 import android.app.Activity;
 import android.app.AlertDialog;

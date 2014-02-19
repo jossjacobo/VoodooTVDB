@@ -1,4 +1,4 @@
-package voodoo.tvdb.Fragments;
+package voodoo.tvdb.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

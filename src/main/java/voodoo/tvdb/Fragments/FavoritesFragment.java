@@ -1,4 +1,4 @@
-package voodoo.tvdb.Fragments;
+package voodoo.tvdb.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,12 +17,12 @@ import java.util.List;
 
 import voodoo.tvdb.activity.MainActivity;
 import voodoo.tvdb.activity.SeriesInfoActivity;
-import voodoo.tvdb.Adapters.FavoriteAdapter;
-import voodoo.tvdb.Adapters.SpinnerAdapter;
+import voodoo.tvdb.adapters.FavoriteAdapter;
+import voodoo.tvdb.adapters.SpinnerAdapter;
 import voodoo.tvdb.alarmServices.MyAlarmManager;
-import voodoo.tvdb.Objects.ListItem;
-import voodoo.tvdb.Objects.ListObject;
-import voodoo.tvdb.Objects.Series;
+import voodoo.tvdb.objects.ListItem;
+import voodoo.tvdb.objects.ListObject;
+import voodoo.tvdb.objects.Series;
 import voodoo.tvdb.preferences.Prefs;
 import voodoo.tvdb.R;
 import voodoo.tvdb.utils.ListHelper;

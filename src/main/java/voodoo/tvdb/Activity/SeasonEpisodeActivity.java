@@ -26,9 +26,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
-import voodoo.tvdb.Objects.Episode;
-import voodoo.tvdb.Objects.Reminder;
-import voodoo.tvdb.Objects.Series;
+import voodoo.tvdb.objects.Episode;
+import voodoo.tvdb.objects.Reminder;
+import voodoo.tvdb.objects.Series;
 import voodoo.tvdb.preferences.Prefs;
 import voodoo.tvdb.R;
 import voodoo.tvdb.utils.ServerUrls;

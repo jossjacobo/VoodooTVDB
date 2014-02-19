@@ -1,4 +1,4 @@
-package voodoo.tvdb.XMLHandlers;
+package voodoo.tvdb.xmlHandlers;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;

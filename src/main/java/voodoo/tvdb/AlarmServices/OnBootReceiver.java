@@ -8,7 +8,7 @@ import android.util.Log;
 import java.text.ParseException;
 import java.util.ArrayList;
 
-import voodoo.tvdb.Objects.Reminder;
+import voodoo.tvdb.objects.Reminder;
 import voodoo.tvdb.sqlitDatabase.DatabaseAdapter;
 
 

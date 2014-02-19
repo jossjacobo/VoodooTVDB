@@ -19,8 +19,8 @@ import java.util.List;
 import voodoo.tvdb.activity.MainActivity;
 import voodoo.tvdb.alarmServices.MyAlarmManager;
 import voodoo.tvdb.alarmServices.SyncService;
-import voodoo.tvdb.Objects.ListObject;
-import voodoo.tvdb.Objects.Series;
+import voodoo.tvdb.objects.ListObject;
+import voodoo.tvdb.objects.Series;
 import voodoo.tvdb.R;
 import voodoo.tvdb.sqlitDatabase.DatabaseAdapter;
 

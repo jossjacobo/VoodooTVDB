@@ -1,4 +1,4 @@
-package voodoo.tvdb.Objects;
+package voodoo.tvdb.objects;
 
 import java.util.ArrayList;
 

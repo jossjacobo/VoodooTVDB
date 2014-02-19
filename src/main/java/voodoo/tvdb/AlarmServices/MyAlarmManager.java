@@ -5,7 +5,7 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
-import voodoo.tvdb.Objects.Reminder;
+import voodoo.tvdb.objects.Reminder;
 import voodoo.tvdb.sqlitDatabase.DatabaseAdapter;
 
 

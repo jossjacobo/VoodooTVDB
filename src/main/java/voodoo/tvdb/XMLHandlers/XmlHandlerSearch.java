@@ -1,4 +1,4 @@
-package voodoo.tvdb.XMLHandlers;
+package voodoo.tvdb.xmlHandlers;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -6,7 +6,7 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import java.util.ArrayList;
 
-import voodoo.tvdb.Objects.Series;
+import voodoo.tvdb.objects.Series;
 
 
 //TODO Move the sorting to the Search.Class Activity instead of here ><

@@ -1,12 +1,12 @@
-package voodoo.tvdb.Fragments;
+package voodoo.tvdb.fragments;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 
 import java.util.ArrayList;
 
-import voodoo.tvdb.Adapters.QueueAdapter;
-import voodoo.tvdb.Objects.Episode;
+import voodoo.tvdb.adapters.QueueAdapter;
+import voodoo.tvdb.objects.Episode;
 import voodoo.tvdb.R;
 import voodoo.tvdb.sqlitDatabase.DatabaseAdapter;
 

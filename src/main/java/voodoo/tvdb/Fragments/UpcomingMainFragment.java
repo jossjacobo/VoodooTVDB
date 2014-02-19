@@ -1,4 +1,4 @@
-package voodoo.tvdb.Fragments;
+package voodoo.tvdb.fragments;
 
 import android.content.Context;
 import android.content.Intent;
@@ -25,7 +25,7 @@ import java.util.Date;
 import voodoo.tvdb.activity.SeasonEpisodeActivity;
 import voodoo.tvdb.activity.SeriesInfoActivity;
 import voodoo.tvdb.activity.BaseSlidingActivity;
-import voodoo.tvdb.Objects.Reminder;
+import voodoo.tvdb.objects.Reminder;
 import voodoo.tvdb.R;
 import voodoo.tvdb.utils.ServerUrls;
 import voodoo.tvdb.sqlitDatabase.DatabaseAdapter;

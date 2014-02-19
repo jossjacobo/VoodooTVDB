@@ -2,9 +2,9 @@ package voodoo.tvdb.user;
 
 import java.util.ArrayList;
 
-import voodoo.tvdb.Objects.ListItem;
-import voodoo.tvdb.Objects.ListObject;
-import voodoo.tvdb.Objects.Series;
+import voodoo.tvdb.objects.ListItem;
+import voodoo.tvdb.objects.ListObject;
+import voodoo.tvdb.objects.Series;
 import voodoo.tvdb.sqlitDatabase.DatabaseAdapter;
 
 import android.content.Context;

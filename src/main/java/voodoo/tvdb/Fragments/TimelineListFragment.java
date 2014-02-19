@@ -1,7 +1,6 @@
-package voodoo.tvdb.Fragments;
+package voodoo.tvdb.fragments;
 
 import android.os.Bundle;
-import android.util.Log;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -11,8 +10,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 
-import voodoo.tvdb.Adapters.ReminderAdapter;
-import voodoo.tvdb.Objects.Reminder;
+import voodoo.tvdb.adapters.ReminderAdapter;
+import voodoo.tvdb.objects.Reminder;
 import voodoo.tvdb.sqlitDatabase.DatabaseAdapter;
 
 public class TimelineListFragment extends BaseListFragment {

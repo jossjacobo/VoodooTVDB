@@ -1,4 +1,4 @@
-package voodoo.tvdb.Adapters;
+package voodoo.tvdb.adapters;
 
 import android.content.Context;
 import android.support.v4.app.Fragment;
@@ -7,7 +7,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import java.util.ArrayList;
 
-import voodoo.tvdb.Objects.Reminder;
+import voodoo.tvdb.objects.Reminder;
 
 
 public class ViewPagerAdapter extends FragmentPagerAdapter {

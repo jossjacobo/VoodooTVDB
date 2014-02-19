@@ -90,6 +90,7 @@
     <string name="contextmenu_watched">Watched</string>
     <string name="contextmenu_not_watched">Have not Watched</string>
     <string name="contextmenu_episode_watched">Watch all previous</string>
+    <string name="share">Share</string>
 
     <!-- Update Notification -->
     <string name="updating_favorites">Updating Favorites</string>

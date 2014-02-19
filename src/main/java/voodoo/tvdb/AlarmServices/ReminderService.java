@@ -8,7 +8,7 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 
 import voodoo.tvdb.activity.MainActivity;
-import voodoo.tvdb.Objects.Reminder;
+import voodoo.tvdb.objects.Reminder;
 import voodoo.tvdb.R;
 
 public class ReminderService extends WakeReminderIntentService{

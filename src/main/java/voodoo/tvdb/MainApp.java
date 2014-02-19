@@ -7,7 +7,7 @@ import com.google.inject.Inject;
 import com.google.inject.Injector;
 
 import roboguice.RoboGuice;
-import voodoo.tvdb.SharedPreferences.DataStore;
+import voodoo.tvdb.sharedPreferences.DataStore;
 
 /**
  * Created by PUTITO-TV on 10/9/13.

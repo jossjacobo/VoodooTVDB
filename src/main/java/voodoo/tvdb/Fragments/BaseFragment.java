@@ -1,4 +1,4 @@
-package voodoo.tvdb.Fragments;
+package voodoo.tvdb.fragments;
 
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -10,7 +10,7 @@ import android.text.SpannableStringBuilder;
 import com.google.inject.Injector;
 
 import roboguice.RoboGuice;
-import voodoo.tvdb.SharedPreferences.DataStore;
+import voodoo.tvdb.sharedPreferences.DataStore;
 import voodoo.tvdb.utils.CustomTypefaceSpan;
 
 /**

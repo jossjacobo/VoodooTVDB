@@ -27,12 +27,12 @@ import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
 import voodoo.tvdb.activity.MainActivity;
-import voodoo.tvdb.Objects.Episode;
-import voodoo.tvdb.Objects.FavoriteBundle;
-import voodoo.tvdb.Objects.ListItem;
-import voodoo.tvdb.Objects.ListObject;
-import voodoo.tvdb.Objects.Reminder;
-import voodoo.tvdb.Objects.Series;
+import voodoo.tvdb.objects.Episode;
+import voodoo.tvdb.objects.FavoriteBundle;
+import voodoo.tvdb.objects.ListItem;
+import voodoo.tvdb.objects.ListObject;
+import voodoo.tvdb.objects.Reminder;
+import voodoo.tvdb.objects.Series;
 import voodoo.tvdb.R;
 import voodoo.tvdb.utils.ListHelper;
 import voodoo.tvdb.utils.ListSyncFunctions;
@@ -41,7 +41,7 @@ import voodoo.tvdb.utils.ServerUrls;
 import voodoo.tvdb.utils.UserFunctions;
 import voodoo.tvdb.utils.WatchedHelper;
 import voodoo.tvdb.utils.WatchedSyncFunctions;
-import voodoo.tvdb.XMLHandlers.XmlHandlerFetchAllSeriesInfo;
+import voodoo.tvdb.xmlHandlers.XmlHandlerFetchAllSeriesInfo;
 import voodoo.tvdb.sqlitDatabase.DatabaseAdapter;
 
 /**

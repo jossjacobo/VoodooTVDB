@@ -1,4 +1,4 @@
-package voodoo.tvdb.Fragments;
+package voodoo.tvdb.fragments;
 
 import android.content.Context;
 import android.content.Intent;
@@ -30,14 +30,14 @@ import javax.xml.parsers.SAXParserFactory;
 import voodoo.tvdb.activity.HotActivity;
 import voodoo.tvdb.activity.SeriesInfoActivity;
 import voodoo.tvdb.activity.BaseSlidingActivity;
-import voodoo.tvdb.Objects.Series;
+import voodoo.tvdb.objects.Series;
 import voodoo.tvdb.R;
 import voodoo.tvdb.utils.FavoriteHelper;
 import voodoo.tvdb.utils.FavoriteSavingListener;
 import voodoo.tvdb.utils.Keys;
 import voodoo.tvdb.utils.ServerUrls;
-import voodoo.tvdb.XMLHandlers.XmlHandlerHot;
-import voodoo.tvdb.XMLHandlers.XmlHandlerServertime;
+import voodoo.tvdb.xmlHandlers.XmlHandlerHot;
+import voodoo.tvdb.xmlHandlers.XmlHandlerServertime;
 import voodoo.tvdb.sqlitDatabase.DatabaseAdapter;
 
 /**

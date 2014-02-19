@@ -1,4 +1,4 @@
-package voodoo.tvdb.Objects;
+package voodoo.tvdb.objects;
 
 import android.os.Parcel;
 import android.os.Parcelable;

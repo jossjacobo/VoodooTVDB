@@ -14,7 +14,7 @@ import javax.inject.Inject;
 
 import roboguice.RoboGuice;
 import voodoo.tvdb.activity.MainActivity;
-import voodoo.tvdb.SharedPreferences.DataStore;
+import voodoo.tvdb.sharedPreferences.DataStore;
 
 public class SplashActivity extends Activity {
 

@@ -1,4 +1,4 @@
-package voodoo.tvdb.SharedPreferences;
+package voodoo.tvdb.sharedPreferences;
 
 import android.content.Context;
 import android.content.SharedPreferences;

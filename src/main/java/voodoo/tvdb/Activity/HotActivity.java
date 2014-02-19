@@ -11,13 +11,13 @@ import com.google.ads.AdView;
 
 import java.util.ArrayList;
 
-import voodoo.tvdb.Adapters.HotAdapter;
-import voodoo.tvdb.Objects.Series;
-import voodoo.tvdb.preferences.Prefs;
+import voodoo.tvdb.adapters.HotAdapter;
+import voodoo.tvdb.objects.Series;
 import voodoo.tvdb.R;
+import voodoo.tvdb.preferences.Prefs;
 import voodoo.tvdb.sqlitDatabase.DatabaseAdapter;
 
-public class HotActivity extends BaseActivity {
+public class HotActivity extends voodoo.tvdb.activity.BaseActivity {
 
     private static final String TAG = "Hot";
 	
@@ -111,7 +111,7 @@ public class HotActivity extends BaseActivity {
 			startActivity(new Intent(this, Prefs.class));
 			return true;
 		case android.R.id.home:
-            Intent i = new Intent(this, MainActivity.class);
+            Intent i = new Intent(this, voodoo.tvdb.activity.MainActivity.class);
             i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			startActivity(i);
 			return true;

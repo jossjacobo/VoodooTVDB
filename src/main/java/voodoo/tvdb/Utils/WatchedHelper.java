@@ -4,7 +4,7 @@ import android.content.Context;
 
 import java.util.ArrayList;
 
-import voodoo.tvdb.Objects.Episode;
+import voodoo.tvdb.objects.Episode;
 import voodoo.tvdb.sqlitDatabase.DatabaseAdapter;
 
 public class WatchedHelper {

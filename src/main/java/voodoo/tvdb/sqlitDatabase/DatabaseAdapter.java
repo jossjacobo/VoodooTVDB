@@ -6,11 +6,11 @@ import java.util.HashMap;
 import java.util.TreeSet;
 
 import voodoo.tvdb.activity.BaseSlidingActivity;
-import voodoo.tvdb.Objects.Episode;
-import voodoo.tvdb.Objects.ListItem;
-import voodoo.tvdb.Objects.ListObject;
-import voodoo.tvdb.Objects.Reminder;
-import voodoo.tvdb.Objects.Series;
+import voodoo.tvdb.objects.Episode;
+import voodoo.tvdb.objects.ListItem;
+import voodoo.tvdb.objects.ListObject;
+import voodoo.tvdb.objects.Reminder;
+import voodoo.tvdb.objects.Series;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;

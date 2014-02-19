@@ -25,7 +25,7 @@ import java.io.File;
 
 import roboguice.RoboGuice;
 import voodoo.tvdb.R;
-import voodoo.tvdb.SharedPreferences.DataStore;
+import voodoo.tvdb.sharedPreferences.DataStore;
 import voodoo.tvdb.utils.CustomTypefaceSpan;
 
 /**

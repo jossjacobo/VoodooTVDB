@@ -1,21 +1,14 @@
 package voodoo.tvdb.activity;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.ActionBar;
 import android.view.View;
 
 import com.google.ads.AdView;
 
-import voodoo.tvdb.Fragments.AboutFragment;
-import voodoo.tvdb.Fragments.DashboardFragment;
-import voodoo.tvdb.Fragments.FavoritesFragment;
-import voodoo.tvdb.Fragments.LoginFragment;
-import voodoo.tvdb.Fragments.QueueFragment;
-import voodoo.tvdb.Fragments.RegisterFragment;
-import voodoo.tvdb.Fragments.SlidingMenuFragment;
-import voodoo.tvdb.Fragments.TimelineFragment;
+import voodoo.tvdb.fragments.DashboardFragment;
+import voodoo.tvdb.fragments.LoginFragment;
+import voodoo.tvdb.fragments.RegisterFragment;
+import voodoo.tvdb.fragments.SlidingMenuFragment;
 import voodoo.tvdb.R;
 
 /**

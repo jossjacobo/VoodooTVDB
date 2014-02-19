@@ -1,4 +1,4 @@
-package voodoo.tvdb.Adapters;
+package voodoo.tvdb.adapters;
 
 import android.app.Activity;
 import android.content.Context;
@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 import voodoo.tvdb.activity.SeriesInfoActivity;
-import voodoo.tvdb.Objects.Series;
+import voodoo.tvdb.objects.Series;
 import voodoo.tvdb.R;
 import voodoo.tvdb.utils.ServerUrls;
 

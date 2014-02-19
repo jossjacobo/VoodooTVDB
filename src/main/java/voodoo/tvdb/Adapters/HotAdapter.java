@@ -1,4 +1,4 @@
-package voodoo.tvdb.Adapters;
+package voodoo.tvdb.adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -19,7 +19,7 @@ import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import java.util.ArrayList;
 
 import voodoo.tvdb.activity.SeriesInfoActivity;
-import voodoo.tvdb.Objects.Series;
+import voodoo.tvdb.objects.Series;
 import voodoo.tvdb.R;
 import voodoo.tvdb.utils.ServerUrls;
 

@@ -22,10 +22,10 @@ import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
 import voodoo.tvdb.alarmServices.MyAlarmManager;
-import voodoo.tvdb.Objects.FavoriteBundle;
-import voodoo.tvdb.Objects.Reminder;
-import voodoo.tvdb.Objects.Series;
-import voodoo.tvdb.XMLHandlers.XmlHandlerFetchAllSeriesInfo;
+import voodoo.tvdb.objects.FavoriteBundle;
+import voodoo.tvdb.objects.Reminder;
+import voodoo.tvdb.objects.Series;
+import voodoo.tvdb.xmlHandlers.XmlHandlerFetchAllSeriesInfo;
 import voodoo.tvdb.sqlitDatabase.DatabaseAdapter;
 
 public class FavoriteHelper {

@@ -1,4 +1,4 @@
-package voodoo.tvdb.Adapters;
+package voodoo.tvdb.adapters;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -30,8 +30,8 @@ import java.util.Date;
 import java.util.TreeSet;
 
 import voodoo.tvdb.activity.SeasonEpisodeActivity;
-import voodoo.tvdb.Objects.Episode;
-import voodoo.tvdb.Objects.Series;
+import voodoo.tvdb.objects.Episode;
+import voodoo.tvdb.objects.Series;
 import voodoo.tvdb.R;
 import voodoo.tvdb.utils.ServerUrls;
 import voodoo.tvdb.utils.WatchedHelper;

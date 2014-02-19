@@ -1,4 +1,4 @@
-package voodoo.tvdb.XMLHandlers;
+package voodoo.tvdb.xmlHandlers;
 
 import android.content.Context;
 
@@ -8,8 +8,8 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import java.util.ArrayList;
 
-import voodoo.tvdb.Objects.Episode;
-import voodoo.tvdb.Objects.Series;
+import voodoo.tvdb.objects.Episode;
+import voodoo.tvdb.objects.Series;
 
 
 public class XmlHandlerFetchAllSeriesInfo extends DefaultHandler{

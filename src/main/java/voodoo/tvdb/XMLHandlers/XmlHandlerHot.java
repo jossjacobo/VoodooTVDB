@@ -1,4 +1,4 @@
-package voodoo.tvdb.XMLHandlers;
+package voodoo.tvdb.xmlHandlers;
 
 import android.content.Context;
 
@@ -8,7 +8,7 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import java.util.ArrayList;
 
-import voodoo.tvdb.Objects.Series;
+import voodoo.tvdb.objects.Series;
 
 
 public class XmlHandlerHot extends DefaultHandler {

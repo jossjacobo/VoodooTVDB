@@ -1,4 +1,4 @@
-package voodoo.tvdb.Fragments;
+package voodoo.tvdb.fragments;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -13,7 +13,7 @@ import android.widget.LinearLayout;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import voodoo.tvdb.activity.TutorialActivity;
-import voodoo.tvdb.Objects.ListObject;
+import voodoo.tvdb.objects.ListObject;
 import voodoo.tvdb.R;
 import voodoo.tvdb.sqlitDatabase.DatabaseAdapter;
 
