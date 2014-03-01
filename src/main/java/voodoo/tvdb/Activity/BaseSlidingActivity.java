@@ -70,10 +70,6 @@ import voodoo.tvdb.utils.UserFunctions;
  */
 public class BaseSlidingActivity extends ActionBarActivity implements View.OnClickListener {
 
-    private static final String TAG = "BaseSlidingActivity";
-    public boolean blocked = false;
-    public boolean home = false;
-
     public DataStore dataStore;
     
     public ImageLoader imageLoader = ImageLoader.getInstance();
@@ -86,11 +82,8 @@ public class BaseSlidingActivity extends ActionBarActivity implements View.OnCli
     private ActionBarDrawerToggle mDrawerToggle;
     private MenuListAdapter adapter;
 
-    private LinearLayout header;
-    private ImageView avatar;
     private TextView username;
     private TextView login;
-    private TextView goPro;
 
     private DatabaseAdapter db;
 
@@ -226,11 +219,11 @@ public class BaseSlidingActivity extends ActionBarActivity implements View.OnCli
 
     private View getDrawerHeader() {
 
-        header = (LinearLayout) LayoutInflater.from(BaseSlidingActivity.this).inflate(R.layout.drawer_list_header, null);
-        avatar = (ImageView) header.findViewById(R.id.drawer_list_header_avatar);
+        LinearLayout header = (LinearLayout) LayoutInflater.from(BaseSlidingActivity.this).inflate(R.layout.drawer_list_header, null);
+        ImageView avatar = (ImageView) header.findViewById(R.id.drawer_list_header_avatar);
         username = (TextView) header.findViewById(R.id.drawer_list_header_user);
         login = (TextView) header.findViewById(R.id.drawer_list_header_logInOut);
-        goPro = (TextView) header.findViewById(R.id.drawer_list_header_go_pro);
+        TextView goPro = (TextView) header.findViewById(R.id.drawer_list_header_go_pro);
 
         avatar.setOnClickListener(this);
         username.setOnClickListener(this);
@@ -480,22 +473,29 @@ public class BaseSlidingActivity extends ActionBarActivity implements View.OnCli
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         super.onCreateOptionsMenu(menu);
+
         // Search Menu Item
-        getMenuInflater().inflate(R.menu.search_menu_item, menu);
+        getMenuInflater().inflate(R.menu.menu_item_search, menu);
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         MenuItem search = menu.findItem(R.id.menu_item_search);
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(search);
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-        searchView.setIconifiedByDefault(false);
-        
-//        search.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener(){
-//
-//            @Override
-//            public boolean onMenuItemClick(MenuItem item) {
-//                Log.e(TAG, "Search Clicked");
-//                return onSearchRequested();
-//            }
-//        });
+        searchView.setIconifiedByDefault(true);
+        searchView.setOnSearchClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getSupportActionBar().setIcon(R.drawable.icon);
+            }
+        });
+        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                getSupportActionBar().setIcon(R.drawable.logo);
+                return false;
+            }
+        });
+
+
         return true;
     }
 
@@ -542,22 +542,4 @@ public class BaseSlidingActivity extends ActionBarActivity implements View.OnCli
         return false;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

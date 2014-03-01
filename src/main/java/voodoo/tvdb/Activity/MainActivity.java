@@ -43,11 +43,6 @@ public class MainActivity extends BaseSlidingActivity implements SlidingMenuFrag
     }
 
     @Override
-    public void onHome(boolean isHome) {
-        home = isHome;
-    }
-
-    @Override
     public void onLoadQueue() {
         selectFragment(contentView, R.id.queue_fragment);
     }

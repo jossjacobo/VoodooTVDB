@@ -23,7 +23,6 @@ public class TutorialActivity extends Activity {
         ViewPager pager = (ViewPager) findViewById(R.id.pager_tutorial);
         pager.setAdapter(adapter);
         pager.setCurrentItem(0);
-
     }
 
 }

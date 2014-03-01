@@ -62,7 +62,6 @@ public class DashboardFragment extends BaseFragment implements HotMainFragment.H
     @Override
     public void onResume(){
         super.onResume();
-        listener.onHome(true);
 
         if(hotFragment.series != null)
             hotFragment.checkForChanges();
@@ -72,15 +71,7 @@ public class DashboardFragment extends BaseFragment implements HotMainFragment.H
             queueFragment.checkForChanges();
     }
 
-    @Override
-    public void onPause(){
-        super.onPause();
-        listener.onHome(false);
-    }
-
     private void initializeFrags() {
-//        FragmentTransaction ft = context.getSupportFragmentManager().beginTransaction();
-
         hotFragment = new HotMainFragment();
         hotFragment.setListener(this);
         hotViewContainer = hotFragment.createView(context,layoutInflater,imageLoader);
@@ -172,7 +163,6 @@ public class DashboardFragment extends BaseFragment implements HotMainFragment.H
     }
 
     public interface DashboardListner{
-        public void onHome(boolean isHome);
         public void onLoadQueue();
         public void onLoadTimeline();
     }

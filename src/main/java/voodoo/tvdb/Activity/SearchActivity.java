@@ -70,14 +70,13 @@ public class SearchActivity extends BaseActivity implements OnScrollListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search);
 
+        list = (ListView) findViewById(R.id.list);
         empty = (TextView) findViewById(R.id.empty);
-        ListView list = (ListView) findViewById(R.id.list);
+
         list.setEmptyView(empty);
         
         dbAdapter = new DatabaseAdapter(this);
         loadingView = getLayoutInflater().inflate(R.layout.item_loading, null);
-
-        list = (ListView) findViewById(R.id.list);
         
         //Get Intent, verify the action and get the query
         Intent intent = getIntent();
@@ -273,7 +272,7 @@ public class SearchActivity extends BaseActivity implements OnScrollListener{
 			//Log.d(TAG, "searchQuery, onPreExecute()");
 			
 			// Hide Footer
-			if(list.getFooterViewsCount() > 0){
+			if(list != null && list.getFooterViewsCount() > 0){
 				list.removeFooterView(loadingView);
 			}
 			

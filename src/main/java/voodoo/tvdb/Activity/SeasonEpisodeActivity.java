@@ -146,19 +146,17 @@ public class SeasonEpisodeActivity extends BaseActivity {
 	public boolean onCreateOptionsMenu(Menu menu){
 		super.onCreateOptionsMenu(menu);
 		
-		//ActionBar
-		getMenuInflater().inflate(R.menu.share_menu_item, menu);
-
+		getMenuInflater().inflate(R.menu.menu_item_share, menu);
 		MenuItem share = menu.findItem(R.id.menu_icon_share);
 		ShareActionProvider provider = (ShareActionProvider) MenuItemCompat.getActionProvider(share);
-		//provider.setShareHistoryFileName(ShareActionProvider.DEFAULT_SHARE_HISTORY_FILE_NAME);
 		Intent i = new Intent(Intent.ACTION_SEND);
 		i.setType("text/plain");
 		i.putExtra(Intent.EXTRA_TEXT, "Watching \"" + episode.TITLE + "\" from " + series.TITLE + "! http://voodootvdb.com");
 		provider.setShareIntent(i);
-		
-		watched = menu.add("watched").setIcon(isWatched ? R.drawable.btn_check_on : R.drawable.btn_check_off);
-        MenuItemCompat.setShowAsAction(watched, MenuItemCompat.SHOW_AS_ACTION_ALWAYS);
+
+        getMenuInflater().inflate(R.menu.menu_item_watched, menu);
+        watched = menu.findItem(R.id.menu_item_watched);
+		watched.setIcon(isWatched ? R.drawable.btn_check_on : R.drawable.btn_check_off);
 		watched.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener(){
 
 			@Override
@@ -216,9 +214,7 @@ public class SeasonEpisodeActivity extends BaseActivity {
 				
 				return true;
 			}
-
     	});
-		
 		return true;
 	}
 	@Override
@@ -240,7 +236,7 @@ public class SeasonEpisodeActivity extends BaseActivity {
 			break;
 			
 		case R.id.menu_icon_share:
-			
+            // TODO
 			Log.d("SEASON_EPISODE",  "onOptionsItemSelected");
 			break;
 		}

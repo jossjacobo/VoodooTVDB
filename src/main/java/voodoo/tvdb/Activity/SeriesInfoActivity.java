@@ -173,8 +173,7 @@ public class SeriesInfoActivity extends BaseActivity {
 
 		String text = series == null ? "http://voodootvdb.com" : "Watching " + series.TITLE + "! http://voodootvdb.com";
 
-		getMenuInflater().inflate(R.menu.share_menu_item, menu);
-
+		getMenuInflater().inflate(R.menu.menu_item_share, menu);
 		MenuItem share = menu.findItem(R.id.menu_icon_share);
 		ShareActionProvider provider = (ShareActionProvider) MenuItemCompat.getActionProvider(share);
 		Intent i = new Intent(Intent.ACTION_SEND);
@@ -182,9 +181,10 @@ public class SeriesInfoActivity extends BaseActivity {
 		i.putExtra(Intent.EXTRA_TEXT, text);
         i.putExtra(Intent.EXTRA_TEXT, "voodoo");
 		provider.setShareIntent(i);
-		
-		favorite = menu.add(getResources().getString(R.string.favorites)).setIcon( isFavorited ? R.drawable.rate_star_med_on_holo_light : R.drawable.rate_star_med_off_holo_light);
-        MenuItemCompat.setShowAsAction(favorite, MenuItemCompat.SHOW_AS_ACTION_ALWAYS);
+
+        getMenuInflater().inflate(R.menu.menu_item_favorite, menu);
+		favorite = menu.findItem(R.id.menu_item_favorite);
+        favorite.setIcon( isFavorited ? R.drawable.rate_star_med_on_holo_light : R.drawable.rate_star_med_off_holo_light);
 		favorite.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener(){
 			@Override
 			public boolean onMenuItemClick(MenuItem item) {
@@ -202,7 +202,7 @@ public class SeriesInfoActivity extends BaseActivity {
                 });
 				return true;
 			}
-    	});
+            	});
 		
 		return true;
 	}

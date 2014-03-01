@@ -53,7 +53,7 @@ public class SuggestionProvider extends SearchRecentSuggestionsProvider {
 		 * "content://authority/optionalPath/search_suggest_query/queryText"
 		 * 
 		 * Where the search_suggest_query is an unique element added by android
-		 * and the queryText is what the user actually inputed into the search bar
+		 * and the queryText is what the user actually inputted into the search bar
 		 */
 		
 		//Query the user entered into the search bar

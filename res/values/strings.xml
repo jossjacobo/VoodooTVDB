@@ -129,7 +129,7 @@
     <!-- Search Activity -->
     <string name="search">Search</string>
     <string name="search_bar_label">Results</string>
-    <string name="search_hint">Search for Show</string>
+    <string name="search_hint">Search Shows&#8230;</string>
     <string name="empty_text">No Results Found</string>
 
     <!-- Favorites Activity -->

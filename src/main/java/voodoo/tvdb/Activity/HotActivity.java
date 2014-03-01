@@ -17,7 +17,7 @@ import voodoo.tvdb.R;
 import voodoo.tvdb.preferences.Prefs;
 import voodoo.tvdb.sqlitDatabase.DatabaseAdapter;
 
-public class HotActivity extends voodoo.tvdb.activity.BaseActivity {
+public class HotActivity extends BaseActivity {
 
     private static final String TAG = "Hot";
 	

@@ -28,16 +28,16 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 
+import voodoo.tvdb.R;
 import voodoo.tvdb.adapters.SeasonAdapter;
 import voodoo.tvdb.objects.Episode;
 import voodoo.tvdb.objects.Reminder;
 import voodoo.tvdb.objects.Series;
 import voodoo.tvdb.preferences.Prefs;
-import voodoo.tvdb.R;
+import voodoo.tvdb.sqlitDatabase.DatabaseAdapter;
 import voodoo.tvdb.utils.FavoriteHelper;
 import voodoo.tvdb.utils.FavoriteSavingListener;
 import voodoo.tvdb.utils.WatchedHelper;
-import voodoo.tvdb.sqlitDatabase.DatabaseAdapter;
 
 /**
  * TODO Add Reminder for this particular episode
@@ -149,8 +149,9 @@ public class SeasonActivity extends BaseActivity {
 		super.onCreateOptionsMenu(menu);
 		
 		//ActionBar
-		favorite = (MenuItem) menu.add("favorite").setIcon( isFavorite ? R.drawable.rate_star_med_on_holo_light : R.drawable.rate_star_med_off_holo_light);
-		favorite.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+        getMenuInflater().inflate(R.menu.menu_item_favorite, menu);
+        favorite = menu.findItem(R.id.menu_item_favorite);
+		favorite.setIcon( isFavorite ? R.drawable.rate_star_med_on_holo_light : R.drawable.rate_star_med_off_holo_light);
 		favorite.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener(){
 
 			@Override
