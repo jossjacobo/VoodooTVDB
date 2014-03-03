@@ -74,7 +74,6 @@ public class SeriesInfoActivity extends BaseActivity {
 	private ViewHolder holder;
 	
 	LinearLayout seasonsList;
-	TextView empty;
 	LayoutInflater inflater;
 	
 	private DatabaseAdapter dbAdapter;

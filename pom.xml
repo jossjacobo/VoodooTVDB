@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>voodoo.tvdb</groupId>
 	<artifactId>VoodooTVDB</artifactId>
-	<version>1.0-SNAPSHOT</version>
+	<version>0.9.14</version>
 	<packaging>apk</packaging>
 	<name>VoodooTVDB</name>
 
@@ -145,9 +145,9 @@
                                         </include>
                                     </includes>
                                     <keystore>VoodooXTC.keystore</keystore>
-                                    <storepass><!-- Check PassPack for Store Password --></storepass>
-                                    <alias><!-- Check PassPack for Alias --></alias>
-                                    <keypass><!-- Check PassPack for Alias Password --></keypass>
+                                    <storepass><!-- PassPack --></storepass>
+                                    <alias><!-- PassPack --></alias>
+                                    <keypass><!-- PassPack --></keypass>
                                     <verbose>true</verbose>
                                 </configuration>
                             </execution>
