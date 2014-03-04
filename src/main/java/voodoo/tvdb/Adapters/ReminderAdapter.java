@@ -360,7 +360,7 @@ public class ReminderAdapter extends BaseAdapter implements View.OnClickListener
     @Override
     public void onClick(View v) {
         Intent i = new Intent(context, SeasonEpisodeActivity.class);
-        i.putExtra("REMINDER", (Reminder) v.findViewById(R.id.reminder_date_and_time).getTag());
+        i.putExtra(SeasonEpisodeActivity.REMINDER, (Reminder) v.findViewById(R.id.reminder_date_and_time).getTag());
         context.startActivity(i);
     }
 }

@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>voodoo.tvdb</groupId>
 	<artifactId>VoodooTVDB</artifactId>
-	<version>0.9.14</version>
+	<version>0.9.15</version>
 	<packaging>apk</packaging>
 	<name>VoodooTVDB</name>
 
@@ -41,13 +41,6 @@
             <artifactId>compatibility-v4</artifactId>
             <version>18</version>
         </dependency>
-
-        <!--<dependency>-->
-            <!--<groupId>com.jeremyfeinstein.slidingmenu</groupId>-->
-            <!--<artifactId>robosherlock-slidingmenu</artifactId>-->
-            <!--<version>1.10.0</version>-->
-            <!--<type>apklib</type>-->
-        <!--</dependency>-->
 
         <dependency>
             <groupId>com.github.rtyley</groupId>
