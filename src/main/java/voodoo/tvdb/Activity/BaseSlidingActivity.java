@@ -84,6 +84,7 @@ public class BaseSlidingActivity extends ActionBarActivity implements View.OnCli
 
     private TextView username;
     private TextView login;
+    private TextView goPro;
 
     private DatabaseAdapter db;
 
@@ -109,6 +110,12 @@ public class BaseSlidingActivity extends ActionBarActivity implements View.OnCli
         setActionBarTitle(getResources().getString(R.string.app_name));
         setupSlidingMenu();
         initializeImageLoader();
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        setHeaderContent();
     }
 
     @Override
@@ -223,7 +230,7 @@ public class BaseSlidingActivity extends ActionBarActivity implements View.OnCli
         ImageView avatar = (ImageView) header.findViewById(R.id.drawer_list_header_avatar);
         username = (TextView) header.findViewById(R.id.drawer_list_header_user);
         login = (TextView) header.findViewById(R.id.drawer_list_header_logInOut);
-        TextView goPro = (TextView) header.findViewById(R.id.drawer_list_header_go_pro);
+        goPro = (TextView) header.findViewById(R.id.drawer_list_header_go_pro);
 
         avatar.setOnClickListener(this);
         username.setOnClickListener(this);
@@ -255,6 +262,10 @@ public class BaseSlidingActivity extends ActionBarActivity implements View.OnCli
             username.setTag("login");
             login.setText("Register");
             login.setTag("register");
+        }
+
+        if(isProInstalled(this)){
+            goPro.setVisibility(View.GONE);
         }
     }
 
@@ -490,7 +501,9 @@ public class BaseSlidingActivity extends ActionBarActivity implements View.OnCli
         searchView.setOnCloseListener(new SearchView.OnCloseListener() {
             @Override
             public boolean onClose() {
-                getSupportActionBar().setIcon(R.drawable.logo);
+                if(currentFrag == R.id.dashboard_fragment){
+                    getSupportActionBar().setIcon(R.drawable.logo);
+                }
                 return false;
             }
         });
