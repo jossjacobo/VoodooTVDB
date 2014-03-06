@@ -1,11 +1,13 @@
 package voodoo.tvdb.fragments;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.text.Spannable;
 import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +25,11 @@ public class AboutFragment extends BaseFragment {
     TextView text2;
     TextView text3;
     TextView text4;
+
+    TextView version;
+
+    String appVersionName;
+    int appVersionCode;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedState){
@@ -75,6 +82,14 @@ public class AboutFragment extends BaseFragment {
             }
         });
 
+        version = (TextView) view.findViewById(R.id.version);
+        try{
+            appVersionName = context.getPackageManager().getPackageInfo(context.getPackageName(), 0).versionName;
+            appVersionCode = context.getPackageManager().getPackageInfo(context.getPackageName(), 0).versionCode;
+        }catch (PackageManager.NameNotFoundException e){
+            Log.e("About", e.toString());
+        }
+        version.setText("Version " + appVersionName + " Build " + appVersionCode);
         return view;
     }
 

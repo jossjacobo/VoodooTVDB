@@ -1,131 +1,146 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:oak="http://oak/oak/schema"
-    android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical" 
-	android:paddingLeft="15dip"
-    android:paddingRight="15dip"
-    android:gravity="center_horizontal" >
-	<!-- 
-    Title Bar
-     -->
-    <RelativeLayout
-        android:id="@+id/tutorial_page7_top_images"
+    android:layout_width="fill_parent">
+    <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <ImageView
-            android:id="@+id/about_icon"
-		  	android:layout_width="35dip"
-		  	android:layout_height="35dip"
-		  	android:src="@drawable/icon"
-		  	android:layout_marginTop="5dip"
-		  	android:layout_marginBottom="5dip"
-            android:layout_alignParentLeft="true"
-		  	android:contentDescription="@string/tutorial_2"/>
-        <ImageView
-            android:id="@+id/about_title"
-		  	android:layout_width="wrap_content"
-		  	android:layout_height="30dip"
-		  	android:src="@drawable/logo2"
-		  	android:layout_gravity="center_vertical"
-		  	android:contentDescription="@string/tutorial_2"
-            android:layout_centerInParent="true"/>
-    </RelativeLayout>
-    <View
-        android:id="@+id/tutorial_page7_top_divider"
-    	android:layout_width="fill_parent"
-    	android:layout_height="1dp"
-    	android:background="@color/blue"
-    	/> 
-   	
-    <!-- 
-    Page 7 Content
-     -->
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:paddingLeft="15dip"
+        android:paddingRight="15dip"
+        android:gravity="center_horizontal" >
+        <!--
+        Title Bar
+         -->
+        <RelativeLayout
+            android:id="@+id/tutorial_page7_top_images"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <ImageView
+                android:id="@+id/about_icon"
+                android:layout_width="35dip"
+                android:layout_height="35dip"
+                android:src="@drawable/icon"
+                android:layout_marginTop="5dip"
+                android:layout_marginBottom="5dip"
+                android:layout_alignParentLeft="true"
+                android:contentDescription="@string/tutorial_2"/>
+            <ImageView
+                android:id="@+id/about_title"
+                android:layout_width="wrap_content"
+                android:layout_height="30dip"
+                android:src="@drawable/logo2"
+                android:layout_gravity="center_vertical"
+                android:contentDescription="@string/tutorial_2"
+                android:layout_centerInParent="true"/>
+        </RelativeLayout>
+        <View
+            android:id="@+id/tutorial_page7_top_divider"
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="@color/blue"
+            />
 
-    <oak.widget.TextViewWithFont
-   	    android:id="@+id/tutorial_page7_text1"
-        android:text="@string/tutorial_page7_text1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/tut_grey"
-        android:textSize="@dimen/text_size_tutorial_page2_text1"
-        android:layout_marginTop="15dip"
-        android:lineSpacingExtra="3dip"
-        oak:font="Roboto-Light.ttf"
-        />
-    <oak.widget.TextViewWithFont
-  	    android:id="@+id/tutorial_page7_text2"
-		android:text="@string/tutorial_page7_text2"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:textColor="@color/blue"
-		android:textSize="@dimen/text_size_tutorial_page2_text1"
-		android:layout_marginTop="15dip"
-        oak:font="Roboto-Light.ttf"
-		/>
-    <oak.widget.TextViewWithFont
-   	    android:id="@+id/tutorial_page7_text3"
-        android:text="@string/tutorial_page7_text3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/tut_grey"
-        android:textSize="@dimen/text_size_tutorial_page2_text1"
-        android:layout_marginTop="15dip"
-        android:lineSpacingExtra="3dip"
-        oak:font="Roboto-Light.ttf"
-        />
+        <!--
+        Page 7 Content
+         -->
 
+        <oak.widget.TextViewWithFont
+            android:id="@+id/tutorial_page7_text1"
+            android:text="@string/tutorial_page7_text1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/tut_grey"
+            android:textSize="@dimen/text_size_tutorial_page2_text1"
+            android:layout_marginTop="15dip"
+            android:lineSpacingExtra="3dip"
+            oak:font="Roboto-Light.ttf"
+            />
+        <oak.widget.TextViewWithFont
+            android:id="@+id/tutorial_page7_text2"
+            android:text="@string/tutorial_page7_text2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/blue"
+            android:textSize="@dimen/text_size_tutorial_page2_text1"
+            android:layout_marginTop="15dip"
+            oak:font="Roboto-Light.ttf"
+            />
+        <oak.widget.TextViewWithFont
+            android:id="@+id/tutorial_page7_text3"
+            android:text="@string/tutorial_page7_text3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/tut_grey"
+            android:textSize="@dimen/text_size_tutorial_page2_text1"
+            android:layout_marginTop="15dip"
+            android:lineSpacingExtra="3dip"
+            oak:font="Roboto-Light.ttf"
+            />
+
+        <oak.widget.TextViewWithFont
+            android:id="@+id/tutorial_page7_text4"
+            android:text="@string/tutorial_page7_text4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/blue"
+            android:textSize="@dimen/text_size_tutorial_page2_text1"
+            android:lineSpacingExtra="3dip"
+            android:layout_marginTop="10dip"
+            android:layout_marginBottom="10dip"
+            oak:font="Roboto-Light.ttf"
+            />
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="@color/blue"
+            android:padding="10dip"
+            />
+
+        <oak.widget.TextViewWithFont
+            android:id="@+id/tutorial_page7_text5"
+            android:text="@string/tutorial_page7_text5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/tut_grey"
+            android:textSize="@dimen/text_size_tutorial_who"
+            android:layout_marginTop="15dip"
+            android:lineSpacingExtra="3dip"
+            oak:font="Roboto-Light.ttf"
+            />
+        <oak.widget.TextViewWithFont
+            android:id="@+id/tutorial_page7_text6"
+            android:text="@string/tutorial_page7_text6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/tut_grey"
+            android:textSize="@dimen/text_size_tutorial_me"
+            android:lineSpacingExtra="3dip"
+            oak:font="Roboto-Light.ttf"
+            />
+        <oak.widget.TextViewWithFont
+            android:id="@+id/tutorial_page7_text7"
+            android:text="@string/tutorial_page7_text7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/tut_grey"
+            android:textSize="@dimen/text_size_tutorial_lead"
+            android:lineSpacingExtra="3dip"
+            oak:font="Roboto-Light.ttf"
+            />
+    </LinearLayout>
     <oak.widget.TextViewWithFont
-   	    android:id="@+id/tutorial_page7_text4"
-        android:text="@string/tutorial_page7_text4"
+        android:id="@+id/version"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/blue"
-        android:textSize="@dimen/text_size_tutorial_page2_text1"
-        android:lineSpacingExtra="3dip"
-        android:layout_marginTop="10dip"
-        android:layout_marginBottom="10dip"
-        oak:font="Roboto-Light.ttf"
-        />     
-	<View
-    	android:layout_width="fill_parent"
-    	android:layout_height="1dp"
-    	android:background="@color/blue"
-    	android:padding="10dip"
-    	/>
-
-    <oak.widget.TextViewWithFont
-   	    android:id="@+id/tutorial_page7_text5"
-        android:text="@string/tutorial_page7_text5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/tut_grey"
-        android:textSize="@dimen/text_size_tutorial_who"
-        android:layout_marginTop="15dip"
-        android:lineSpacingExtra="3dip"
+        android:textSize="12sp"
+        android:padding="8dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
         oak:font="Roboto-Light.ttf"
         />
-    <oak.widget.TextViewWithFont
-   	    android:id="@+id/tutorial_page7_text6"
-        android:text="@string/tutorial_page7_text6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/tut_grey"
-        android:textSize="@dimen/text_size_tutorial_me"
-        android:lineSpacingExtra="3dip"
-        oak:font="Roboto-Light.ttf"
-        />
-    <oak.widget.TextViewWithFont
-   	    android:id="@+id/tutorial_page7_text7"
-        android:text="@string/tutorial_page7_text7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/tut_grey"
-        android:textSize="@dimen/text_size_tutorial_lead"
-        android:lineSpacingExtra="3dip"
-        oak:font="Roboto-Light.ttf"
-        />
-    
-</LinearLayout>
+</RelativeLayout>
