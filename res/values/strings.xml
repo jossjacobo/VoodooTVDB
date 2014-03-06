@@ -150,8 +150,8 @@
 
     <!-- TimeLine -->
     <string name="timeline">Timeline</string>
-    <string name="tab_1">Upcoming</string>
-    <string name="tab_2">Older</string>
+    <string name="tab_upcoming">Upcoming</string>
+    <string name="tab_older">Older</string>
     <string name="timeline_empty_string">No Shows</string>
 
     <!-- Reminder -->

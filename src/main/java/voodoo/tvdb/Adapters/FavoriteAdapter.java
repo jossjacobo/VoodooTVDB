@@ -154,15 +154,11 @@ public class FavoriteAdapter extends BaseAdapter implements OnClickListener, OnC
 	    }
 	    
 	    public ArrayList<Series> removeSeparators(ArrayList<Series> s){
-	    	
 	    	for(int i = 0; i < s.size(); i++){
-	    		
 	    		if(s.get(i).TYPE == Series.TYPE_SEPARATOR){
 	    			s.remove(i);
 	    		}
-	    		
 	    	}
-	    	
 	    	return s;
 	    }
 	    

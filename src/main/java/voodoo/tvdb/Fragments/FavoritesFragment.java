@@ -85,7 +85,6 @@ public class FavoritesFragment extends BaseListFragment {
 
             // Series is not null
             // Back button pressed
-
             if(!listName.equals("All")){
 
                 // Check is the list didn't get deleted
@@ -95,7 +94,6 @@ public class FavoritesFragment extends BaseListFragment {
 
                 if( (l == null) || (l.DELETED.equals(ListObject.KEY_TRUE) )){
 
-                    Log.d(TAG, "list was deleted");
                     // List was deleted
                     createDropDownNav();
 
@@ -106,7 +104,7 @@ public class FavoritesFragment extends BaseListFragment {
                     series = adapter.removeSeparators(series);
 
                     // Check if items are different
-                    if(compare(series, query)){
+                    if(!Equals(series, query)){
 
                         // Items are different, load new items
                         series = query;
@@ -126,7 +124,7 @@ public class FavoritesFragment extends BaseListFragment {
                 series = adapter.removeSeparators(series);
 
                 // Check if items are different
-                if(compare(series, query)){
+                if(!Equals(series, query)){
 
                     // Items are different, load new items
                     series = query;
@@ -340,10 +338,7 @@ public class FavoritesFragment extends BaseListFragment {
 
         //Delete all of the Queue
         dbAdapter.deleteQueueSeries(iD);
-
-        if(dbAdapter.deleteSeries(iD)){
-            Log.d(TAG, "Series deleted from database");
-        }
+        dbAdapter.deleteSeries(iD);
         dbAdapter.close();
 
         series = fetchFavorites(listName);
@@ -352,44 +347,25 @@ public class FavoritesFragment extends BaseListFragment {
 
     }
 
-    // TODO review and make sure the Compare works...
-    private boolean compare(ArrayList<Series> series, ArrayList<Series> query){
-
-        if(series == null && query != null){
+    private boolean Equals(ArrayList<Series> series, ArrayList<Series> query){
+        if(series == null || query == null){
             return false;
         }
-
-        if(series != null && query == null){
-            return false;
-        }
-
-        if(series == null && query == null){
-            return true;
-        }
-
         if(series.size() == query.size()){
-
             for(int i = 0; i < series.size(); i++){
-
                 if(series.get(i).ID == null && query.get(i).ID != null){
                     return false;
                 }
-
                 if(series.get(i).ID != null && query.get(i).ID == null){
                     return false;
                 }
-
-                if(series.get(i).ID != series.get(i).ID){
+                if(!series.get(i).ID.equals(series.get(i).ID)){
                     return false;
                 }
             }
-
         }else{
-
             return false;
-
         }
-
         return true;
 
     }

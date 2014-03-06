@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.view.LayoutInflater;
@@ -19,23 +20,19 @@ import voodoo.tvdb.R;
  */
 public class TimelineFragment extends BaseFragment {
 
-    View view;
-    ArrayList<Fragment> frags;
-    ViewPagerAdapter adapter;
+    private ViewPagerAdapter adapter;
+    private ViewPager viewPager;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedState){
-        view = inflater.inflate(R.layout.timeline_main, container, false);
-
-        //Action bar
-        setupActionBar();
+        View view = inflater.inflate(R.layout.timeline_main, container, false);
 
         adapter = new ViewPagerAdapter(null, getChildFragmentManager());
 
-        ViewPager mViewPager = (ViewPager) view.findViewById(R.id.viewPager);
-        mViewPager.setAdapter(adapter);
-        mViewPager.setCurrentItem(0);
-        mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        viewPager = (ViewPager) view.findViewById(R.id.viewPager);
+        viewPager.setAdapter(adapter);
+        viewPager.setCurrentItem(0);
+        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrollStateChanged(int arg0) {
             }
@@ -46,19 +43,11 @@ public class TimelineFragment extends BaseFragment {
 
             @Override
             public void onPageSelected(int position) {
-                switch (position) {
-                    case 0:
-                        view.findViewById(R.id.first_tab).setVisibility(View.VISIBLE);
-                        view.findViewById(R.id.second_tab).setVisibility(View.INVISIBLE);
-                        break;
-                    case 1:
-                        view.findViewById(R.id.first_tab).setVisibility(View.INVISIBLE);
-                        view.findViewById(R.id.second_tab).setVisibility(View.VISIBLE);
-                        break;
-                }
+                context.getSupportActionBar().setSelectedNavigationItem(position);
             }
         });
 
+        setupActionBar();
         return view;
     }
 
@@ -68,18 +57,41 @@ public class TimelineFragment extends BaseFragment {
         actionBar.setDisplayShowTitleEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeButtonEnabled(true);
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
         actionBar.setIcon(R.drawable.icon);
+
+        // Setup Tabs
+        ActionBar.Tab upcomingTab = actionBar.newTab().setText(getString(R.string.tab_upcoming)).setTabListener(TimeLineTabListener);
+        actionBar.addTab(upcomingTab);
+
+        ActionBar.Tab olderTab = actionBar.newTab().setText(getString(R.string.tab_older)).setTabListener(TimeLineTabListener);
+        actionBar.addTab(olderTab);
 
         setActionBarTitle(getResources().getString(R.string.timeline));
     }
+
+    private ActionBar.TabListener TimeLineTabListener = new ActionBar.TabListener(){
+
+        @Override
+        public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+            viewPager.setCurrentItem(tab.getPosition());
+        }
+
+        @Override
+        public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+        }
+
+        @Override
+        public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+        }
+    };
 
     @Override
     public void onResume(){
         super.onResume();
 
         if(adapter != null){
-            frags = getFragments();
+            ArrayList<Fragment> frags = getFragments();
             adapter.setFrags(frags);
         }
     }

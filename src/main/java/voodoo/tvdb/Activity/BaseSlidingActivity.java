@@ -264,9 +264,7 @@ public class BaseSlidingActivity extends ActionBarActivity implements View.OnCli
             login.setTag("register");
         }
 
-        if(isProInstalled(this)){
-            goPro.setVisibility(View.GONE);
-        }
+        goPro.setVisibility(isProInstalled(this) ? View.GONE : View.VISIBLE);
     }
 
     public void selectFragment(View view, int nextFrag){
@@ -548,11 +546,8 @@ public class BaseSlidingActivity extends ActionBarActivity implements View.OnCli
     /** Is Pro version installed */
     protected boolean isProInstalled(Context context){
         PackageManager manager = context.getPackageManager();
-        if( manager.checkSignatures(context.getPackageName(), "voodoo.tvdb.key") == PackageManager.SIGNATURE_MATCH){
-            // Pro Key installed, and signatures match
-            return true;
-        }
-        return false;
+        // Pro Key installed, and signatures match
+        return manager.checkSignatures(context.getPackageName(), "voodoo.tvdb.key") == PackageManager.SIGNATURE_MATCH;
     }
 }
 

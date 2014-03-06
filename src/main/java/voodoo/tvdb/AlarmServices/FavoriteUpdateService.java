@@ -70,7 +70,7 @@ public class FavoriteUpdateService extends WakeReminderIntentService{
 
 		//List of ID's
 		ArrayList<String> SeriesIds = new ArrayList<String>();
-		ArrayList<Series> HotSeriesList = new ArrayList<Series>();
+		ArrayList<Series> HotSeriesList;
 		
 		DatabaseAdapter dbAdapter = new DatabaseAdapter(getApplicationContext());
 		dbAdapter.open();
@@ -142,9 +142,7 @@ public class FavoriteUpdateService extends WakeReminderIntentService{
 					SeriesIds.add(dlID);
 				}
 			}
-			//Set the Full List to null to free up some space
-			FullSeriesIds = null;
-			
+
 			// Max Progress and Progress Status
 			final int MAX_PROGRESS;
 			int mProgressStatus = 0;

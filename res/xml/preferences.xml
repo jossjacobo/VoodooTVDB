@@ -1,19 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen
 	xmlns:android="http://schemas.android.com/apk/res/android">
-	
-    <PreferenceCategory 
-		android:title="Developer Settings"
-		android:enabled="false">
-		
-        <CheckBoxPreference
-		    android:key = "network_mode"
-		    android:title="Network Mode"
-		    android:defaultValue="true"
-		    android:enabled="true"/>
-		
-	</PreferenceCategory>
-    
+
     <PreferenceCategory 
 		android:title="User Settings">
 		
@@ -29,12 +17,6 @@
 			android:defaultValue = "false"
 			android:enabled="true"/>
 		
-		<CheckBoxPreference
-		    android:key = "drawer"
-		    android:title="Drawer"
-		    android:defaultValue="true"
-		    android:enabled="true"/>
-		
 	</PreferenceCategory>
     
 	<PreferenceCategory 
@@ -47,18 +29,18 @@
 			android:entries="@array/update_freq"
 			android:defaultValue="1"/>
 		
-		<ListPreference
-			android:key = "reminder_time"
-			android:title = "Remind me"
-			android:entryValues="@array/reminder_times_values"
-			android:entries="@array/reminder_times"
-			android:summary="60 minutes"
-			android:defaultValue="30"/>
-		
 		<voodoo.tvdb.preferences.TimePreference
 			android:key = "update_service"
 			android:title = "Update Time"
 			android:defaultValue = "00:01" />
+
+        <ListPreference
+            android:key = "reminder_time"
+            android:title = "Remind me"
+            android:entryValues="@array/reminder_times_values"
+            android:entries="@array/reminder_times"
+            android:summary="60 minutes"
+            android:defaultValue="30"/>
 	
 	</PreferenceCategory>
 
