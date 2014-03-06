@@ -67,6 +67,7 @@
             android:text="@string/register_password_title"
             android:textSize="@dimen/register_password_title"
              oak:font="Roboto-Light.ttf"/>
+
 		<!--  Password TextField -->
         <EditText
             android:id="@+id/register_password"
@@ -74,15 +75,6 @@
             android:layout_height="wrap_content"
             android:inputType="textPassword"
             android:singleLine="true" />
-        
-        <!-- Sync Checkbox -->
-		<CheckBox 
-	        android:id="@+id/register_sync_checkbox"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:text="@string/register_sync_checkbox"
-	        android:padding="16dp"
-	        android:checked="true"/>
 		
 		<!-- Trakt Checkbox -->
 		<CheckBox 

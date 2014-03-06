@@ -10,12 +10,6 @@
 			android:title="User Profile"
 			android:enabled="true"
 			/>
-        
-		<CheckBoxPreference
-			android:key = "sync"
-			android:title = "Device Sync"
-			android:defaultValue = "false"
-			android:enabled="true"/>
 		
 	</PreferenceCategory>
     

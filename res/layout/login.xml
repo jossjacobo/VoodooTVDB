@@ -62,15 +62,6 @@
             android:inputType="textPassword"
             android:singleLine="true"
             />
-        
-        <!-- Sync Checkbox -->
-		<CheckBox 
-	        android:id="@+id/login_sync_checkbox"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:text="@string/login_sync_checkbox"
-	        android:padding="24dip"
-	        android:checked="true"/>
 		        
         <!--  Error message -->
          <oak.widget.TextViewWithFont

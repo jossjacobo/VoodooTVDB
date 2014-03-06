@@ -173,7 +173,7 @@ public class UserFunctions {
 	
 	public boolean setSync(boolean sync){
 		
-		SharedPreferences settings = (SharedPreferences) PreferenceManager.getDefaultSharedPreferences(context);
+		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
         
 		SharedPreferences.Editor editor = settings.edit();
     	editor.putBoolean(KEY_SYNC, sync);
@@ -185,7 +185,7 @@ public class UserFunctions {
 	
 	public boolean getSyncStatus(){
 		
-		SharedPreferences settings = (SharedPreferences) PreferenceManager.getDefaultSharedPreferences(context);
+		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
 		
 		boolean result = settings.getBoolean(KEY_SYNC, false);
 		

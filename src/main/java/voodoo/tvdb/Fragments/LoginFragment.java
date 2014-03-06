@@ -7,12 +7,10 @@ import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,17 +20,15 @@ import org.json.JSONObject;
 
 import java.util.Locale;
 
-import voodoo.tvdb.alarmServices.ReminderManager;
 import voodoo.tvdb.R;
-import voodoo.tvdb.utils.UserFunctions;
+import voodoo.tvdb.alarmServices.ReminderManager;
 import voodoo.tvdb.sqlitDatabase.DatabaseAdapter;
+import voodoo.tvdb.utils.UserFunctions;
 
 /**
  * Created by Voodoo Home on 11/2/13.
  */
 public class LoginFragment extends BaseFragment{
-
-    private static final String TAG = "LoginFragment";
 
     // Buttons & Inputs
     Button loginButton;
@@ -40,7 +36,6 @@ public class LoginFragment extends BaseFragment{
     EditText inputEmail;
     EditText inputPassword;
     TextView loginErrorMessage;
-    CheckBox syncCheckbox;
 
     /** JSON Response node names */
     private static String KEY_SUCCESS = "success";
@@ -70,7 +65,7 @@ public class LoginFragment extends BaseFragment{
                 String email = inputEmail.getText().toString().toLowerCase(Locale.ENGLISH).trim();
                 String password = inputPassword.getText().toString();
 
-                new loginAsync(context, email, password, syncCheckbox.isChecked() ).execute("");
+                new loginAsync(context, email, password, true).execute("");
             }
 
         });
@@ -89,7 +84,6 @@ public class LoginFragment extends BaseFragment{
         inputEmail = (EditText) view.findViewById(R.id.login_email);
         inputPassword = (EditText) view.findViewById(R.id.login_password);
         loginErrorMessage = (TextView) view.findViewById(R.id.login_error);
-        syncCheckbox = (CheckBox) view.findViewById(R.id.login_sync_checkbox);
 
         return view;
     }
@@ -183,8 +177,6 @@ public class LoginFragment extends BaseFragment{
 
                             JSONObject json_user = json.getJSONObject("user");
 
-                            Log.d("LOGIN", json_user.toString());
-
                             /**
                              *  Clear all previous data in database
                              */
@@ -205,7 +197,7 @@ public class LoginFragment extends BaseFragment{
 
 
                             // Toast
-                            Toast.makeText(context, "LoginActivity successful", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, "Login successful", Toast.LENGTH_SHORT).show();
 
                             /**
                              * Determine if you need to setup the Sync Service

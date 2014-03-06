@@ -462,7 +462,6 @@ public class BaseSlidingActivity extends ActionBarActivity implements View.OnCli
             }else if(title.equals("Queue")){
                 selectFragment(contentView, R.id.queue_fragment);
             }else if(title.equals("Sync")){
-                // TODO disable this button...after clicked...or while sync going on.
                 ReminderManager manager = new ReminderManager(context);
                 manager.setNowService();
             }else if(title.equals("Settings")){
@@ -546,8 +545,11 @@ public class BaseSlidingActivity extends ActionBarActivity implements View.OnCli
     /** Is Pro version installed */
     protected boolean isProInstalled(Context context){
         PackageManager manager = context.getPackageManager();
-        // Pro Key installed, and signatures match
-        return manager.checkSignatures(context.getPackageName(), "voodoo.tvdb.key") == PackageManager.SIGNATURE_MATCH;
+        if( manager.checkSignatures(context.getPackageName(), "voodoo.tvdb.key") == PackageManager.SIGNATURE_MATCH){
+            // Pro Key installed, and signatures match
+            return true;
+        }
+        return false;
     }
 }
 

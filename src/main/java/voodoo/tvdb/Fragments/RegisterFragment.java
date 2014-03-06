@@ -8,7 +8,6 @@ import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,10 +22,10 @@ import org.json.JSONObject;
 
 import java.util.Locale;
 
-import voodoo.tvdb.alarmServices.ReminderManager;
 import voodoo.tvdb.R;
-import voodoo.tvdb.utils.UserFunctions;
+import voodoo.tvdb.alarmServices.ReminderManager;
 import voodoo.tvdb.sqlitDatabase.DatabaseAdapter;
+import voodoo.tvdb.utils.UserFunctions;
 
 /**
  * Created by Voodoo Home on 11/2/13.
@@ -39,7 +38,6 @@ public class RegisterFragment extends BaseFragment{
     EditText inputEmail;
     EditText inputPassword;
     TextView registerErrorMessage;
-    CheckBox syncCheckbox;
     CheckBox traktCheckbox;
 
     private static String KEY_SUCCESS = "success";
@@ -76,7 +74,7 @@ public class RegisterFragment extends BaseFragment{
                         String email = inputEmail.getText().toString().toLowerCase(Locale.ENGLISH).trim();
                         String password = inputPassword.getText().toString();
 
-                        new registerAsync(context, username, email, password, syncCheckbox.isChecked(),traktCheckbox.isChecked()).execute("");
+                        new registerAsync(context, username, email, password, true, traktCheckbox.isChecked()).execute("");
                     }
                 });
                 builder.setNegativeButton("Nah", new DialogInterface.OnClickListener() {
@@ -106,7 +104,6 @@ public class RegisterFragment extends BaseFragment{
         inputEmail = (EditText) view.findViewById(R.id.register_email);
         inputPassword = (EditText) view.findViewById(R.id.register_password);
         registerErrorMessage = (TextView) view.findViewById(R.id.register_error);
-        syncCheckbox = (CheckBox) view.findViewById(R.id.register_sync_checkbox);
         traktCheckbox = (CheckBox) view.findViewById(R.id.register_trakt_checkbox);
 
         return view;
@@ -204,11 +201,8 @@ public class RegisterFragment extends BaseFragment{
                             JSONObject json_voodootvdb_user = json.getJSONObject("voodootvdb");
                             JSONObject json_user = json_voodootvdb_user.getJSONObject("user");
 
-                            Log.d("REGISTER", json_user.toString());
-
                             // Clear all previous data in database
                             userFunctions.logOffUserStatic();
-
 
                             /**
                              * Add user to database
