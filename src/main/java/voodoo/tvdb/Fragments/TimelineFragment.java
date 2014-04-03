@@ -96,6 +96,12 @@ public class TimelineFragment extends BaseFragment {
         }
     }
 
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        context.getSupportActionBar().removeAllTabs();
+    }
+
     private ArrayList<Fragment> getFragments() {
         TimelineListFragment upcomingFragment = getUpcomingFragment();
         TimelineListFragment olderFragment = getOlderFragment();
