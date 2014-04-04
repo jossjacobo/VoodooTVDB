@@ -15,6 +15,8 @@ import android.view.ContextMenu.ContextMenuInfo;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.volley.RequestQueue;
+import android.volley.toolbox.Volley;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
@@ -36,17 +38,17 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
+import voodoo.tvdb.R;
 import voodoo.tvdb.adapters.LazyAdapter;
 import voodoo.tvdb.objects.SearchBundle;
 import voodoo.tvdb.objects.Series;
 import voodoo.tvdb.preferences.Prefs;
-import voodoo.tvdb.R;
+import voodoo.tvdb.sqlitDatabase.DatabaseAdapter;
 import voodoo.tvdb.utils.FavoriteHelper;
 import voodoo.tvdb.utils.FavoriteSavingListener;
 import voodoo.tvdb.utils.ServerUrls;
 import voodoo.tvdb.xmlHandlers.XmlHandlerFetchInfo;
 import voodoo.tvdb.xmlHandlers.XmlHandlerSearch;
-import voodoo.tvdb.sqlitDatabase.DatabaseAdapter;
 
 public class SearchActivity extends BaseActivity implements OnScrollListener{
 
@@ -69,6 +71,8 @@ public class SearchActivity extends BaseActivity implements OnScrollListener{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search);
+
+        RequestQueue volley = Volley.newRequestQueue(this);
 
         list = (ListView) findViewById(R.id.list);
         empty = (TextView) findViewById(R.id.empty);
