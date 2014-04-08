@@ -4,7 +4,7 @@
     xmlns:oak="http://oak/oak/schema"
     android:id="@+id/item_loading"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:gravity="center_horizontal"
     android:paddingTop="10dp"

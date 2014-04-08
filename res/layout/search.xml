@@ -11,7 +11,7 @@
    	<LinearLayout
         android:id="@+id/results_title"
    	    android:layout_width="fill_parent"
-   	    android:layout_height="25dip"
+   	    android:layout_height="wrap_content"
    	    android:background="@color/blue"
    	    android:orientation="horizontal"
    	    >
@@ -22,37 +22,58 @@
    	        android:layout_height="wrap_content"
    	        android:textColor="@color/white"
    	        android:textSize="14sp"
-   	        android:layout_margin="1dip"
+   	        android:layout_margin="4dp"
    	        android:layout_gravity="center_vertical"
             oak:font="Roboto-Light.ttf"
    	        />
    	</LinearLayout>
 
-	<!-- Search List -->
-	<ListView
-	    android:id="@+id/list"
-	    android:layout_width="fill_parent"
-	    android:layout_height="fill_parent"
-	    android:cacheColorHint="@color/transparent"
-	    android:clickable="true"
-	    android:divider="@color/transparent"
-	    android:fadingEdge="none"
+	<LinearLayout
+        android:id="@+id/search_content"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
         android:layout_above="@+id/adView"
         android:layout_below="@id/results_title"
-        android:scrollbars="none"
-	    />
-	
-	<!-- Empty Search List Message -->
-	<oak.widget.TextViewWithFont
-		android:id="@+id/empty"
-		android:layout_width="fill_parent"
-		android:layout_height="fill_parent"
-		android:gravity="center"
-		android:textColor="@color/blue"
-		android:textSize="32sp"
-		android:padding="10dip"
-		oak:font="Roboto-Light.ttf"
-		/> 
+        >
+        <!-- Search List -->
+        <ListView
+            android:id="@+id/list"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:cacheColorHint="@color/transparent"
+            android:clickable="true"
+            android:divider="@color/transparent"
+            android:fadingEdge="none"
+            android:scrollbars="none"
+            />
+
+        <!-- Empty Search List Message -->
+        <oak.widget.TextViewWithFont
+            android:id="@+id/empty"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:gravity="center"
+            android:textColor="@color/blue"
+            android:textSize="32sp"
+            android:padding="10dip"
+            oak:font="Roboto-Light.ttf"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/search_loading"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_above="@+id/adView"
+        android:layout_below="@id/results_title"
+        android:gravity="center"
+        android:visibility="gone"
+        >
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
 		
 	<!-- Ads -->
 	<com.google.ads.AdView

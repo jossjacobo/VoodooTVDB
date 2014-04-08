@@ -3,6 +3,8 @@ package voodoo.tvdb.objects;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Series implements Parcelable{
 	
 	public final static int TYPE_ITEM = 0;
@@ -11,23 +13,56 @@ public class Series implements Parcelable{
 	/** Added on version 0.9.13 */
 	public final static int SERIES_IS_NOT_IN_FAVES = 0;
 	public final static int SERIES_IS_IN_FAVES = 1;
-	
+
+    @SerializedName("series_id")
 	public String ID;
+
+    @SerializedName("title")
 	public String TITLE;
+
+    @SerializedName("overview")
 	public String OVERVIEW;
+
+    @SerializedName("poster_url")
 	public String POSTER_URL;
+
+    @SerializedName("actors")
 	public String ACTORS;
+
+    @SerializedName("airs_dayofweek")
 	public String AIRS_DAYOFWEEK;
+
+    @SerializedName("airs_time")
 	public String AIRS_TIME;
+
+    @SerializedName("genre")
 	public String GENRE;
+
+    @SerializedName("imdb_id")
 	public String IMDB_ID;
+
+    @SerializedName("network")
 	public String NETWORK;
+
+    @SerializedName("rating")
 	public float RATING;
+
+    @SerializedName("runtime")
 	public String RUNTIME;
+
+    @SerializedName("status")
 	public String STATUS;
+
+    @SerializedName("last_updated")
 	public String LAST_UPDATED;
+
+    @SerializedName("rating_count")
 	public float RATING_COUNT;
+
+    @SerializedName("content_rating")
 	public String CONTENT_RATING;
+
+    @SerializedName("first_aired")
 	public String FIRST_AIRED;
 	
 	public int TYPE;

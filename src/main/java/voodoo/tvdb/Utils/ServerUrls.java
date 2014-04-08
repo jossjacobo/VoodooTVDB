@@ -37,9 +37,6 @@ public class ServerUrls {
 	
 	/**
 	 * Host URL
-	 * 
-	 * @param context
-	 * @return
 	 */
 	public static String getHost(Context context){
 		
@@ -49,9 +46,6 @@ public class ServerUrls {
 	
 	/**
 	 * Search Url
-	 * 
-	 * @param context
-	 * @return
 	 */
 	public static String getSearchUrl(Context context, String query){
 		
@@ -61,12 +55,16 @@ public class ServerUrls {
 		return url += getMode(context) ? "search/show/xml/" + query : "VoodooTVDB/search/show_offline/xml/" + query;
 		
 	}
+
+    /**
+     * Search Url v2
+     */
+    public static String getSearchUrlv2(Context context, String query, int limit, int start){
+        return getHost(context) + "search/shows/json/" + query + "/" + limit + "/" + start;
+    }
 	
 	/**
 	 * Get Series URL
-	 * 
-	 * @param context
-	 * @return
 	 */
 	public static String getSeriesUrl(Context context, String series_id){
 		
@@ -79,8 +77,6 @@ public class ServerUrls {
 	
 	/**
 	 * Get All Series URL
-	 * @param context
-	 * @return
 	 */
 	public static String getAllSeriesUrl(Context context, String series_id){
 		
@@ -93,9 +89,6 @@ public class ServerUrls {
 	
 	/**
 	 * Get Image URL
-	 * 
-	 * @param context
-	 * @return
 	 */
 	public static String getImageUrl(Context context, String path){
 		
@@ -110,10 +103,6 @@ public class ServerUrls {
 	
 	/**
 	 * Get Original Size Image Url
-	 * 
-	 * @param context
-	 * @param path
-	 * @return
 	 */
 	public static String getImageUrlOriginal(Context context, String path){
 		
@@ -195,7 +184,6 @@ public class ServerUrls {
 	/**
 	 * Get Watched URLs
 	 */
-	// TODO public static String getWathchedUrl(Context context, String action){
 	public static String getWatchedUrl(Context context, String action){
 		
 		// http://voodootvdb.com/users/watched.php
