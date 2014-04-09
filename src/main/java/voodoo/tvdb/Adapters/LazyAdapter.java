@@ -49,7 +49,7 @@ public class LazyAdapter extends BaseAdapter implements OnClickListener, OnCreat
         this.items = i;
 
         imageLoader= ImageLoader.getInstance();
-        
+
         optionsWithDelay = new DisplayImageOptions.Builder()
 			.showStubImage(R.drawable.stub)
 			.showImageForEmptyUri(R.drawable.stub_not_found)
@@ -137,13 +137,9 @@ public class LazyAdapter extends BaseAdapter implements OnClickListener, OnCreat
         String url = ServerUrls.getImageUrl(activity, ServerUrls.fixURL(series.POSTER_URL));
         Log.d(TAG, url);
         if(!MemoryCacheUtil.findCachedBitmapsForImageUri(url, imageLoader.getMemoryCache()).isEmpty()){
-        	
         	imageLoader.displayImage(url, holder.image, this.optionsWithoutDelay);
-        	
         }else{
-        	
         	imageLoader.displayImage(url, holder.image, this.optionsWithDelay);
-        	
         }
         
         return vi;

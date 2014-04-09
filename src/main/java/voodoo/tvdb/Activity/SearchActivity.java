@@ -2,9 +2,7 @@ package voodoo.tvdb.activity;
 
 import android.app.SearchManager;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.MenuInflater;
@@ -41,12 +39,12 @@ public class SearchActivity extends BaseActivity implements OnScrollListener{
 
 	private static final String TAG = "Search";
 
-	private boolean busy_fetching_more = false;
 	private String query;
 	
 	private ListView list;
     private LazyAdapter adapter;
     private View loadingView;
+    private TextView empty;
     private LinearLayout loadingContainer;
     private LinearLayout contentContainer;
 
@@ -57,6 +55,7 @@ public class SearchActivity extends BaseActivity implements OnScrollListener{
     private Gson gson;
 
     private final int limit = 8;
+    private boolean fetching = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -65,99 +64,146 @@ public class SearchActivity extends BaseActivity implements OnScrollListener{
 
         gson = new Gson();
         volley = Volley.newRequestQueue(this);
-        adapter = new LazyAdapter(this, new ArrayList<Series>());
         dbAdapter = new DatabaseAdapter(this);
         items = new ArrayList<Series>();
 
-        TextView empty = (TextView) findViewById(R.id.empty);
-        list = (ListView) findViewById(R.id.list);
+        empty = (TextView) findViewById(R.id.empty);
         loadingContainer = (LinearLayout) findViewById(R.id.search_loading);
         contentContainer = (LinearLayout) findViewById(R.id.search_content);
         loadingView = getLayoutInflater().inflate(R.layout.item_loading, null);
 
-        list.addFooterView(loadingView);
-        list.setEmptyView(empty);
-        list.setAdapter(adapter);
-
-//        //Get Intent, verify the action and get the query
-//        Intent intent = getIntent();
-//
-//        if(Intent.ACTION_SEARCH.equals(intent.getAction())){
-//        	//Get Query passed from search
-//        	query = intent.getStringExtra(SearchManager.QUERY);
-//        	//Perform search
-//            search(query);
-//
-//        } else if(Intent.ACTION_VIEW.equals(intent.getAction())){
-//        	// Get Query passed from suggestions
-//        	Uri detailUri = intent.getData();
-//            query = detailUri.getLastPathSegment().toLowerCase();
-//        	//Perform search
-//        	search(query);
-//        }
-        setActionBarTitle(query == null ? "" : query);
-
         // Ads
     	AdView adview = (AdView) findViewById(R.id.adView);
         viewAds(adview);
+
+        query = "";
+
+        if(getIntent().getAction().equals(Intent.ACTION_VIEW)){
+            handleSearchView(getIntent());
+        }
     }
 
-    private void search(String query) {
-        showLoading();
-        String url = ServerUrls.getSearchUrlv2(this, query, limit, 0);
-        volley.add(new StringRequest(url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                Log.e(TAG, "response: " + response);
-                showContent();
-                if(!response.equals("{}")){
-                    Collections.addAll(items, gson.fromJson(response, Series[].class));
-//                    ((LazyAdapter) ((HeaderViewListAdapter) list.getAdapter()).getWrappedAdapter()).setItems(items);
-                    adapter.setItems(items);
-                }else{
-                    list.removeFooterView(loadingView);
-                }
-            }
-        },
-        new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                showContent();
-                list.removeFooterView(loadingView);
-            }
-        })).setTag(this);
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        volley.cancelAll(this);
     }
 
     @Override
     public void onNewIntent(final Intent queryIntent){
     	super.onNewIntent(queryIntent);
-    	
-    	// Set Empty Item List
-        items.clear();
 
-    	final String queryAction = queryIntent.getAction();
-        Log.e(TAG,"onNewIntent | queryAction: " + queryAction);
+        String queryAction = queryIntent.getAction();
     	if(Intent.ACTION_SEARCH.equals(queryAction)){
-    		
-    		//Get Query passed from search
-        	query = queryIntent.getStringExtra(SearchManager.QUERY);
-
-        	//Perform search
-            search(query);
-
-    	}else if(Intent.ACTION_VIEW.equals(queryAction)){
-    		
-    		// Get Query passed from suggestions
-        	Uri detailUri = queryIntent.getData();
-            query = detailUri.getLastPathSegment().toLowerCase();
-        	
-        	//Perform search
-            search(query);
-    	}
-    	//Change the title of the ActionBar
-        setActionBarTitle(query == null ? "" : query);
+            handleSearch(queryIntent);
+        }
     }
-    
+
+    private void handleSearchView(Intent searchViewIntent) {
+        // Get ID passed from suggestions
+        String id = searchViewIntent.getExtras().getSerializable(SearchManager.EXTRA_DATA_KEY).toString();
+        Intent i = new Intent(this, SeriesInfoActivity.class);
+        i.putExtra(SeriesInfoActivity.ID, id);
+        startActivity(i);
+        finish();
+    }
+
+    private void handleSearch(Intent searchIntent){
+        String oldQuery = query;
+        query = searchIntent.getStringExtra(SearchManager.QUERY);
+
+        // If it's a new search query, clear fetching flag
+        if(!oldQuery.equals(query)){
+            fetching = false;
+        }
+
+        setActionBarTitle(query == null ? "" : query);
+        search(query);
+    }
+
+    private void setupListView() {
+        items.clear();
+        adapter = new LazyAdapter(this, items);
+        list = (ListView) findViewById(R.id.list);
+        list.setOnScrollListener(null);
+        list.removeFooterView(loadingView);
+        list.addFooterView(loadingView);
+        list.setEmptyView(empty);
+        list.setAdapter(adapter);
+    }
+
+    private void search(String query) {
+
+        if(!fetching){
+            // Performing a new search, initialize ListView
+            setupListView();
+            fetching = true;
+
+            showLoading();
+            String url = ServerUrls.getSearchUrlv2(this, query, limit, 0);
+            final SearchActivity activity = this;
+            volley.add(new StringRequest(
+                    url,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            showContent();
+                            if(response != null && !response.equals("[]")){
+                                Collections.addAll(items, gson.fromJson(response, Series[].class));
+                                adapter.setItems(items);
+                                fetching = false;
+                                list.setOnScrollListener(activity);
+                            }else{
+                                list.removeFooterView(loadingView);
+                                list.setOnScrollListener(null);
+                                fetching = false;
+                            }
+                        }
+                    },new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            showContent();
+                            list.removeFooterView(loadingView);
+                            list.setOnScrollListener(null);
+                            fetching = true;
+                        }
+             })).setTag(this);
+        }
+    }
+
+    private void fetchMore() {
+
+        if(!fetching){
+            fetching = true;
+            final SearchActivity activity = this;
+            String url = ServerUrls.getSearchUrlv2(this, query, limit, items.size());
+            volley.add(new StringRequest(
+                    url,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            if(response!= null && !response.equals("[]")){
+                                Collections.addAll(items, gson.fromJson(response, Series[].class));
+                                adapter.setItems(items);
+                                fetching = false;
+                                list.setOnScrollListener(activity);
+                            }else{
+                                list.removeFooterView(loadingView);
+                                fetching = true;
+                                list.setOnScrollListener(null);
+                            }
+                        }
+                    },new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    list.removeFooterView(loadingView);
+                    list.setOnScrollListener(null);
+                    fetching = true;
+                }
+            })).setTag(this);
+        }
+    }
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item){
 		switch(item.getItemId()){
@@ -184,19 +230,9 @@ public class SearchActivity extends BaseActivity implements OnScrollListener{
 		int lastItemOnScreen = firstVisibleItem + visibleItemCount;
 		boolean loadMore = lastItemOnScreen == totalItemCount;
 		
-		if(loadMore && !busy_fetching_more){
-			busy_fetching_more = true;
-            // TODO searchMore
-//			searchBundle.TOLOAD = visibleItemCount;
-//			new moreQuery(this).execute(searchBundle);
+		if(loadMore && !fetching){
+            fetchMore();
 		}
-
-        // TODO can probably delete this, since I am removing loading footer view somewhere else.
-//		if(items.size() == (totalItemCount + searchBundle.EXCEPTIONS)){
-//			if(list.getFooterViewsCount() != 0)
-//				list.removeFooterView(loadingView);
-//			busy_fetching_more = true;
-//		}
 	}
 	@Override
 	public void onScrollStateChanged(AbsListView view, int scrollState){
@@ -239,272 +275,6 @@ public class SearchActivity extends BaseActivity implements OnScrollListener{
 
     	return super.onContextItemSelected(item);
     }
-
-    /**
-     * AsyncTask to search for the passed query and download the initial items
-     */
-//    private class searchQuery extends AsyncTask<String, Void, SearchBundle>{
-//
-//    	private Context context;
-//    	private ProgressDialog dialog;
-//    	private AsyncTask<String, Void, SearchBundle> myQuery = null;
-//
-//    	//SAXParsers
-//    	SAXParserFactory mySAXParserFactory;
-//    	SAXParser mySAXParser;
-//    	XMLReader mXMLReader;
-//    	XmlHandlerSearch mXmlHandler;
-//    	XmlHandlerFetchInfo mXmlHandlerFetchInfo;
-//
-//    	URL url;
-//
-//    	//Constructor
-//    	public searchQuery(Activity activity){
-//    		context = activity;
-//    		dialog = new ProgressDialog(context);
-//    	}
-//
-//		@Override
-//		protected void onPreExecute(){
-//			dialog.setMessage("Loading. Please wait...");
-//			dialog.setIndeterminate(true);
-//			dialog.setCancelable(true);
-//			dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
-//				@Override
-//				public void onCancel(DialogInterface dialog) {
-//					myQuery.cancel(true);
-//				}
-//			});
-//			dialog.show();
-//			myQuery = this;
-//
-//			//Log.d(TAG, "searchQuery, onPreExecute()");
-//
-//			// Hide Footer
-//			if(list != null && list.getFooterViewsCount() > 0){
-//				list.removeFooterView(loadingView);
-//			}
-//
-//		}
-//
-//    	@Override
-//		protected SearchBundle doInBackground(String... queryString) {
-//			SearchBundle sb = new SearchBundle();
-//
-//			//Log.d(TAG, "searchQuery, doInBackground()");
-//
-//    		//Download the ID List
-//    		for(String query : queryString){
-//
-//    			//String onlineString = "http://ci.voodootvdb.com/search/show/xml/" + query.replace(" ", "%20");
-//
-//    			//URL String
-//    			try{
-//
-//    				url = new URL(ServerUrls.getSearchUrl(context, query.replace(" ", "%20")));
-//    				Log.d(TAG, url.toString());
-//
-//    				mySAXParserFactory = SAXParserFactory.newInstance();
-//        			mySAXParser = mySAXParserFactory.newSAXParser();
-//        			mXMLReader = mySAXParser.getXMLReader();
-//        			mXmlHandler = new XmlHandlerSearch();
-//
-//        			mXMLReader.setContentHandler(mXmlHandler);
-//
-//        			//Create an input source and set encoding to "ISO-8857-15"
-//        			InputSource is = new InputSource(url.openStream());
-//        			//is.setEncoding("ISO-8859-1");
-//        			mXMLReader.parse(is);
-//
-//        			//Log.d(TAG, "searchQuery, create SAXParseFactory, SAXParser...etc and open stream...");
-//
-//        			sb.IDLIST = mXmlHandler.getIdList();
-//        			sb.COUNT = sb.IDLIST.size() > 5 ? 5 : sb.IDLIST.size();
-//
-//    			}catch (MalformedURLException e) {
-//    				//Log.d(TAG, "MalformedURLException fetching ID list");
-//    				e.printStackTrace();
-//    				return null;
-//    			} catch (ParserConfigurationException e) {
-//    				//Log.d(TAG, "ParserConfigurationException fetching ID list");
-//    				e.printStackTrace();
-//    				return null;
-//    			} catch (SAXException e) {
-//    				//Log.d(TAG, "SAXException fetching ID list");
-//    				e.printStackTrace();
-//    				return null;
-//    			} catch (IOException e) {
-//    				//Log.d(TAG, "IOException fetching ID list");
-//    				e.printStackTrace();
-//    				return null;
-//    			}
-//
-//    		}
-//
-//    		//Download the Initial Items
-//    		sb.ITEMS = new ArrayList<Series>();
-//    		sb.EXCEPTIONS = 0;
-//
-//    		//Log.d(TAG, "searchQuery, Download initial items one by one");
-//
-//    		//Download Initial items one by one...
-//    		for(int i = 0; i < sb.COUNT; i++){
-//
-//    			//String onlineString = "http://voodootvdb.com/getAllSeries.php?ID=" + sb.IDLIST.get(i).ID;
-//
-//    			//URL
-//    			try {
-//
-//    				url = new URL( ServerUrls.getSeriesUrl(context, sb.IDLIST.get(i).ID));
-//    				Log.d(TAG, url.toString());
-//
-//    				mySAXParserFactory = SAXParserFactory.newInstance();
-//    	        	mySAXParser = mySAXParserFactory.newSAXParser();
-//    	        	mXMLReader = mySAXParser.getXMLReader();
-//    	        	mXmlHandlerFetchInfo = new XmlHandlerFetchInfo(context);
-//
-//    	        	mXMLReader.setContentHandler(mXmlHandlerFetchInfo);
-//    	        	mXMLReader.parse(new InputSource(url.openStream()));
-//
-//    	        	//Log.d(TAG, "searchQuery, after creating it all the SAXParseFactory and opening stream....");
-//
-//    	        	Series s = mXmlHandlerFetchInfo.getSeries();
-//    	        	sb.ITEMS.add(s);
-//
-//    			} catch (MalformedURLException e) {
-//    				sb.EXCEPTIONS++;
-//    				//Log.e(TAG, "MalformedURLException fetching series info");
-//    				e.printStackTrace();
-//    			} catch (ParserConfigurationException e){
-//    				sb.EXCEPTIONS++;
-//    				//Log.e(TAG, "ParserConfigurationException no element found fetching series info");
-//    				e.printStackTrace();
-//    			} catch (SAXException e) {
-//    				sb.EXCEPTIONS++;
-//    				//Log.e(TAG, "SAXException fetching series info");
-//    				e.printStackTrace();
-//    			} catch (IOException e) {
-//    				sb.EXCEPTIONS++;
-//    				//Log.e(TAG, "IOException fetching series info");
-//    				e.printStackTrace();
-//    			}
-//    		}
-//
-//			return sb;
-//		}
-//
-//    	@Override
-//    	protected void onPostExecute(SearchBundle sb){
-//
-//    		//Log.d(TAG, "searchQuery, onPostExecute()");
-//
-//    		searchBundle = sb;
-//
-//    		dialog.dismiss();
-//
-//    		if(sb == null || sb.ITEMS == null || sb.ITEMS.isEmpty()){
-//    			empty.setText(R.string.empty_text);
-//    			return;
-//    		}
-//    		adapter=new LazyAdapter(SearchActivity.this, searchBundle.ITEMS);
-//            list.setFastScrollEnabled(true);
-//
-//            adapter.setItems(sb.ITEMS);
-//
-//            if(sb.IDLIST.size() > 5){
-//            	list.setOnScrollListener(SearchActivity.this);
-//            	list.addFooterView(loadingView);
-//            }
-//            list.setAdapter(adapter);
-//            registerForContextMenu(list);
-//
-//            busy_fetching_more = false;
-//    	}
-//
-//    }
-    
-    /**
-     * AsyncTask to download more Series when the user scrolls to the bottom of the list
-     */
-//    private class moreQuery extends AsyncTask<SearchBundle, Void, SearchBundle>{
-//
-//    	private Context context;
-//
-//    	public moreQuery(Activity activity){
-//    		context = activity;
-//    	}
-//
-//		@Override
-//		protected SearchBundle doInBackground(SearchBundle... params) {
-//			for(SearchBundle sb : params){
-//
-//				//Calculate how many shows to load
-//				int toLoad = (sb.ITEMS.size() + sb.TOLOAD) > sb.IDLIST.size() ? sb.IDLIST.size() : (sb.ITEMS.size() + sb.TOLOAD);
-//
-//				for(int i = sb.ITEMS.size(); i < toLoad; i++){
-//
-//					//Download each item individually
-//
-//					//String onlineString = "http://voodootvdb.com/getAllSeries.php?ID=" + sb.IDLIST.get(i).ID;
-//
-//					//URL
-//					try {
-//
-//						URL url = new URL( ServerUrls.getSeriesUrl(context, sb.IDLIST.get(i).ID));
-//						Log.d(TAG, url.toString());
-//
-//						SAXParserFactory mySAXParserFactory = SAXParserFactory.newInstance();
-//			        	SAXParser mySAXParser = mySAXParserFactory.newSAXParser();
-//			        	XMLReader mXMLReader = mySAXParser.getXMLReader();
-//			        	XmlHandlerFetchInfo mXmlHandlerFetchInfo = new XmlHandlerFetchInfo(context);
-//			        	mXMLReader.setContentHandler(mXmlHandlerFetchInfo);
-//			        	mXMLReader.parse(new InputSource(url.openStream()));
-//
-//			        	Series s = mXmlHandlerFetchInfo.getSeries();
-//			        	sb.ITEMS.add(s);
-//			        	//Log.d(TAG, "doInBackground ... sb.ITEMS.size() = " + sb.ITEMS.size());
-//
-//					} catch (MalformedURLException e) {
-//						sb.EXCEPTIONS++;
-//						//Log.e(TAG, "MalformedURLException fetching series info");
-//						e.printStackTrace();
-//					} catch (ParserConfigurationException e){
-//						sb.EXCEPTIONS++;
-//						//Log.e(TAG, "ParserConfigurationException no element found fetching series info");
-//						e.printStackTrace();
-//					} catch (SAXException e) {
-//						sb.EXCEPTIONS++;
-//						//Log.e(TAG, "SAXException fetching series info");
-//						e.printStackTrace();
-//					} catch (IOException e) {
-//						sb.EXCEPTIONS++;
-//						//Log.e(TAG, "IOException fetching series info");
-//						e.printStackTrace();
-//					}
-//				}
-//				return sb;
-//			}
-//			return null;
-//		}
-//
-//		@Override
-//		protected void onPostExecute(SearchBundle sb){
-//			//Log.d(TAG, "searchBundle.ITEMS.size() = " + searchBundle.ITEMS.size());
-//			//Log.d(TAG, "sb.ITEMS.size() = " + sb.ITEMS.size());
-//
-//			searchBundle = sb;
-//			adapter.setItems(searchBundle.ITEMS);
-//			adapter.notifyDataSetChanged();
-//			busy_fetching_more = false;
-//
-//			// Determine whether to remove footer loading view
-//			if( (searchBundle.ITEMS.size() + searchBundle.EXCEPTIONS) >= searchBundle.IDLIST.size()){
-//				list.removeFooterView(loadingView);
-//			}
-//
-//		}
-//
-//    }
 
     private void showLoading() {
         loadingContainer.setVisibility(View.VISIBLE);
