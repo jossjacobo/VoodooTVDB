@@ -151,7 +151,7 @@ public class SeriesInfoActivity extends BaseActivity {
 		if(series != null){
 			//Update the Favorite Star by clearing all the Actions and creating a new Action bar
 			isFavorited = isSeriesFavorited(series.ID);
-			invalidateOptionsMenu();
+            supportInvalidateOptionsMenu();
 		}
 	}
 	@Override
@@ -350,7 +350,7 @@ public class SeriesInfoActivity extends BaseActivity {
 				setContent();
 			}
 			
-			invalidateOptionsMenu();
+            supportInvalidateOptionsMenu();
 		}
 	}
 	

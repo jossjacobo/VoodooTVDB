@@ -79,7 +79,7 @@ public class SearchActivity extends BaseActivity implements OnScrollListener{
         query = "";
 
         if(getIntent().getAction().equals(Intent.ACTION_VIEW)){
-            handleSearchView(getIntent());
+            handleSearchView(getIntent(), true);
         }
     }
 
@@ -96,16 +96,20 @@ public class SearchActivity extends BaseActivity implements OnScrollListener{
         String queryAction = queryIntent.getAction();
     	if(Intent.ACTION_SEARCH.equals(queryAction)){
             handleSearch(queryIntent);
+        }else if(Intent.ACTION_VIEW.equals(queryAction)){
+            handleSearchView(queryIntent, false);
         }
     }
 
-    private void handleSearchView(Intent searchViewIntent) {
+    private void handleSearchView(Intent searchViewIntent, boolean finishActivity) {
         // Get ID passed from suggestions
         String id = searchViewIntent.getExtras().getSerializable(SearchManager.EXTRA_DATA_KEY).toString();
         Intent i = new Intent(this, SeriesInfoActivity.class);
         i.putExtra(SeriesInfoActivity.ID, id);
         startActivity(i);
-        finish();
+
+        if(finishActivity)
+            finish();
     }
 
     private void handleSearch(Intent searchIntent){
