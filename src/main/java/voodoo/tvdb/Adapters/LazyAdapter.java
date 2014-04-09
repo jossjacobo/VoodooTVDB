@@ -147,7 +147,7 @@ public class LazyAdapter extends BaseAdapter implements OnClickListener, OnCreat
 
 	@Override
 	public void onClick(View v) {
-		
+
 		Intent i = new Intent(activity.getApplicationContext(), SeriesInfoActivity.class);
 		i.putExtra(SeriesInfoActivity.ID, v.findViewById(R.id.text).getTag().toString());
 		activity.startActivity(i);
