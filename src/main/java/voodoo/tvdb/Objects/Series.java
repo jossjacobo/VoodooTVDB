@@ -5,6 +5,9 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
+import java.util.Collections;
+
 public class Series implements Parcelable{
 	
 	public final static int TYPE_ITEM = 0;
@@ -64,12 +67,23 @@ public class Series implements Parcelable{
 
     @SerializedName("first_aired")
 	public String FIRST_AIRED;
-	
+
+    @SerializedName("episodes")
+    public Episode[] episodes;
+
+    public ArrayList<Episode> episodeList;
+
 	public int TYPE;
 	public String DIVIDER_TEXT;
 	
 	/** Added on version 0.9.13 */
 	public int IS_FAVORITE;
+
+    public ArrayList<Episode> getEpisodes(){
+        ArrayList<Episode> e = new ArrayList<Episode>();
+        Collections.addAll(e, episodes);
+        return e;
+    }
 
 	/** Default Constructor */
 	public Series(){

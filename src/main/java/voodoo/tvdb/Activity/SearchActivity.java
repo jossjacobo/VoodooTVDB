@@ -3,9 +3,6 @@ package voodoo.tvdb.activity;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.ContextMenu;
-import android.view.ContextMenu.ContextMenuInfo;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.volley.RequestQueue;
@@ -15,7 +12,6 @@ import android.volley.toolbox.StringRequest;
 import android.volley.toolbox.Volley;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
-import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -30,31 +26,25 @@ import voodoo.tvdb.R;
 import voodoo.tvdb.adapters.LazyAdapter;
 import voodoo.tvdb.objects.Series;
 import voodoo.tvdb.preferences.Prefs;
-import voodoo.tvdb.sqlitDatabase.DatabaseAdapter;
-import voodoo.tvdb.utils.FavoriteHelper;
-import voodoo.tvdb.utils.FavoriteSavingListener;
 import voodoo.tvdb.utils.ServerUrls;
 
 public class SearchActivity extends BaseActivity implements OnScrollListener{
 
-	private static final String TAG = "Search";
+    private final int LIMIT = 8;
 
 	private String query;
-	
-	private ListView list;
+    private ListView list;
     private LazyAdapter adapter;
     private View loadingView;
     private TextView empty;
     private LinearLayout loadingContainer;
+
     private LinearLayout contentContainer;
 
     private ArrayList<Series> items;
-    
-    private DatabaseAdapter dbAdapter;
     private RequestQueue volley;
-    private Gson gson;
 
-    private final int limit = 8;
+    private Gson gson;
     private boolean fetching = false;
 
     @Override
@@ -64,7 +54,6 @@ public class SearchActivity extends BaseActivity implements OnScrollListener{
 
         gson = new Gson();
         volley = Volley.newRequestQueue(this);
-        dbAdapter = new DatabaseAdapter(this);
         items = new ArrayList<Series>();
 
         empty = (TextView) findViewById(R.id.empty);
@@ -144,7 +133,7 @@ public class SearchActivity extends BaseActivity implements OnScrollListener{
             fetching = true;
 
             showLoading();
-            String url = ServerUrls.getSearchUrlv2(this, query, limit, 0);
+            String url = ServerUrls.getSearchUrlv2(this, query, LIMIT, 0);
             final SearchActivity activity = this;
             volley.add(new StringRequest(
                     url,
@@ -180,7 +169,7 @@ public class SearchActivity extends BaseActivity implements OnScrollListener{
         if(!fetching){
             fetching = true;
             final SearchActivity activity = this;
-            String url = ServerUrls.getSearchUrlv2(this, query, limit, items.size());
+            String url = ServerUrls.getSearchUrlv2(this, query, LIMIT, items.size());
             volley.add(new StringRequest(
                     url,
                     new Response.Listener<String>() {
@@ -241,44 +230,6 @@ public class SearchActivity extends BaseActivity implements OnScrollListener{
 	@Override
 	public void onScrollStateChanged(AbsListView view, int scrollState){
 	}
-
-    /**
-     * On Item LongPress Context menu
-     */
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo){
-    	super.onCreateContextMenu(menu, v, menuInfo);
-    		MenuInflater mi = getMenuInflater();
-        	mi.inflate(R.menu.list_menu_item_longpress, menu);
-    }
-    @Override
-    public boolean onContextItemSelected(android.view.MenuItem item){
-
-    	AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-
-    	Series s = items.get(info.position);
-    	switch(item.getItemId()){
-    	case R.id.menu_open:
-    		Intent i = new Intent(this, SeriesInfoActivity.class);
-    		i.putExtra(SeriesInfoActivity.ID, s.ID);
-    		startActivity(i);
-    		return true;
-    	case R.id.menu_favorite:
-            FavoriteHelper faveHelper = new FavoriteHelper(this);
-            faveHelper.createFavoriteAlert(s, faveHelper.isSeriesFavorited(s.ID), new FavoriteSavingListener() {
-                @Override
-                public void onSavingCompleted(String series_id) {
-                }
-                @Override
-                public void onDeleteCompleted(String series_id) {
-                }
-            });
-
-    		return true;
-    	}
-
-    	return super.onContextItemSelected(item);
-    }
 
     private void showLoading() {
         loadingContainer.setVisibility(View.VISIBLE);

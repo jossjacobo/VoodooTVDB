@@ -17,12 +17,18 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.volley.RequestQueue;
+import android.volley.Response;
+import android.volley.VolleyError;
+import android.volley.toolbox.StringRequest;
+import android.volley.toolbox.Volley;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.google.ads.AdView;
+import com.google.gson.Gson;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
@@ -38,6 +44,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
@@ -56,14 +63,13 @@ import voodoo.tvdb.sqlitDatabase.DatabaseAdapter;
 
 @SuppressLint("SimpleDateFormat")
 public class SeriesInfoActivity extends BaseActivity {
-	private static final String TAG = "SeriesInfo";
 
     public static final String ID = "id";
 
 	private static final int COLLAPSED = 0;
 	private static final int EXPANDED = 1;
 
-    String title = "";
+    private String title = "";
 	
 	private Series series;
 	private String seriesID;
@@ -71,56 +77,47 @@ public class SeriesInfoActivity extends BaseActivity {
 	private ArrayList<Episode> episodeList;
 	
 	private ImageLoader imageLoader;
-	private ViewHolder holder;
 	
-	LinearLayout seasonsList;
-	LayoutInflater inflater;
-	
-	private DatabaseAdapter dbAdapter;
-	
-	MenuItem favorite;
-	Boolean isFavorited = false;
 
-	public static class ViewHolder{
-		public ImageView seriesPoster;
-		public LinearLayout seriesPosterContainer;
-		public TextView seriesInfoBarTitle;
-		public TextView seriesTime;
-		public TextView seriesDay;
-		public TextView seriesStatus;
-		public TextView seriesNetwork;
-		public TextView seriesRuntime;
-		public TextView seriesContentRating;
-		public RatingBar seriesRatingBar;
-		public TextView seriesRatingText;
-		public TextView seriesGenre;
-		//public ImageView seriesIMDB;
-		public TextView seriesActor;
-		public TextView seriesOverview;
-		public TextView seriesFirstAired;
-		public TextView seriesNextEpisodeAirs;
-		
-		public TextView seriesOverviewGroupTitle;
-		public TextView seriesActorGroupTitle;
-		public TextView seriesGenreGroupTitle;
-		public TextView seriesFirstAiredOnGroupTitle;
-		public TextView seriesImdbGroupTitle;
-		public TextView seriesSeasonsGroupTitle;
-		
-		//Drop Down Image and Container
-		public ImageView overviewDropDown;
-		public ImageView actorsDropDown;
-		public LinearLayout overviewDropDownContainer;
-		public LinearLayout actorsDropDownContainer;
-	}
-	
+	private DatabaseAdapter dbAdapter;
+
+	private MenuItem favorite;
+	private Boolean isFavorited = false;
+
+	private LayoutInflater inflater;
+    private ImageView seriesPoster;
+    private TextView seriesTime;
+    private TextView seriesDay;
+    private TextView seriesStatus;
+    private TextView seriesNetwork;
+    private TextView seriesRuntime;
+    private TextView seriesContentRating;
+    private RatingBar seriesRatingBar;
+    private TextView seriesRatingText;
+    private TextView seriesGenre;
+    private TextView seriesActor;
+    private TextView seriesOverview;
+    private TextView seriesFirstAired;
+    private TextView seriesNextEpisodeAirs;
+	private LinearLayout seasonsList;
+    private LinearLayout loading;
+
+    //Drop Down Image and Container
+    private ImageView overviewDropDown;
+    private ImageView actorsDropDown;
+
+    private Gson gson;
+    private RequestQueue volley;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.series_info);
-		
-		imageLoader = ImageLoader.getInstance();
-		inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        gson = new Gson();
+        volley = Volley.newRequestQueue(this);
+        imageLoader = ImageLoader.getInstance();
+        inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
 		dbAdapter = new DatabaseAdapter(this);
 		findView();
@@ -139,12 +136,9 @@ public class SeriesInfoActivity extends BaseActivity {
 	@Override
 	public void onResume(){
 		super.onResume();
-		
-		dbAdapter.open();
-		
 		if(series == null || episodeList == null){
 			if(seriesID != null){
-				new fetchSeriesInfoAsync(SeriesInfoActivity.this).execute(seriesID);
+                handleId(seriesID);
 			}
 		}
 		
@@ -154,18 +148,75 @@ public class SeriesInfoActivity extends BaseActivity {
             supportInvalidateOptionsMenu();
 		}
 	}
-	@Override
-	public void onDestroy(){
-        //Log.d(TAG, "onDestroy");
+
+    private void handleId(String seriesID) {
+        dbAdapter.open();
+
+        //Check Series is on Database Already
+        series = dbAdapter.fetchSeries(seriesID);
+
+        if(series != null){
+
+            //Series is in the database
+
+            episodeList = dbAdapter.fetchAllEpisodes(seriesID);
+
+            //Get list of Season Numbers
+            if(episodeList != null){
+                seasons = getSeasons(episodeList);
+            }else{
+                seasons = null;
+            }
+            handleContent();
+        }else {
+            //Series is NOT in Database
+            String url = ServerUrls.getAllSeriesUrl(this, seriesID);
+            volley.add(new StringRequest(
+                    url,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            if(response != null && !response.equals("[]")){
+                                series = gson.fromJson(response, Series.class);
+
+                            }else{
+
+                            }
+                        }
+                    },new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    showContent();
+                    list.removeFooterView(loadingView);
+                    list.setOnScrollListener(null);
+                    fetching = true;
+                }
+            })).setTag(this);
+        }
+
         dbAdapter.close();
-		super.onDestroy();
-	}
-	@Override
-	public void onPause(){
-		super.onPause();
-		dbAdapter.close();
-	}
-	
+    }
+
+    private ArrayList<Integer> getSeasons(ArrayList<Episode> episodeList) {
+        ArrayList<Integer> s = new ArrayList<Integer>();
+        int seasonNumber = -100;
+        for(Episode episode : episodeList){
+            if(seasonNumber != episode.SEASON_NUMBER){
+                seasonNumber = episode.SEASON_NUMBER;
+                s.add(seasonNumber);
+            }
+        }
+        return s;
+    }
+
+    private void handleContent(){
+        loading.setVisibility(View.GONE);
+        if(series != null && seasons != null){
+            setContent();
+        }
+        supportInvalidateOptionsMenu();
+    }
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu){
 		super.onCreateOptionsMenu(menu);
@@ -356,43 +407,28 @@ public class SeriesInfoActivity extends BaseActivity {
 	
 	private void findView() {
 		//Find Views
-		holder = new ViewHolder();
-		holder.seriesInfoBarTitle = (TextView) findViewById(R.id.series_info_bar_title);
-		holder.seriesPoster = (ImageView) findViewById(R.id.series_poster);
-		//holder.seriesPosterContainer = (LinearLayout) findViewById(R.id.series_poster_container);
-		holder.seriesTime = (TextView) findViewById(R.id.series_time);
-		holder.seriesDay = (TextView) findViewById(R.id.series_day);
-		holder.seriesStatus = (TextView) findViewById(R.id.series_status);
-		holder.seriesNetwork = (TextView) findViewById(R.id.series_network);
-		holder.seriesRuntime = (TextView) findViewById(R.id.series_runtime);
-		holder.seriesContentRating = (TextView) findViewById(R.id.series_content_rating);
-		holder.seriesRatingBar = (RatingBar) findViewById(R.id.series_ratingBar);
-		holder.seriesRatingText = (TextView) findViewById(R.id.series_ratingText);
-		holder.seriesGenre = (TextView) findViewById(R.id.series_genre);
-		//holder.seriesIMDB = (ImageView) findViewById(R.id.series_imdb);
-		holder.seriesActor = (TextView) findViewById(R.id.series_actors);
-		holder.seriesOverview = (TextView) findViewById(R.id.series_overview);
-		holder.seriesFirstAired = (TextView) findViewById(R.id.series_first_aired);
-		holder.seriesNextEpisodeAirs = (TextView) findViewById(R.id.series_next_episode_airs);
+		seriesPoster = (ImageView) findViewById(R.id.series_poster);
+		seriesTime = (TextView) findViewById(R.id.series_time);
+		seriesDay = (TextView) findViewById(R.id.series_day);
+		seriesStatus = (TextView) findViewById(R.id.series_status);
+		seriesNetwork = (TextView) findViewById(R.id.series_network);
+		seriesRuntime = (TextView) findViewById(R.id.series_runtime);
+		seriesContentRating = (TextView) findViewById(R.id.series_content_rating);
+		seriesRatingBar = (RatingBar) findViewById(R.id.series_ratingBar);
+		seriesRatingText = (TextView) findViewById(R.id.series_ratingText);
+		seriesGenre = (TextView) findViewById(R.id.series_genre);
+		seriesActor = (TextView) findViewById(R.id.series_actors);
+		seriesOverview = (TextView) findViewById(R.id.series_overview);
+		seriesFirstAired = (TextView) findViewById(R.id.series_first_aired);
+		seriesNextEpisodeAirs = (TextView) findViewById(R.id.series_next_episode_airs);
 		
 		seasonsList = (LinearLayout) findViewById(R.id.seasons_list);
 		
-		//Find Group Titles
-		holder.seriesOverviewGroupTitle = (TextView) findViewById(R.id.series_overview_group_title);
-		holder.seriesActorGroupTitle = (TextView) findViewById(R.id.series_actors_group_title);
-		holder.seriesGenreGroupTitle = (TextView) findViewById(R.id.series_genre_group_title);
-		holder.seriesFirstAiredOnGroupTitle = (TextView) findViewById(R.id.series_first_aired_on_group_title);
-		//holder.seriesImdbGroupTitle = (TextView) findViewById(R.id.series_imdb_group_title);
-		holder.seriesSeasonsGroupTitle = (TextView) findViewById(R.id.series_seasons_group_title);
-		
 		//Find Drop Down Image Views
-		holder.overviewDropDown = (ImageView) findViewById(R.id.series_overview_img_button);
-		holder.actorsDropDown = (ImageView) findViewById(R.id.series_actors_img_button);
-		
-		//Find Drop Down Images Containers
-		holder.overviewDropDownContainer = (LinearLayout) findViewById(R.id.series_overview_img_button_layout);
-		holder.actorsDropDownContainer = (LinearLayout) findViewById(R.id.series_actors_img_button_layout);
-		
+		overviewDropDown = (ImageView) findViewById(R.id.series_overview_img_button);
+		actorsDropDown = (ImageView) findViewById(R.id.series_actors_img_button);
+
+        loading = (LinearLayout) findViewById(R.id.series_loading);
 	}
 	private void setContent() {
 
@@ -415,11 +451,11 @@ public class SeriesInfoActivity extends BaseActivity {
 			.build();
 			
 		String imgUri = ServerUrls.getImageUrl(this, ServerUrls.fixURL(series.POSTER_URL));
-		imageLoader.displayImage(imgUri, holder.seriesPoster, optionsWithDelay);
+		imageLoader.displayImage(imgUri, seriesPoster, optionsWithDelay);
 		
 		/**
-		holder.seriesPosterContainer.setTag(series.POSTER_URL != null ? series.POSTER_URL : null);
-		holder.seriesPosterContainer.setOnClickListener(new OnClickListener(){
+		seriesPosterContainer.setTag(series.POSTER_URL != null ? series.POSTER_URL : null);
+		seriesPosterContainer.setOnClickListener(new OnClickListener(){
 
 			@Override
 			public void onClick(View v) {
@@ -435,81 +471,66 @@ public class SeriesInfoActivity extends BaseActivity {
 			
 		});	*/
 		
-		holder.seriesTime.setText(series.AIRS_TIME);
-		holder.seriesDay.setText(series.AIRS_DAYOFWEEK);
-		holder.seriesStatus.setText(series.STATUS != null ? series.STATUS : "No Status Available");
-		holder.seriesNetwork.setText(series.NETWORK != null ? series.NETWORK + " -" : "");
-		holder.seriesRuntime.setText(series.RUNTIME + " min.");
-		holder.seriesContentRating.setText(series.CONTENT_RATING);
-		holder.seriesRatingBar.setRating(series.RATING);
-		holder.seriesRatingText.setText("(" + series.RATING + "/10)");
+		seriesTime.setText(series.AIRS_TIME);
+		seriesDay.setText(series.AIRS_DAYOFWEEK);
+		seriesStatus.setText(series.STATUS != null ? series.STATUS : "No Status Available");
+		seriesNetwork.setText(series.NETWORK != null ? series.NETWORK + " -" : "");
+		seriesRuntime.setText(series.RUNTIME + " min.");
+		seriesContentRating.setText(series.CONTENT_RATING);
+		seriesRatingBar.setRating(series.RATING);
+		seriesRatingText.setText("(" + series.RATING + "/10)");
 		
 		//Set Actors & Collapse Tag
-		holder.seriesActor.setText(getActors(series.ACTORS));
-		holder.seriesActor.setTag(COLLAPSED);
+		seriesActor.setText(getActors(series.ACTORS));
+		seriesActor.setTag(COLLAPSED);
 		
 		//Set Overview & Collapse Tag
-		holder.seriesOverview.setText(series.OVERVIEW != null ? series.OVERVIEW.replace("\n\n", "\n").replace("  ", " ") : "No Overview Available");
-		holder.seriesOverview.setTag(COLLAPSED);
+		seriesOverview.setText(series.OVERVIEW != null ? series.OVERVIEW.replace("\n\n", "\n").replace("  ", " ") : "No Overview Available");
+		seriesOverview.setTag(COLLAPSED);
 		
-		holder.seriesFirstAired.setText(dateFormat(series.FIRST_AIRED));
+		seriesFirstAired.setText(dateFormat(series.FIRST_AIRED));
 		
-		holder.seriesGenre.setText(series.GENRE != null ? 
+		seriesGenre.setText(series.GENRE != null ? 
 				(!series.GENRE.equals("||") ? series.GENRE.substring(1, series.GENRE.length()-1).replace("|", ", ") : "No Genre Available") :
 				"No Genre Available");
 		
-		/** 
-		 * Removing IMDB Link 
-		if(series.IMDB_ID != null){
-			holder.seriesIMDB.setImageBitmap(BitmapFactory.decodeResource(this.getResources(), R.drawable.imdb));
-			holder.seriesIMDB.setOnClickListener(new OnClickListener(){
-				@Override
-				public void onClick(View v) {
-					Intent i = new Intent(Intent.ACTION_VIEW);
-					i.setData(Uri.parse("http://www.imdb.com/title/" + series.IMDB_ID + "/"));
-					startActivity(i);
-				}
-			});
-		}
-		*/
-		
 		String nextEp = getNextEpisodeToAir();
-		holder.seriesNextEpisodeAirs.setText(nextEp != null ? "Next: " + dateFormat(nextEp) : "No Upcoming");
+		seriesNextEpisodeAirs.setText(nextEp != null ? "Next: " + dateFormat(nextEp) : "No Upcoming");
 		
 		//Set Drop Down Image View Click Listeners
-		holder.seriesOverview.setOnClickListener(new OnClickListener(){
+		seriesOverview.setOnClickListener(new OnClickListener(){
 
 			@Override
 			public void onClick(View view) {
 				
-				if( (Integer)holder.seriesOverview.getTag() == COLLAPSED){
-					holder.seriesOverview.setMaxLines(Integer.MAX_VALUE);
-					holder.seriesOverview.setEllipsize(null);
-					holder.seriesOverview.setTag(EXPANDED);
-					holder.overviewDropDown.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.expander_close_holo_light));
+				if( (Integer)seriesOverview.getTag() == COLLAPSED){
+					seriesOverview.setMaxLines(Integer.MAX_VALUE);
+					seriesOverview.setEllipsize(null);
+					seriesOverview.setTag(EXPANDED);
+					overviewDropDown.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.expander_close_holo_light));
 				}else{
-					holder.seriesOverview.setMaxLines(3);
-					holder.seriesOverview.setEllipsize(TruncateAt.END);
-					holder.seriesOverview.setTag(COLLAPSED);
-					holder.overviewDropDown.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.expander_open_holo_light));
+					seriesOverview.setMaxLines(3);
+					seriesOverview.setEllipsize(TruncateAt.END);
+					seriesOverview.setTag(COLLAPSED);
+					overviewDropDown.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.expander_open_holo_light));
 				}
 			}
 			
 		});
-		holder.seriesActor.setOnClickListener(new OnClickListener(){
+		seriesActor.setOnClickListener(new OnClickListener(){
 
 			@Override
 			public void onClick(View v) {
-				if( (Integer)holder.seriesActor.getTag() == COLLAPSED){
-					holder.seriesActor.setMaxLines(Integer.MAX_VALUE);
-					holder.seriesActor.setEllipsize(null);
-					holder.seriesActor.setTag(EXPANDED);
-					holder.actorsDropDown.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.expander_close_holo_light));
+				if( (Integer)seriesActor.getTag() == COLLAPSED){
+					seriesActor.setMaxLines(Integer.MAX_VALUE);
+					seriesActor.setEllipsize(null);
+					seriesActor.setTag(EXPANDED);
+					actorsDropDown.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.expander_close_holo_light));
 				}else{
-					holder.seriesActor.setMaxLines(3);
-					holder.seriesActor.setEllipsize(TruncateAt.END);
-					holder.seriesActor.setTag(COLLAPSED);
-					holder.actorsDropDown.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.expander_open_holo_light));
+					seriesActor.setMaxLines(3);
+					seriesActor.setEllipsize(TruncateAt.END);
+					seriesActor.setTag(COLLAPSED);
+					actorsDropDown.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.expander_open_holo_light));
 				}
 			}
 			
