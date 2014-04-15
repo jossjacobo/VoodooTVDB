@@ -71,8 +71,6 @@ public class Series implements Parcelable{
     @SerializedName("episodes")
     public Episode[] episodes;
 
-    public ArrayList<Episode> episodeList;
-
 	public int TYPE;
 	public String DIVIDER_TEXT;
 	

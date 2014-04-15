@@ -1,5 +1,13 @@
 package voodoo.tvdb.sqlitDatabase;
 
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.Cursor;
+import android.database.SQLException;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,13 +19,6 @@ import voodoo.tvdb.objects.ListItem;
 import voodoo.tvdb.objects.ListObject;
 import voodoo.tvdb.objects.Reminder;
 import voodoo.tvdb.objects.Series;
-import android.content.ContentValues;
-import android.content.Context;
-import android.database.Cursor;
-import android.database.SQLException;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 
 
@@ -663,6 +664,12 @@ public class DatabaseAdapter {
 			return null;
 		}
 	}
+
+    public Episode[] fetchEpisodes(String seriesId){
+        ArrayList<Episode> episodes = fetchAllEpisodes(seriesId);
+        return  episodes.toArray(new Episode[episodes.size()]);
+    }
+
 	public ArrayList<Episode> fetchAllEpisodesBySeason(String series_id, int season_number){
 		Cursor c = Db.query(DATABASE_EPISODES_TABLE, new String[] {KEY_EPISODE_ID,KEY_SERIES_ID, KEY_FIRST_AIRED}, 
 				KEY_SEASON_NUMBER + "=" + season_number + " AND " + KEY_SERIES_ID + "=" + series_id,

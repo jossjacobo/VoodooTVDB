@@ -89,7 +89,7 @@
                   android:layout_marginTop="3dip"
                   android:layout_marginBottom="3dip"
                   android:layout_alignParentLeft="true"
-                  android:visibility="gone">
+                  >
                   <ProgressBar
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
@@ -130,13 +130,14 @@
 				  	android:textSize="@dimen/text_size_series_info_day"
 				  	android:layout_below="@id/series_next_episode_airs"
 				  	android:layout_toRightOf="@id/series_time"
-				  	android:layout_marginLeft="4dip"
+                    android:maxLines="2"
+                    android:ellipsize="end"
 				  	oak:font="Roboto-BoldCondensedItalic.ttf"
 				  	/>
 				
-				<!-- Series Network i.e. HBO, FOX, CBS  -->
+				<!-- Series Network i.e. HBO, FOX, CBS and Run Time -->
 				<oak.widget.TextViewWithFont
-				  	android:id="@+id/series_network"
+				  	android:id="@+id/series_network_and_runtime"
 				  	android:layout_width="wrap_content"
 				  	android:layout_height="wrap_content"
 				  	android:textColor="@color/black"
@@ -148,16 +149,16 @@
 				  	/>
 				
 				<!-- Series Run Time -->
-				<oak.widget.TextViewWithFont
-				  	android:id="@+id/series_runtime"
-				  	android:layout_width="wrap_content"
-				  	android:layout_height="wrap_content"
-				  	android:textColor="@color/black"
-				  	android:textSize="@dimen/text_size_series_info_runtime"
-				  	android:layout_below="@id/series_time"
-				  	android:layout_toRightOf="@id/series_network"
-				  	oak:font="Roboto-Light.ttf"
-				  	/>
+				<!--<oak.widget.TextViewWithFont-->
+				  	<!--android:id="@+id/series_runtime"-->
+				  	<!--android:layout_width="wrap_content"-->
+				  	<!--android:layout_height="wrap_content"-->
+				  	<!--android:textColor="@color/black"-->
+				  	<!--android:textSize="@dimen/text_size_series_info_runtime"-->
+				  	<!--android:layout_below="@id/series_time"-->
+				  	<!--android:layout_toRightOf="@id/series_network"-->
+				  	<!--oak:font="Roboto-Light.ttf"-->
+				  	<!--/>-->
 				
 				<!-- Series Content Rating -->
 				<oak.widget.TextViewWithFont
@@ -167,8 +168,8 @@
 				  	android:textColor="@color/black"
 				  	android:singleLine="true"
 				  	android:textSize="@dimen/text_size_series_info_tv_rating"
-				  	android:layout_below="@id/series_network"
-				  	android:layout_alignLeft="@id/series_network"
+				  	android:layout_below="@id/series_network_and_runtime"
+				  	android:layout_alignLeft="@id/series_network_and_runtime"
 				  	android:layout_toRightOf="@id/series_poster"
 				  	oak:font="Roboto-Light.ttf"
 				  	/>
@@ -207,7 +208,8 @@
 				    android:layout_height="wrap_content"
 				    android:layout_width="wrap_content"
 				  	android:layout_alignParentRight="true"
-				  	android:layout_below="@id/series_ratingText"
+				  	android:layout_alignParentBottom="true"
+                    android:padding="8dp"
 				  	android:background="@drawable/card_square_blue_bg_dropshadow"
 				    >
 				    <oak.widget.TextViewWithFont
@@ -217,7 +219,7 @@
 					  	android:textColor="@color/white"
 					  	android:gravity="right"
 					  	android:textSize="@dimen/text_size_series_info_status"
-					  	android:text="status"
+					  	android:text="@string/series_info_status"
 					  	android:layout_margin="4dip"
 					  	oak:font="Roboto-Light.ttf"
 					  	/>

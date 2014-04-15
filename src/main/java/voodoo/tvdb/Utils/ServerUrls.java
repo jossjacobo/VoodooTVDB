@@ -86,6 +86,10 @@ public class ServerUrls {
 		return url += getMode(context) ? "shows/getAllSeries/xml/" + series_id : "VoodooTVDB/shows/getAllSeries/xml/" + series_id;
 		
 	}
+
+    public static String getAllSeriesJsonUrl(Context context, String seriesId){
+        return getHost(context) + "shows/getAllSeries/json/" + seriesId;
+    }
 	
 	/**
 	 * Get Image URL

@@ -39,25 +39,25 @@
     <dimen name="text_size_search_item_rating">12sp</dimen>
 
     <!-- Text Size Series Info -->
-    <dimen name="text_size_series_info_bar_title">15dip</dimen>
-    <dimen name="text_size_series_info_next_episode">20dip</dimen>
-    <dimen name="text_size_series_info_time">16dip</dimen>
-    <dimen name="text_size_series_info_day">16dip</dimen>
-    <dimen name="text_size_series_info_network">16dip</dimen>
-    <dimen name="text_size_series_info_runtime">16dip</dimen>
-    <dimen name="text_size_series_info_tv_rating">16dip</dimen>
-    <dimen name="text_size_series_info_star_rating">14dip</dimen>
-    <dimen name="text_size_series_info_status">16dip</dimen>
-    <dimen name="text_size_series_info_overview_title">16dip</dimen>
-    <dimen name="text_size_series_info_overview_content">14dip</dimen>
-    <dimen name="text_size_series_info_actors_title">16dip</dimen>
-    <dimen name="text_size_series_info_actors_content">14dip</dimen>
-    <dimen name="text_size_series_info_genre_title">16dip</dimen>
-    <dimen name="text_size_series_info_genre_content">14dip</dimen>
-    <dimen name="text_size_series_info_aired_on_title">16dip</dimen>
-    <dimen name="text_size_series_info_aired_on_content">14dip</dimen>
-    <dimen name="text_size_series_info_imdb_title">16dip</dimen>
-    <dimen name="text_size_series_info_seasons_title">16dip</dimen>
+    <dimen name="text_size_series_info_bar_title">15sp</dimen>
+    <dimen name="text_size_series_info_next_episode">20sp</dimen>
+    <dimen name="text_size_series_info_time">16sp</dimen>
+    <dimen name="text_size_series_info_day">16sp</dimen>
+    <dimen name="text_size_series_info_network">16sp</dimen>
+    <dimen name="text_size_series_info_runtime">16sp</dimen>
+    <dimen name="text_size_series_info_tv_rating">16sp</dimen>
+    <dimen name="text_size_series_info_star_rating">14sp</dimen>
+    <dimen name="text_size_series_info_status">16sp</dimen>
+    <dimen name="text_size_series_info_overview_title">16sp</dimen>
+    <dimen name="text_size_series_info_overview_content">14sp</dimen>
+    <dimen name="text_size_series_info_actors_title">16sp</dimen>
+    <dimen name="text_size_series_info_actors_content">14sp</dimen>
+    <dimen name="text_size_series_info_genre_title">16sp</dimen>
+    <dimen name="text_size_series_info_genre_content">14sp</dimen>
+    <dimen name="text_size_series_info_aired_on_title">16sp</dimen>
+    <dimen name="text_size_series_info_aired_on_content">14sp</dimen>
+    <dimen name="text_size_series_info_imdb_title">16sp</dimen>
+    <dimen name="text_size_series_info_seasons_title">16sp</dimen>
 
     <!-- Season Episode Item -->
     <dimen name="text_size_season_episode_item_title">20dip</dimen>

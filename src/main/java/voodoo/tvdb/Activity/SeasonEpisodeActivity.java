@@ -18,22 +18,22 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.google.ads.AdView;
+import com.google.gson.Gson;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 
+import voodoo.tvdb.R;
 import voodoo.tvdb.objects.Episode;
 import voodoo.tvdb.objects.Reminder;
 import voodoo.tvdb.objects.Series;
 import voodoo.tvdb.preferences.Prefs;
-import voodoo.tvdb.R;
+import voodoo.tvdb.sqlitDatabase.DatabaseAdapter;
 import voodoo.tvdb.utils.ServerUrls;
 import voodoo.tvdb.utils.WatchedHelper;
-import voodoo.tvdb.sqlitDatabase.DatabaseAdapter;
 
 @SuppressLint("SimpleDateFormat")
 public class SeasonEpisodeActivity extends BaseActivity {
@@ -65,11 +65,11 @@ public class SeasonEpisodeActivity extends BaseActivity {
 	//Resources
 	private Episode episode;
 	private Reminder reminder;
-	private ArrayList<Episode> full_episode_list;
 	private Series series;
 	
 	//Database adapter and Inflater
 	DatabaseAdapter dbAdapter;
+    Gson gson;
 
 	//Action bar
 	MenuItem watched;
@@ -87,13 +87,13 @@ public class SeasonEpisodeActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		
 		setContentView(R.layout.season_episode);
-		
+		gson = new Gson();
+
 		//Get Resources needed from intent
 		Intent i = getIntent();
 		episode = i.getParcelableExtra(EPISODE);
 		reminder = i.getParcelableExtra(REMINDER);
-		full_episode_list = i.getParcelableArrayListExtra(FULL_EPISODE_LIST);
-		series = i.getParcelableExtra(SERIES);
+		series = gson.fromJson(i.getStringExtra(SERIES), Series.class);
 		
 		//Database Adapter Initialized
 		dbAdapter = new DatabaseAdapter(this);
@@ -106,7 +106,7 @@ public class SeasonEpisodeActivity extends BaseActivity {
 			
 			episode = dbAdapter.fetchEpisode(reminder.EPISODE_ID);
 			series = dbAdapter.fetchSeries(reminder.SERIES_ID);
-			full_episode_list = dbAdapter.fetchAllEpisodes(reminder.SERIES_ID);
+			series.episodes = dbAdapter.fetchEpisodes(reminder.SERIES_ID);
 			
 			dbAdapter.close();
 		}
@@ -182,10 +182,10 @@ public class SeasonEpisodeActivity extends BaseActivity {
 							dbAdapter.deleteQueueEpisode(episode.ID);
 							
 							//Check Previous Watched Episodes and add the latest one, if any
-							for(int j = full_episode_list.size()-1; j >= 0; j--){
+							for(int j = series.episodes.length - 1; j >= 0; j--){
 								//Start at POSITION and work back
-								if(dbAdapter.isEpisodeWatched(full_episode_list.get(j).ID)){
-									dbAdapter.insertQueue(full_episode_list.get(j));
+								if(dbAdapter.isEpisodeWatched(series.episodes[j].ID)){
+									dbAdapter.insertQueue(series.episodes[j]);
 									break;
 								}
 							}
@@ -214,7 +214,7 @@ public class SeasonEpisodeActivity extends BaseActivity {
 				
 				return true;
 			}
-    	});
+            	});
 		return true;
 	}
 	@Override
@@ -228,9 +228,8 @@ public class SeasonEpisodeActivity extends BaseActivity {
 		case android.R.id.home:
 			//Start the Season Activity
 			Intent i = new Intent(SeasonEpisodeActivity.this, SeasonActivity.class);
-			i.putExtra(SeasonActivity.SERIES, series);
+			i.putExtra(SeasonActivity.SERIES, gson.toJson(series));
 			i.putExtra(SeasonActivity.SEASON_NUMBER, episode.SEASON_NUMBER + "");
-			i.putParcelableArrayListExtra(SeasonActivity.EPISODE_LIST, full_episode_list);
             i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			startActivity(i);
 			break;

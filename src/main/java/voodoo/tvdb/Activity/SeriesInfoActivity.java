@@ -1,13 +1,9 @@
 package voodoo.tvdb.activity;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.ShareActionProvider;
@@ -33,33 +29,19 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
-import org.xml.sax.XMLReader;
-
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
 
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
-
+import voodoo.tvdb.R;
 import voodoo.tvdb.objects.Episode;
-import voodoo.tvdb.objects.FavoriteBundle;
 import voodoo.tvdb.objects.Series;
 import voodoo.tvdb.preferences.Prefs;
-import voodoo.tvdb.R;
+import voodoo.tvdb.sqlitDatabase.DatabaseAdapter;
 import voodoo.tvdb.utils.FavoriteHelper;
 import voodoo.tvdb.utils.FavoriteSavingListener;
 import voodoo.tvdb.utils.ServerUrls;
-import voodoo.tvdb.xmlHandlers.XmlHandlerFetchAllSeriesInfo;
-import voodoo.tvdb.sqlitDatabase.DatabaseAdapter;
 
 @SuppressLint("SimpleDateFormat")
 public class SeriesInfoActivity extends BaseActivity {
@@ -74,8 +56,7 @@ public class SeriesInfoActivity extends BaseActivity {
 	private Series series;
 	private String seriesID;
 	private ArrayList<Integer> seasons;
-	private ArrayList<Episode> episodeList;
-	
+
 	private ImageLoader imageLoader;
 	
 
@@ -89,8 +70,7 @@ public class SeriesInfoActivity extends BaseActivity {
     private TextView seriesTime;
     private TextView seriesDay;
     private TextView seriesStatus;
-    private TextView seriesNetwork;
-    private TextView seriesRuntime;
+    private TextView seriesNetworkAndRuntime;
     private TextView seriesContentRating;
     private RatingBar seriesRatingBar;
     private TextView seriesRatingText;
@@ -136,7 +116,7 @@ public class SeriesInfoActivity extends BaseActivity {
 	@Override
 	public void onResume(){
 		super.onResume();
-		if(series == null || episodeList == null){
+		if(series == null){
 			if(seriesID != null){
                 handleId(seriesID);
 			}
@@ -150,54 +130,47 @@ public class SeriesInfoActivity extends BaseActivity {
 	}
 
     private void handleId(String seriesID) {
-        dbAdapter.open();
 
         //Check Series is on Database Already
+        dbAdapter.open();
         series = dbAdapter.fetchSeries(seriesID);
+        dbAdapter.close();
 
         if(series != null){
+            dbAdapter.open();
+            series.episodes = dbAdapter.fetchEpisodes(seriesID);
+            dbAdapter.close();
 
-            //Series is in the database
-
-            episodeList = dbAdapter.fetchAllEpisodes(seriesID);
-
-            //Get list of Season Numbers
-            if(episodeList != null){
-                seasons = getSeasons(episodeList);
+            if(series.episodes != null){
+                seasons = getSeasons(series.episodes);
             }else{
                 seasons = null;
             }
             handleContent();
         }else {
             //Series is NOT in Database
-            String url = ServerUrls.getAllSeriesUrl(this, seriesID);
+            String url = ServerUrls.getAllSeriesJsonUrl(this, seriesID);
             volley.add(new StringRequest(
                     url,
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
-                            if(response != null && !response.equals("[]")){
+                            if(response != null){
                                 series = gson.fromJson(response, Series.class);
-
-                            }else{
-
+                                seasons = getSeasons(series.episodes);
                             }
+                            handleContent();
                         }
                     },new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    showContent();
-                    list.removeFooterView(loadingView);
-                    list.setOnScrollListener(null);
-                    fetching = true;
+                    handleContent();
                 }
             })).setTag(this);
         }
-
-        dbAdapter.close();
     }
 
-    private ArrayList<Integer> getSeasons(ArrayList<Episode> episodeList) {
+    private ArrayList<Integer> getSeasons(Episode[] episodeList) {
         ArrayList<Integer> s = new ArrayList<Integer>();
         int seasonNumber = -100;
         for(Episode episode : episodeList){
@@ -273,137 +246,6 @@ public class SeriesInfoActivity extends BaseActivity {
 		}
 		return false;
 	}
-
-	private class fetchSeriesInfoAsync extends AsyncTask<String, Void, FavoriteBundle>{
-
-		private Context context;
-    	private ProgressDialog dialog;
-    	private FavoriteBundle fb;
-    	
-    	private AsyncTask<String, Void, FavoriteBundle> myFetSerInfoAsync;
-    	
-    	//SAXParsers
-    	private SAXParserFactory mySAXParserFactory;
-    	private SAXParser mySAXParser;
-    	private XMLReader mXMLReader;
-    	private XmlHandlerFetchAllSeriesInfo xmlHandler;
-    	
-    	private URL url;
-    	
-    	//Constructor
-    	public fetchSeriesInfoAsync(Activity activity){
-    		context = activity;
-    		dialog = new ProgressDialog(context);
-    		fb = new FavoriteBundle();
-    	}
-    	
-    	@Override
-    	protected void onPreExecute(){
-    		dialog.setMessage("Loading. Please wait...");
-			dialog.setIndeterminate(true);
-			dialog.setCancelable(true);
-			dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
-				
-				@Override
-				public void onCancel(DialogInterface dialog) {
-					myFetSerInfoAsync.cancel(true);
-				}
-			});
-			dialog.show();
-			myFetSerInfoAsync = this;
-    	}
-		
-		@Override
-		protected FavoriteBundle doInBackground(String... params) {
-			for(String id : params){
-				
-				//Check Series is on Database Already
-				Series seriesCheck = dbAdapter.fetchSeries(id);
-				
-				if(seriesCheck != null){
-					//Series is in the database
-					fb.SERIES = seriesCheck;
-					fb.EPISODES = dbAdapter.fetchAllEpisodes(id);
-
-					//Get list of Season Numbers
-					if(fb.EPISODES != null){
-						fb.SEASONS = new ArrayList<Integer>();
-						int seasonNumber = -100;
-						for(int i = 0; i < fb.EPISODES.size(); i++){
-							if(seasonNumber != fb.EPISODES.get(i).SEASON_NUMBER){
-								seasonNumber = fb.EPISODES.get(i).SEASON_NUMBER;
-								fb.SEASONS.add(seasonNumber);
-							}
-						}
-					}else{
-						fb.SEASONS = null;
-					}
-					return fb;
-				}else{
-					//Series is NOT in Database
-					try{
-						
-						//URL
-	        			url = new URL(ServerUrls.getAllSeriesUrl(context, id));
-						
-						mySAXParserFactory = SAXParserFactory.newInstance();
-						mySAXParser = mySAXParserFactory.newSAXParser();
-						mXMLReader = mySAXParser.getXMLReader();
-						xmlHandler = new XmlHandlerFetchAllSeriesInfo(SeriesInfoActivity.this);
-						mXMLReader.setContentHandler(xmlHandler);
-				        
-			        	mXMLReader.parse(new InputSource(url.openStream()));
-
-						//Get the series info and episodes info 
-			        	fb.SERIES = xmlHandler.getSeries();
-			        	fb.EPISODES = xmlHandler.getEpisodesList();
-			        	fb.SEASONS = xmlHandler.getSeasons();
-			        	
-			        	return fb;
-						
-					}catch (MalformedURLException e) {
-						//Log.d(TAG, "MalformedURLException");
-						e.printStackTrace();
-						return null;
-					} catch (ParserConfigurationException e) {
-						//Log.d(TAG, "ParserConfigurationException");
-						e.printStackTrace();
-						return null;
-					} catch (SAXException e) {
-						//Log.d(TAG, "SAXException");
-						e.printStackTrace();
-						return null;
-					} catch (IOException e) {
-						//Log.d(TAG, "IOException");
-						e.printStackTrace();
-						return null;
-					}
-				}
-			}
-			return null;
-		}
-		
-		@Override
-		protected void onPostExecute(FavoriteBundle fb){
-			dialog.dismiss();
-			
-			if(fb != null){
-				series = fb.SERIES;
-				seasons = fb.SEASONS;
-				episodeList = fb.EPISODES;
-			}else{
-				series = null;
-				seasons = null;
-				episodeList = null;
-			}
-			
-			if(series != null && seasons != null){
-				setContent();
-			}
-			
-            supportInvalidateOptionsMenu();
-		}
-	}
 	
 	private void findView() {
 		//Find Views
@@ -411,8 +253,7 @@ public class SeriesInfoActivity extends BaseActivity {
 		seriesTime = (TextView) findViewById(R.id.series_time);
 		seriesDay = (TextView) findViewById(R.id.series_day);
 		seriesStatus = (TextView) findViewById(R.id.series_status);
-		seriesNetwork = (TextView) findViewById(R.id.series_network);
-		seriesRuntime = (TextView) findViewById(R.id.series_runtime);
+		seriesNetworkAndRuntime = (TextView) findViewById(R.id.series_network_and_runtime);
 		seriesContentRating = (TextView) findViewById(R.id.series_content_rating);
 		seriesRatingBar = (RatingBar) findViewById(R.id.series_ratingBar);
 		seriesRatingText = (TextView) findViewById(R.id.series_ratingText);
@@ -452,6 +293,19 @@ public class SeriesInfoActivity extends BaseActivity {
 			
 		String imgUri = ServerUrls.getImageUrl(this, ServerUrls.fixURL(series.POSTER_URL));
 		imageLoader.displayImage(imgUri, seriesPoster, optionsWithDelay);
+        seriesPoster.setTag(series.POSTER_URL);
+        seriesPoster.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String url = (String) v.getTag();
+                if(url != null){
+                    Intent i = new Intent(SeriesInfoActivity.this, ImagePosterActivity.class);
+                    i.putExtra(ImagePosterActivity.URL, url);
+                    i.putExtra(ImagePosterActivity.TITLE, series.TITLE);
+                    startActivity(i);
+                }
+            }
+        });
 		
 		/**
 		seriesPosterContainer.setTag(series.POSTER_URL != null ? series.POSTER_URL : null);
@@ -474,8 +328,7 @@ public class SeriesInfoActivity extends BaseActivity {
 		seriesTime.setText(series.AIRS_TIME);
 		seriesDay.setText(series.AIRS_DAYOFWEEK);
 		seriesStatus.setText(series.STATUS != null ? series.STATUS : "No Status Available");
-		seriesNetwork.setText(series.NETWORK != null ? series.NETWORK + " -" : "");
-		seriesRuntime.setText(series.RUNTIME + " min.");
+		seriesNetworkAndRuntime.setText( (series.NETWORK != null ? series.NETWORK + " -" : "") + (series.RUNTIME == null ? "" : series.RUNTIME + " min."));
 		seriesContentRating.setText(series.CONTENT_RATING);
 		seriesRatingBar.setRating(series.RATING);
 		seriesRatingText.setText("(" + series.RATING + "/10)");
@@ -570,10 +423,9 @@ public class SeriesInfoActivity extends BaseActivity {
 						
 						Intent i = new Intent(SeriesInfoActivity.this, SeasonActivity.class);
 						
-						i.putExtra(SeasonActivity.SERIES, series);
+						i.putExtra(SeasonActivity.SERIES, gson.toJson(series));
 						i.putExtra(SeasonActivity.SEASON_NUMBER, seasonNumber);
-						i.putParcelableArrayListExtra(SeasonActivity.EPISODE_LIST, episodeList);
-						
+
 						startActivity(i);
 					}
 				});
@@ -595,10 +447,11 @@ public class SeriesInfoActivity extends BaseActivity {
 		String nextEpisodeLatest = null;
 		String nextEpisodeZero = null;
 		
-		if(episodeList != null){
+		if(series.episodes != null){
 			//Search the latest Episodes first
-			for(int i = episodeList.size()-1; i >= 0; i--){
-				if(episodeList.get(i).FIRST_AIRED != null && episodeList.get(i).SEASON_NUMBER != 0){
+			for(int i = series.episodes.length -1; i >= 0; i--){
+                Episode episode = series.episodes[i];
+				if(episode.FIRST_AIRED != null && episode.SEASON_NUMBER != 0){
 					
 					SimpleDateFormat sdf;
 					if(series.AIRS_TIME != null && series.AIRS_TIME.length() == 8){
@@ -609,7 +462,7 @@ public class SeriesInfoActivity extends BaseActivity {
 					
 					Calendar nextEpisodeTime = Calendar.getInstance();
 					try {
-						String d = (series.AIRS_TIME != null && series.AIRS_TIME.length() == 8)? series.AIRS_TIME + episodeList.get(i).FIRST_AIRED : episodeList.get(i).FIRST_AIRED;
+						String d = (series.AIRS_TIME != null && series.AIRS_TIME.length() == 8)? series.AIRS_TIME + episode.FIRST_AIRED : episode.FIRST_AIRED;
 						nextEpisodeTime.setTime(sdf.parse(d.replace(" ", "")));
 					} catch (ParseException e) {
 						e.printStackTrace();
@@ -617,7 +470,7 @@ public class SeriesInfoActivity extends BaseActivity {
 					//Log.d(TAG, "Compared to NextEpisodeTime in Latest Season:" + nextEpisodeTime.get(Calendar.MONTH) + "-" + nextEpisodeTime.get(Calendar.DAY_OF_MONTH) + "-" + nextEpisodeTime.get(Calendar.YEAR));
 					
 					if(currentTime.before(nextEpisodeTime)){
-						nextEpisodeLatest = episodeList.get(i).FIRST_AIRED;
+						nextEpisodeLatest = episode.FIRST_AIRED;
 					}else if(currentTime.after(nextEpisodeTime)){
 						break;
 					}
@@ -628,14 +481,16 @@ public class SeriesInfoActivity extends BaseActivity {
 			//Then Search for the Movies and extras in Season 0
 			//Count how many episodes are in Season 0
 			int s0 = 0;
-			for(int i = 0; i < episodeList.size(); i++){
-				if(episodeList.get(i).SEASON_NUMBER == 0){
+			for(int i = 0; i < series.episodes.length; i++){
+                Episode episode = series.episodes[i];
+				if(episode.SEASON_NUMBER == 0){
 					s0++;
-				}else if(episodeList.get(i).SEASON_NUMBER > 0){
+				}else if(episode.SEASON_NUMBER > 0){
 					break;
 				}
 			}
-			for(int i = s0 - 1; i >= 0; i--){		
+			for(int i = s0 - 1; i >= 0; i--){
+                Episode episode = series.episodes[i];
 				SimpleDateFormat sdf;
 				if(series.AIRS_TIME != null && series.AIRS_TIME.length() == 8){
 					sdf = new SimpleDateFormat("KK:mmaayyyy-MM-dd");
@@ -645,17 +500,19 @@ public class SeriesInfoActivity extends BaseActivity {
 				
 				Calendar nextEpisodeTime = Calendar.getInstance();
 				try {
-					String d = (series.AIRS_TIME != null && series.AIRS_TIME.length() == 8)? series.AIRS_TIME + episodeList.get(i).FIRST_AIRED : episodeList.get(i).FIRST_AIRED;
+					String d = (series.AIRS_TIME != null &&
+                            series.AIRS_TIME.length() == 8)
+                            ? series.AIRS_TIME + episode.FIRST_AIRED
+                            : episode.FIRST_AIRED;
 					if(d != null){
 						nextEpisodeTime.setTime(sdf.parse(d.replace(" ", "")));
 					}
 				} catch (ParseException e) {
 					e.printStackTrace();
 				}
-				//Log.d(TAG, "Compared to NextEpisodeTime in Season 0:" + nextEpisodeTime.get(Calendar.MONTH) + "-" + nextEpisodeTime.get(Calendar.DAY_OF_MONTH) + "-" + nextEpisodeTime.get(Calendar.YEAR));
-				
+
 				if(currentTime.before(nextEpisodeTime)){
-					nextEpisodeZero = episodeList.get(i).FIRST_AIRED;
+					nextEpisodeZero = episode.FIRST_AIRED;
 				}else if(currentTime.after(nextEpisodeTime)){
 					break;
 				}
@@ -703,12 +560,10 @@ public class SeriesInfoActivity extends BaseActivity {
 		
 	}
 	private boolean isSeriesFavorited(String iD) {
+        dbAdapter.open();
 		Series series = dbAdapter.fetchSeries(iD);
-		if(series != null){
-			return true;
-		}else{
-			return false;
-		}
+        dbAdapter.close();
+        return series != null;
 	}
 }
 

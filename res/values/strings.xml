@@ -170,6 +170,7 @@
     <string name="series_info_imdb">IMDB Icon</string>
     <string name="series_info_seasons_title">Seasons</string>
     <string name="series_info_reviews_title">Reviews &amp; Shouts</string>
+    <string name="series_info_status">status</string>
 
     <!-- Season Episode Item -->
     <string name="season_episode_item_image">Episode Image</string>

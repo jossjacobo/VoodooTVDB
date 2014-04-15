@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.ads.AdView;
+import com.google.gson.Gson;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -47,11 +48,9 @@ import voodoo.tvdb.utils.WatchedHelper;
  */
 @SuppressLint("SimpleDateFormat")
 public class SeasonActivity extends BaseActivity {
-	private static final String TAG = "Season";
 
     public static final String SERIES = "series";
     public static final String SEASON_NUMBER = "season_number";
-    public static final String EPISODE_LIST = "episode_list";
 
     String title;
 	
@@ -62,33 +61,32 @@ public class SeasonActivity extends BaseActivity {
 	Series series;
 	String season_number;
 	ArrayList<Episode> episodes;
-	ArrayList<Episode> fullEpisodeList;
 	String[] reminderList;
 
 	ListView list;
 	SeasonAdapter adapter;
 	DatabaseAdapter dbAdapter;
-	TextView seasonBarTitle;
-	
+
 	@Override
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.season);
+
 		dbAdapter = new DatabaseAdapter(this);
+        Gson gson = new Gson();
 		
 		list = (ListView) findViewById(R.id.seasons_list);
-		
-		//Get Resources Needed
-		Intent i = getIntent();
-		series = i.getParcelableExtra(SERIES);
-		season_number = i.getStringExtra(SEASON_NUMBER);
-		fullEpisodeList = i.getParcelableArrayListExtra(EPISODE_LIST);
+        TextView seasonBarTitle = (TextView) findViewById(R.id.season_bar_title);
 
-		/** Action Bar */
-		title = "Season " + season_number;
+        //Get Resources Needed
+        Intent i = getIntent();
+        series = gson.fromJson(i.getStringExtra(SERIES), Series.class);
+        season_number = i.getStringExtra(SEASON_NUMBER);
+
+        /** Action Bar */
+        title = "Season " + season_number;
         setActionBarTitle(title);
 
-		seasonBarTitle = (TextView) findViewById(R.id.season_bar_title);
 		seasonBarTitle.setText(series.TITLE);
 		
 		registerForContextMenu(list);
@@ -106,13 +104,12 @@ public class SeasonActivity extends BaseActivity {
 		if(adapter == null){
 			adapter = new SeasonAdapter(this);
 			
-			episodes = sortOutSeasonEpisodes(fullEpisodeList, season_number);
+			episodes = sortOutSeasonEpisodes(series.episodes, season_number);
 			
 			lookForRemindersInSD();
 			setRemindersInEpisode();
 			
 			adapter.setItems(episodes);
-			adapter.setFullEpisodeList(fullEpisodeList);
 			adapter.setSeries(series);
 			
 			list.setAdapter(adapter);
@@ -137,7 +134,6 @@ public class SeasonActivity extends BaseActivity {
 		if(adapter != null){
 			list.setAdapter(null);
 		}
-        //Log.d(TAG, "onDestroy");
         super.onDestroy();
         dbAdapter.close();
 	}
@@ -328,14 +324,14 @@ public class SeasonActivity extends BaseActivity {
      * 	to sort out episodes from an individual season
      */
     private ArrayList<Episode> sortOutSeasonEpisodes(
-			ArrayList<Episode> episodeList, String sNumber) {
+			Episode[] episodeList, String sNumber) {
 		
 		ArrayList<Episode> newList = new ArrayList<Episode>();
 		int s = Integer.parseInt(sNumber);
 		
-		for(int i = 0; i < episodeList.size(); i++){
-			if(s == episodeList.get(i).SEASON_NUMBER){
-				newList.add(episodeList.get(i));
+		for(int i = 0; i < episodeList.length; i++){
+			if(s == episodeList[i].SEASON_NUMBER){
+				newList.add(episodeList[i]);
 			}
 		}
 		

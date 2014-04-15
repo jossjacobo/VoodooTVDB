@@ -3,6 +3,7 @@ package voodoo.tvdb.activity;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.volley.RequestQueue;
@@ -30,6 +31,7 @@ import voodoo.tvdb.utils.ServerUrls;
 
 public class SearchActivity extends BaseActivity implements OnScrollListener{
 
+    private static final String TAG = "SearchActivity";
     private final int LIMIT = 8;
 
 	private String query;
@@ -52,6 +54,8 @@ public class SearchActivity extends BaseActivity implements OnScrollListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search);
 
+        Log.e(TAG, "onCreate");
+
         gson = new Gson();
         volley = Volley.newRequestQueue(this);
         items = new ArrayList<Series>();
@@ -67,7 +71,9 @@ public class SearchActivity extends BaseActivity implements OnScrollListener{
 
         query = "";
 
-        if(getIntent().getAction().equals(Intent.ACTION_VIEW)){
+        if(getIntent().getAction().equals(Intent.ACTION_SEARCH)){
+            handleSearch(getIntent());
+        }else if(getIntent().getAction().equals(Intent.ACTION_VIEW)){
             handleSearchView(getIntent(), true);
         }
     }

@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.MemoryCacheUtil;
@@ -29,13 +30,13 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.TreeSet;
 
+import voodoo.tvdb.R;
 import voodoo.tvdb.activity.SeasonEpisodeActivity;
 import voodoo.tvdb.objects.Episode;
 import voodoo.tvdb.objects.Series;
-import voodoo.tvdb.R;
+import voodoo.tvdb.sqlitDatabase.DatabaseAdapter;
 import voodoo.tvdb.utils.ServerUrls;
 import voodoo.tvdb.utils.WatchedHelper;
-import voodoo.tvdb.sqlitDatabase.DatabaseAdapter;
 
 @SuppressLint("SimpleDateFormat")
 public class SeasonAdapter extends BaseAdapter implements OnClickListener, OnCreateContextMenuListener{
@@ -56,7 +57,6 @@ public class SeasonAdapter extends BaseAdapter implements OnClickListener, OnCre
 	@SuppressWarnings("rawtypes")
 	private TreeSet watched;
 	private ArrayList<Episode> episodes;
-	private ArrayList<Episode> full_episode_list;
 	private Series series;
 
 	private String SERIES_ID;
@@ -95,10 +95,6 @@ public class SeasonAdapter extends BaseAdapter implements OnClickListener, OnCre
     	episodes.add(item);
     	notifyDataSetChanged();
     }
-	
-	public void setFullEpisodeList(final ArrayList<Episode> fel){
-		this.full_episode_list = fel;
-	}
 	
 	public void setSeries(final Series s){
 		this.series = s;
@@ -269,6 +265,8 @@ public class SeasonAdapter extends BaseAdapter implements OnClickListener, OnCre
 	@SuppressWarnings("unchecked")
 	@Override
 	public void onClick(View v) {
+
+        Gson gson = new Gson();
 		
 		int position;
 		switch(v.getId()){
@@ -276,8 +274,7 @@ public class SeasonAdapter extends BaseAdapter implements OnClickListener, OnCre
 			Intent i = new Intent(activity.getApplicationContext(), SeasonEpisodeActivity.class);
 			position = (Integer) v.findViewById(R.id.episode_title).getTag();
 			i.putExtra(SeasonEpisodeActivity.EPISODE, episodes.get(position));
-			i.putParcelableArrayListExtra(SeasonEpisodeActivity.FULL_EPISODE_LIST, full_episode_list);
-			i.putExtra(SeasonEpisodeActivity.SERIES, series);
+			i.putExtra(SeasonEpisodeActivity.SERIES, gson.toJson(series));
 			activity.startActivity(i);
 			break;
 		
