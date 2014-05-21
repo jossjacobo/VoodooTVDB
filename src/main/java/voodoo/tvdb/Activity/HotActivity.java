@@ -7,7 +7,8 @@ import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.google.ads.AdView;
+import com.google.android.gms.ads.doubleclick.PublisherAdRequest;
+import com.google.android.gms.ads.doubleclick.PublisherAdView;
 
 import java.util.ArrayList;
 
@@ -54,8 +55,10 @@ public class HotActivity extends BaseActivity {
         setActionBarTitle(title);
 
         // Ads
-    	AdView adview = (AdView) findViewById(R.id.adView);
-        viewAds(adview);
+        adView = (PublisherAdView) findViewById(R.id.adView);
+        PublisherAdRequest adRequest = new PublisherAdRequest.Builder().build();
+        adView.loadAd(adRequest);
+        viewAds(adView);
 	}
 	
 	@Override

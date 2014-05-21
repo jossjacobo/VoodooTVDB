@@ -3,7 +3,8 @@ package voodoo.tvdb.activity;
 import android.os.Bundle;
 import android.view.View;
 
-import com.google.ads.AdView;
+import com.google.android.gms.ads.doubleclick.PublisherAdRequest;
+import com.google.android.gms.ads.doubleclick.PublisherAdView;
 
 import voodoo.tvdb.fragments.DashboardFragment;
 import voodoo.tvdb.fragments.LoginFragment;
@@ -24,8 +25,10 @@ public class MainActivity extends BaseSlidingActivity implements SlidingMenuFrag
         selectFragment(contentView, R.id.dashboard_fragment);
 
         // Ads
-        AdView adview = (AdView) findViewById(R.id.adView);
-        viewAds(adview);
+        adView = (PublisherAdView) findViewById(R.id.adView);
+        PublisherAdRequest adRequest = new PublisherAdRequest.Builder().build();
+        adView.loadAd(adRequest);
+        viewAds(adView);
     }
 
     @Override

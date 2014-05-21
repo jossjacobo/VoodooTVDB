@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.google.android.gms.ads.doubleclick.PublisherAdView;
 import com.google.inject.Injector;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
 import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
@@ -36,6 +37,7 @@ import voodoo.tvdb.utils.CustomTypefaceSpan;
 public class BaseActivity extends ActionBarActivity {
 
     public DataStore dataStore;
+    public PublisherAdView adView;
 
     public ImageLoader imageLoader = ImageLoader.getInstance();
     public static DisplayImageOptions optionsWithFadeIn;
@@ -53,6 +55,22 @@ public class BaseActivity extends ActionBarActivity {
 
         setActionBarTitle(getResources().getString(R.string.app_name));
         initializeImageLoader();
+    }
+
+    @Override
+    public void onPause() {
+        adView.pause();
+        super.onPause();
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        adView.resume();
+    }
+    @Override
+    public void onDestroy() {
+        adView.destroy();
+        super.onDestroy();
     }
 
     private void initializeImageLoader() {

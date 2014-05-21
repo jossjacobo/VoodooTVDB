@@ -23,7 +23,8 @@ import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-import com.google.ads.AdView;
+import com.google.android.gms.ads.doubleclick.PublisherAdRequest;
+import com.google.android.gms.ads.doubleclick.PublisherAdView;
 import com.google.gson.Gson;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -109,8 +110,10 @@ public class SeriesInfoActivity extends BaseActivity {
         setActionBarTitle(title);
 
 		// Ads
-    	AdView adview = (AdView) findViewById(R.id.adView);
-        viewAds(adview);
+        adView = (PublisherAdView) findViewById(R.id.adView);
+        PublisherAdRequest adRequest = new PublisherAdRequest.Builder().build();
+        adView.loadAd(adRequest);
+        viewAds(adView);
 		
 	}
 	@Override

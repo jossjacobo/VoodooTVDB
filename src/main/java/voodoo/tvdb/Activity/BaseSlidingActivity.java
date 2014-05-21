@@ -31,6 +31,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.doubleclick.PublisherAdView;
 import com.google.inject.Injector;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
 import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
@@ -92,6 +93,7 @@ public class BaseSlidingActivity extends ActionBarActivity implements View.OnCli
 
     /** Ads */
     private boolean ads = false;
+    public PublisherAdView adView;
 
     @Override
     public void onCreate(Bundle savedState){
@@ -116,6 +118,18 @@ public class BaseSlidingActivity extends ActionBarActivity implements View.OnCli
     public void onResume(){
         super.onResume();
         setHeaderContent();
+        adView.resume();
+    }
+
+    @Override
+    public void onPause() {
+        adView.pause();
+        super.onPause();
+    }
+    @Override
+    public void onDestroy() {
+        adView.destroy();
+        super.onDestroy();
     }
 
     @Override

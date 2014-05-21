@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
   xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:ads="http://schemas.android.com/apk/lib/com.google.ads"
+  xmlns:ads="http://schemas.android.com/apk/res-auto"
   xmlns:oak="http://oak/oak/schema"
   android:layout_width="fill_parent"
   android:layout_height="fill_parent"
@@ -18,17 +18,14 @@
    	android:background="@color/blue"
    	/> 
   
-  <!-- Ads -->	
-  <com.google.ads.AdView
-      android:id="@+id/adView"
-      android:layout_height="wrap_content"
-      android:layout_width="wrap_content"
-      ads:adSize="BANNER"
-      ads:adUnitId="a151192e8c30e71"
-      ads:loadAdOnCreate="true"
-      android:layout_alignParentBottom="true"
-      android:layout_centerInParent="true">
-  </com.google.ads.AdView>
+    <!-- Ads -->
+    <com.google.android.gms.ads.doubleclick.PublisherAdView
+        android:id="@id/adView"
+        style="@style/Wrap"
+        ads:adSize="BANNER"
+        ads:adUnitId="a151192e8c30e71"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true" />
 	
 	<!-- ScrollView -->
 	<ScrollView 

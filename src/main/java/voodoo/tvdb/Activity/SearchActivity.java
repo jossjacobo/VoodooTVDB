@@ -16,7 +16,8 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.google.ads.AdView;
+import com.google.android.gms.ads.doubleclick.PublisherAdRequest;
+import com.google.android.gms.ads.doubleclick.PublisherAdView;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -62,8 +63,10 @@ public class SearchActivity extends BaseActivity implements OnScrollListener{
         loadingView = getLayoutInflater().inflate(R.layout.item_loading, null);
 
         // Ads
-    	AdView adview = (AdView) findViewById(R.id.adView);
-        viewAds(adview);
+        adView = (PublisherAdView) findViewById(R.id.adView);
+        PublisherAdRequest adRequest = new PublisherAdRequest.Builder().build();
+        adView.loadAd(adRequest);
+        viewAds(adView);
 
         query = "";
 
